@@ -8,9 +8,12 @@
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
     <style>
     .sidebar {
@@ -122,17 +125,17 @@
                             </a>
                         </h6>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link <?php if($active == 'laba_rugi_kantor'){ echo('active');} ?>" href="{{ route('dashboard.laba_rugi_kantor') }}">
                             Laba Rugi Kantor
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link <?php if($active == 'laba_rugi_proyek'){ echo('active');} ?>" href="{{ route('dashboard.laba_rugi_proyek') }}">
                             Laba Rugi Proyek
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link <?php if($active == 'laba_rugi'){ echo('active');} ?>" href="{{ route('dashboard.laba_rugi') }}">
                             Laba Rugi
                         </a>
                         </li>
