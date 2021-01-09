@@ -1,27 +1,16 @@
-@extends('layouts.master')
-@section('title')
-Data
-@endsection
-@section('css')
-<style>
-    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-    background-color: #fff;
-    }
+@extends('adminlte::page')
 
-    .table-keuangan table tr td:last-child {
-    text-align: right;
-    }
+@section('title', 'Keuangan Kapal | Data')
 
-    
-</style>
+@section('content_header')
+<h1>DAFTAR AKUN & RANGE</h1>
 @endsection
-@section('main')
-<!-- Table keuangan -->
-<div class="col-md-8 d-inline-block pt-4 pl-5">
+
+@section('content')
+<div class="col-md-8 d-inline-block pl-5">
     <div class="row">
         <div class="col">
-            <h5>DAFTAR AKUN dan RANGE</h5>
-            <h6 class="d-block">AKUN NERACA & SALDO</h6>
+            <h6 class="d-block">Akun Neraca & Saldo</h6>
         </div>
     </div>
     <div class="row">
@@ -308,6 +297,20 @@ Data
         </div>
     </div>
 </div>
+@endsection
 
-<!-- END Table keuangan -->
+@section('css')
+<link rel="stylesheet" href="/css/admin_custom.css">
+<style>
+    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #fff;
+    }
+
+    .table-keuangan table tr td:last-child {
+    text-align: right;
+    }
+</style>
+@endsection
+
+@section('js')
 @endsection

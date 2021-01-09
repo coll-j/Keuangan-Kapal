@@ -1,16 +1,28 @@
-@extends('adminlte::page')
-
-@section('title', 'Anggaran')
-
-@section('content_header')
-<h1>ANGGARAN</h1>
+@extends('layouts.master')
+@section('title')
+Anggaran Laba Rugi
 @endsection
+@section('css')
+<style>
+    .table td,
+    .table th
+    {
+        text-align:left;
+    }
 
-@section('content')
+    .table td + td,
+    .table th + th
+    {
+        text-align:right
+    }
+</style>
+@endsection
+@section('main')
 <div class="col">
+<h5 class="pt-2">Anggaran Laba Rugi</h5>
 <div class="row text-center pt-3">
     <div class="col">
-        <h5>PT. XYZ</h5>
+        <h6>PT. XYZ</h6>
     </div>
 </div>
 <div class="row text-center pt-1">
@@ -38,14 +50,4 @@
     </div>
 </div>
 </div>
-@endsection
-
-@section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">
-@endsection
-
-@section('js')
-<script>
-    console.log('Hi!'); 
-</script>
 @endsection

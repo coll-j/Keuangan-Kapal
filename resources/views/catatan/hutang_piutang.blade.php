@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Keuangan Kapal | Hutang Piutang')
 
 @section('content_header')
-<h1>Dashboard</h1>
+<h1>HUTANG PIUTANG</h1>
 @endsection
 
 @section('content')

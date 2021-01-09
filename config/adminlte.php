@@ -193,6 +193,11 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
+    // 'anggaran' => 'anggaran',
+    // 'neraca' => 'neraca',
+    // 'laba_rugi' => 'laporan/labarugi',
+    // 'laba_rugi_proyek' => 'laporan/labarugiproyek',
+    // 'laba_rugi_kantor' => 'laporan/labarugikantor',
     'profile_url' => false,
 
     /*
@@ -227,50 +232,55 @@ return [
         ['header' => 'dashboard'],
         [
             'text' => 'profil_perusahaan',
-            'url'  => '#',
+            'url'  => 'profil_perusahaan',
             'icon' => 'fas fa-fw fa-user',
+        ],
+        [
+            'text' => 'data',
+            'url'  => 'data',
+            'icon' => 'fas fa-fw fa-book',
         ],
         ['header' => 'catatan'],
         [
             'text' => 'neraca',
-            'url'  => '#',
+            'url'  => 'neraca',
             'icon' => 'fas fa-fw fa-balance-scale',
         ],
         [
             'text' => 'anggaran',
-            'url'  => '#',
+            'url'  => 'anggaran',
             'icon' => 'fas fa-fw fa-book',
         ],
         [
             'text' => 'transaksi_kantor',
-            'url'  => '#',
+            'url'  => 'transaksi_kantor',
             'icon' => 'fas fa-fw fa-suitcase',
         ],
         [
             'text' => 'transaksi_proyek',
-            'url'  => '#',
+            'url'  => 'transaksi_proyek',
             'icon' => 'fas fa-fw fa-building',
         ],
         [
             'text' => 'hutang_piutang',
-            'url'  => '#',
+            'url'  => 'hutang_piutang',
             'icon' => 'fas fa-fw fa-book',
         ],
 
         ['header' => 'laporan'],
         [
             'text' => 'l_laba_rugi_kantor',
-            'url'  => '#',
+            'url'  => 'laba_rugi_kantor',
             'icon' => 'fas fa-fw fa-book',
         ],
         [
             'text'    => 'l_laba_rugi_proyek',
-            'url'     => '#',
+            'url'     => 'laba_rugi_proyek',
             'icon' => 'fas fa-fw fa-book',
         ],
         [
             'text' => 'l_laba_rugi',
-            'url'  => '#',
+            'url'  => 'laba_rugi',
             'icon' => 'fas fa-fw fa-book',
         ],
          // [

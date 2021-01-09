@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'full_name'                   => 'Nama lengkap',
     'email'                       => 'Email',
     'password'                    => 'Kata sandi',
