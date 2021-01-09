@@ -23,7 +23,7 @@
 
     {{-- Brand text --}}
     <span class="brand-text font-weight-light {{ config('adminlte.classes_brand_text') }}">
-        {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
+        {!! config('adminlte.logo', '<b>Keuangan Kapal</b>') !!}
     </span>
 
 </a>

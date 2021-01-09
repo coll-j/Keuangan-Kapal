@@ -1,16 +1,32 @@
-@extends('adminlte::page')
-
-@section('title', 'Neraca')
-
-@section('content_header')
-<h1>NERACA</h1>
+@extends('layouts.master')
+@section('title')
+Neraca
 @endsection
+@section('css')
+<style>
+    .col-aset{
+        border: 1px solid black;
+    }
+    .col-kewajiban{
+        border: 1px solid black;
+    }
 
-@section('content')
+    table.table.table-borderless td{
+        padding: 0px 10px 0px 5px;
+    }
+
+    table tr td:last-child {
+    text-align: right;
+    }
+</style>
+@endsection
+@section('main')
 <div class="col">
-<div class="row text-center">
+<h5 class="pt-2">Neraca</h5>
+<div class="row text-center pt-3">
     <div class="col">
-        <h5>PT. XYZ</h5>
+        <h6>PT. XYZ</h6>
+        <h6>NERACA</h6>
         <p>05/11/2020</p>
     </div>
 </div>
@@ -137,30 +153,4 @@
     <div class="col-md-2"></div>
 </div>
 </div>
-@endsection
-
-@section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">
-<style>
-    .col-aset{
-        border: 1px solid black;
-    }
-    .col-kewajiban{
-        border: 1px solid black;
-    }
-
-    table.table.table-borderless td{
-        padding: 0px 10px 0px 5px;
-    }
-
-    table tr td:last-child {
-    text-align: right;
-    }
-</style>
-@endsection
-
-@section('js')
-<script>
-    console.log('Hi!'); 
-</script>
 @endsection

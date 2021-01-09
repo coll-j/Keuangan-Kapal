@@ -1,4 +1,5 @@
-@extends('layouts.front')
+@extends('adminlte::front')
+
 @section('content')
 <div class="flex-center position-ref full-height">
 
@@ -25,3 +26,12 @@
 </div>
 @endsection
 
+@section('css')
+<link rel="stylesheet" href="/css/admin_custom.css">
+@endsection
+
+@section('js')
+<script>
+    console.log('Hi!'); 
+</script>
+@endsection
