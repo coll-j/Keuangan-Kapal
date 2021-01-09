@@ -4,9 +4,9 @@
        href="{{ $item['href'] }}" @if(isset($item['target'])) target="{{ $item['target'] }}" @endif
        {!! $item['data-compiled'] ?? '' !!}>
 
-        <!-- <i class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{
+        <i class="{{ $item['icon'] ?? '' }} {{
             isset($item['icon_color']) ? 'text-'.$item['icon_color'] : ''
-        }}"></i> -->
+        }} mr-2" style="font-style: normal;">{{ $item['logo'] ?? '' }} </i>
 
         <p>
             {{ $item['text'] }}

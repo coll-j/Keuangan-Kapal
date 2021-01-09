@@ -126,7 +126,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'elevation-1',
+    'classes_sidebar' => 'sidebar-dark-primary elevation-1',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -230,59 +230,69 @@ return [
 
     'menu' => [
         [   'text' => 'Dashboard',
-            'url' => 'home'],
+            'url' => 'home',
+            'icon' => 'fas fa-fw fa-tachometer-alt'
+        ],
         [
             'text' => 'profil_perusahaan',
             'url'  => 'profil_perusahaan',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-building',
         ],
         [
             'text' => 'data',
             'url'  => 'data',
-            'icon' => 'fas fa-fw fa-book',
+            'icon' => 'fas fa-fw fa-database',
         ],
         ['header' => 'catatan'],
         [
             'text' => 'neraca',
             'url'  => 'neraca',
-            'icon' => 'fas fa-fw fa-balance-scale',
+            'logo' => 'N',
+            'icon_color' => 'secondary'
         ],
         [
             'text' => 'anggaran',
             'url'  => 'anggaran',
-            'icon' => 'fas fa-fw fa-book',
+            'logo' => 'A',
+            'icon_color' => 'secondary'
         ],
         [
             'text' => 'transaksi_kantor',
             'url'  => 'transaksi_kantor',
-            'icon' => 'fas fa-fw fa-suitcase',
+            'logo' => 'TK',
+            'icon_color' => 'secondary'
         ],
         [
             'text' => 'transaksi_proyek',
             'url'  => 'transaksi_proyek',
-            'icon' => 'fas fa-fw fa-building',
+            'logo' => 'TP',
+            'icon_color' => 'secondary'
         ],
         [
             'text' => 'hutang_piutang',
             'url'  => 'hutang_piutang',
-            'icon' => 'fas fa-fw fa-book',
+            'logo' => 'HP',
+            'icon_color' => 'secondary'
         ],
 
         ['header' => 'laporan'],
         [
             'text' => 'l_laba_rugi_kantor',
             'url'  => 'laba_rugi_kantor',
-            'icon' => 'fas fa-fw fa-book',
+            'logo' => 'LRK',
+            'icon_color' => 'secondary'
         ],
         [
             'text'    => 'l_laba_rugi_proyek',
             'url'     => 'laba_rugi_proyek',
-            'icon' => 'fas fa-fw fa-book',
+            'logo' => 'LRP',
+            'icon_color' => 'secondary'
         ],
         [
             'text' => 'l_laba_rugi',
             'url'  => 'laba_rugi',
-            'icon' => 'fas fa-fw fa-book',
+            'logo' => 'LR',
+            'icon_color' => 'secondary'
         ],
          // [
         //     'text' => 'search',
@@ -366,22 +376,22 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],

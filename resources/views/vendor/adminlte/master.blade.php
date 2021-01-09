@@ -76,17 +76,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <style>
-        .nav-pills .nav-link.active,
-        .nav-pills .show > .nav-link {
-            border-top-right-radius: 25px;
-            border-bottom-right-radius: 25px;
-            background-color: #272343;
-            color: #e5e5e5;
-        }
-
         
         * {
             font-family: 'Roboto', sans-serif;
+        }
+
+        .nav-sidebar .nav-link i {
+            display: none;
+        }
+
+        .sidebar-collapse i{
+            display: inline-block !important;
+        }
+
+        .sidebar:hover i{
+            display: none;
         }
     </style>
 </head>
@@ -111,7 +115,6 @@
     @endif
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
     
 
