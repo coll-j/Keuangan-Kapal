@@ -33,3 +33,7 @@ Route::prefix('dashboard')->name('dashboard.')->group(function (){
     Route::get('/anggaran', 'App\Http\Controllers\Catatan\IndexController@pageAnggaran')->name('anggaran');
 
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
