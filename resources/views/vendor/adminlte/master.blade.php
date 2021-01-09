@@ -71,6 +71,22 @@
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+            background-color: #272343;
+            color: #e5e5e5;
+        }
+
+        
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>
