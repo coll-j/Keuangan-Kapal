@@ -27,5 +27,7 @@ class DashboardController extends Controller
 
     public function pageData(){
         return view('dashboard/data');
-    }
+    }  
+
+    
 }
