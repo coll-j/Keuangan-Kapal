@@ -11,21 +11,25 @@
     <div class="row text-center">
         <div class="col">
             <h5>Catatan Transaksi Proyek</h5>
-            <div class="col-xs-offset-9 col-xs-3">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Kas</th>
-                            <th>5,550,000</th>
-                        </tr>
-
-                        <tr>
-                            <th scope="col">Bank</th>
-                            <th>507,280,000</th>
-                        </tr>
-                    </thead>
-                </table>
+            <div class="row justify-content-end">
+                <div class="col-3 text-right">
+                    <b> Kas </b>
+                </div>
+                <div class=" col-2 text-right">
+                    5,550,000
+                </div>
             </div>
+
+            <div class="row justify-content-end">
+                <div class="col-3 text-right">
+                    <b> Bank </b>
+                </div>
+                <div class="col-2 text-right">
+                    507,280,000
+                </div>
+            </div>
+
+
             <button type="button" class="btn btn-outline-primary">Edit</button>
             <button type="button" class="btn btn-outline-primary">Save</button>
             <br><br>

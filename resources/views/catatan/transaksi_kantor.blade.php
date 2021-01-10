@@ -11,7 +11,8 @@
     <div class="row text-center">
         <div class="col">
             <h5>Catatan Transaksi Kantor</h5>
-            <div class="col-xs-offset-9 col-xs-3">
+
+            <!-- <div class="col-xs-offset-9 col-xs-3 text-right">
                 <table class="table">
                     <thead>
                         <tr>
@@ -25,12 +26,33 @@
                         </tr>
                     </thead>
                 </table>
+            </div> -->
+
+            <div class="row justify-content-end">
+                <div class="col-3 text-right">
+                    <b> Kas </b>
+                </div>
+                <div class=" col-2 text-right">
+                    5,550,000
+                </div>
             </div>
+
+            <div class="row justify-content-end">
+                <div class="col-3 text-right">
+                    <b> Bank </b>
+                </div>
+                <div class="col-2 text-right">
+                    507,280,000
+                </div>
+            </div>
+
+
             <button type="button" class="btn btn-outline-primary">Edit</button>
             <button type="button" class="btn btn-outline-primary">Save</button>
             <br><br>
         </div>
     </div>
+
     <table class="table table-hover">
         <thead>
             <tr>
@@ -89,13 +111,60 @@
                 <td>Keluar</td>
                 <td>120,000,000</td>
             </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td>1/2/2019</td>
+                <td>Uang muka Sewa Kantor</td>
+                <td>Untuk sewa kantor 2 tahun</td>
+                <td>Bank</td>
+                <td>Keluar</td>
+                <td>120,000,000</td>
+            </tr>
+            <tr>
+                <th scope="row">7</th>
+                <td>1/2/2019</td>
+                <td>Uang muka Sewa Kantor</td>
+                <td>Untuk sewa kantor 2 tahun</td>
+                <td>Bank</td>
+                <td>Keluar</td>
+                <td>120,000,000</td>
+            </tr>
+            <tr>
+                <th scope="row">8</th>
+                <td>1/2/2019</td>
+                <td>Uang muka Sewa Kantor</td>
+                <td>Untuk sewa kantor 2 tahun</td>
+                <td>Bank</td>
+                <td>Keluar</td>
+                <td>120,000,000</td>
+            </tr>
+            <tr>
+                <th scope="row">9</th>
+                <td>1/2/2019</td>
+                <td>Uang muka Sewa Kantor</td>
+                <td>Untuk sewa kantor 2 tahun</td>
+                <td>Bank</td>
+                <td>Keluar</td>
+                <td>120,000,000</td>
+            </tr>
+            <tr>
+                <th scope="row">10</th>
+                <td>1/2/2019</td>
+                <td>Uang muka Sewa Kantor</td>
+                <td>Untuk sewa kantor 2 tahun</td>
+                <td>Bank</td>
+                <td>Keluar</td>
+                <td>120,000,000</td>
+            </tr>
         </tbody>
     </table>
+
 
     @endsection
 
     @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+
     @endsection
 
     @section('js')
