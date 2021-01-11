@@ -24,7 +24,7 @@
         </div>
         <div class="row text-center pt-1">
             <div class="col">
-                <table class="table table-stripped table-condensed table-lg">
+                <table id="table1"class="display table table-bordered table-hover dataTable">
                 <thead class="thead-light">
                     <th style="width: 70%">Keterangan</th>
                     <th style="width: 30%">Realisasi</th>
@@ -75,5 +75,15 @@
        format: 'dd-mm-yyyy',
        orientation: 'bottom'
      });  
+     $(document).ready(function() {
+        $('#table1').DataTable({
+            'paging'      : false,
+            'lengthChange': false,
+            'searching'   : false,
+            'ordering'    : true,
+            'info'        : false,
+            'autoWidth'   : false
+        });
+    } );
 </script> 
 @endsection

@@ -17,22 +17,28 @@
                 <div class="row" style="padding-top: 4px; padding-bottom: 12px; padding-left: 10%; padding-right:10%">
                     <div class="center-block" ><input class="date form-control text-center" type="text"></div>
                     <div class="center-block sd" ><h6> s/d </h6></div>
-                    <div class="center-block"><input class="date form-control  text-center" type="text"></div>
+                    <div class="center-block"><input class="date form-control text-center" type="text"></div>
                 </div>
                 
             </div>
         </div>
         <div class="row text-center pt-1">
             <div class="col">
-                <table class="table table-stripped table-condensed table-lg">
+                <table id="table1"class="display table table-bordered table-hover dataTable" role="grid">
                 <thead class="thead-light">
-                    <th style="width: 70%">Keterangan</th>
-                    <th style="width: 30%">Realisasi</th>
+                    </tr role="row">
+                        <th style="width: 70%">Keterangan</th>
+                        <th style="width: 30%">Realisasi</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Pendapatan</td>
                         <td>1.350.000.000</td>
+                    </tr>
+                    <tr>
+                        <td>Pemasukan</td>
+                        <td>3.350.000.000</td>
                     </tr>
                 </tbody>
                 </table>
@@ -70,10 +76,20 @@
 @endsection
 
 @section('js')
-<script type="text/javascript">
+<script>
+    $(document).ready(function() {
+        $('#table1').DataTable({
+            'paging'      : false,
+            'lengthChange': false,
+            'searching'   : false,
+            'ordering'    : true,
+            'info'        : false,
+            'autoWidth'   : false
+        });
+    } );
     $('.date').datepicker({  
        format: 'dd-mm-yyyy',
        orientation: 'bottom'
-     });  
+     }); 
 </script> 
 @endsection
