@@ -122,7 +122,7 @@
 </style>
 @endsection
 
-@section('js')
+@section('adminlte_js')
 <script type="text/javascript">
     $('.date').datepicker({  
        format: 'dd-mm-yyyy',
@@ -139,4 +139,5 @@
         });
     } );
 </script> 
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> -->
 @endsection

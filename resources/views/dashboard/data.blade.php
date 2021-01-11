@@ -17,15 +17,15 @@
 @section('content')
 <div class="row">
     <div class="col-md-6 d-inline-block pl-3">
-        <div class="box">
-            <div class="box-header">
+        <div class="card" style="min-height: 100%;">
+            <div class="card-header">
                 <h6 class="d-block">Akun Neraca & Saldo</h6>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <div class="dataTables_wrapper">
                     <!-- Table Akun -->
-                    <table id="table-neraca" class="table table-striped table-bordered table-condensed table-sm" style="width: 100%">
-                        <thead class="">
+                    <table id="table-neraca" class="table table-striped table-bordered table-condensed table-sm">
+                        <thead>
                             <tr>
                                 <th>Akun</th>
                                 <th>Saldo</th>
@@ -83,14 +83,20 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="box">
-            <div class="box-header">
+    <div class="col-md-6">
+        <div class="card" style="height: 48.25%;">
+            <div class="card-header">
                 <h6 class="pt-1">Pemasok</h6>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <div class="dataTables_wrapper">
                     <table id="table-pemasok" class="table table-striped table-bordered table-condensed table-sm">
+                        <thead style="display: none;">
+                            <tr>
+                                <th>Akun</th>
+                                <th>Saldo</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr>
                                 <td style="width: 20%;">A</td>
@@ -104,18 +110,40 @@
                                 <td>C</td>
                                 <td>Pemasok Perlengkapan Lainnya</td>
                             </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>Pemasok Perlengkapan Lainnya</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>Pemasok Perlengkapan Lainnya</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>Pemasok Perlengkapan Lainnya</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>Pemasok Perlengkapan Lainnya</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="box">
-            <div class="box-header">
+        <div class="card" style="height: 48.25%;">
+            <div class="card-header">
                 <h6 class="pt-1">Proyek</h6>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <div class="dataTables_wrapper">
                     <table id="table-proyekan" class="table table-striped table-bordered table-condensed table-sm">
+                        <thead style="display: none;">
+                            <tr>
+                                <th>Akun</th>
+                                <th>Saldo</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr>
                                 <td style="width: 20%;">1</td>
@@ -138,11 +166,11 @@
 </div>
 <div class="row pt-4 pb-4">
     <div class="col-md-6 d-inline pl-3">
-        <div class="box">
-            <div class="box-header">
+        <div class="card">
+            <div class="card-header">
                 <h6>Akun Transaksi Kantor</h6>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <div class="dataTables_wrapper">
                     <!-- Table Akun -->
                     <table id="table-kantor" class="table table-striped table-bordered table-condensed table-sm">
@@ -207,11 +235,11 @@
         </div>
     </div>
     <div class="col-md-6 d-inline">
-        <div class="box">
-            <div class="box-header">
+        <div class="card">
+            <div class="card-header">
                 <h6>Akun Transaksi Proyek</h6>
             </div>
-            <div class="box-body">
+            <div class="card-body">
                 <div class="dataTables_wrapper">
                     <table id="table-proyek" class="table table-striped table-bordered table-condensed table-sm">
                         <thead class="thead-light">
@@ -277,7 +305,7 @@
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">
+<!-- <link rel="stylesheet" href="/css/admin_custom.css"> -->
 <style>
     .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
     background-color: #fff;
@@ -285,10 +313,6 @@
 
     .table-keuangan table tr td:last-child {
     text-align: right;
-    }
-
-    .dataTables_scrollHeadInner, .table{
-      width:96.8%!important
     }
 </style>
 @endsection
@@ -300,7 +324,7 @@
             paging      : false,
             searching   : false,
             scrollY : 300,
-            scrollCollapse    : false,
+            scrollCollapse    : true,
             info        : false,
         });
 
@@ -319,24 +343,30 @@
             scrollCollapse    : true,
             info        : false,
         });
+        
+        $('#table-pemasok').DataTable({
+            paging      : false,
+            searching   : false,
+            scrollY : 100,
+            scrollCollapse    : true,
+            info        : false,
+        });
 
         $('#table-proyekan').DataTable({
             paging      : false,
             searching   : false,
-            scrollY : 150,
+            scrollY : 100,
             scrollCollapse    : true,
             info        : false,
         });
 
-        $('#table-pemasok').DataTable({
-            paging      : false,
-            searching   : false,
-            scrollY : 150,
-            scrollCollapse    : true,
-            info        : false,
-        });
     } );
-
+        $(document).on('shown.lte.pushmenu collapsed.lte.pushmenu', function() {
+            console.log("hey gamtenk");
+            setTimeout(function(){
+                $.fn.dataTable.tables( {api: true} ).columns.adjust();
+            }, 300);
+        });
 </script>
 
 @endsection
