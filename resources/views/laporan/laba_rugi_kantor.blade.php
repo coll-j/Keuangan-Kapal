@@ -29,21 +29,51 @@
     <div class="card-body">
         <div class="row text-center pt-1">
             <div class="col">
-                <table id="table1"class="display table table-bordered table-hover dataTable">
+                <table id="table1"class="display table table-stripped table-hover dataTable">
                 <thead class="thead-light">
                     </tr role="row">
-                        <th style="width: 70%">Keterangan</th>
-                        <th style="width: 30%">Realisasi</th>
+                        <th style="width: 65%">Keterangan</th>
+                        <th style="width: 35%">Realisasi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Pendapatan</td>
+                        <td colspan="2"><b>Pendapatan</b></td>
+                    </tr>
+                    <tr>
+                        <td>Pendapatan Proyek</td>
                         <td>1.350.000.000</td>
                     </tr>
                     <tr>
-                        <td>Pemasukan</td>
-                        <td>3.350.000.000</td>
+                        <td class="right" ><b>Jumlah Pendapatan</b></td>
+                        <td class="end-row">1.350.000.000</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Biaya</b></td>
+                    </tr>
+                    <tr>
+                        <td>Biaya Persiapan dan Perijinan</td>
+                        <td>15.000.000</td>
+                    </tr>
+                    <tr>
+                        <td>Biaya Administrasi dan Umum</td>
+                        <td>7.500.000</td>
+                    </tr>
+                    <tr>
+                        <td>Biaya Pemasaran</td>
+                        <td>25.000.000</td>
+                    </tr>
+                    <tr>
+                        <td>Biaya Material</td>
+                        <td>775.000.000</td>
+                    </tr>
+                    <tr>
+                        <td class="right" ><b>Jumlah Biaya</b></td>
+                        <td class="end-row">1.084.250.000</td>
+                    </tr>
+                    <tr>
+                        <td class="right"><b>Laba</b></td>
+                        <td class="end-row">265.750.000</td>
                     </tr>
                 </tbody>
                 </table>
@@ -61,6 +91,12 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <style>
+    td.right {
+        float: right;
+    }
+    td.end-row {
+        border-top: 2px solid;
+    }
     .table td,
     .table th
     {
