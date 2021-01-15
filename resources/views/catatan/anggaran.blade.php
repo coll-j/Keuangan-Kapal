@@ -3,7 +3,7 @@
 @section('title', 'Anggaran')
 
 @section('content_header')
-<h1>ANGGARAN LABA RUGI</h1>
+<h5 class="pl-3"><b>ANGGARAN LABA RUGI</b></h5>
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
     <!-- /.card-header -->
 
     <div class="card-body">
-        <div class="row text-center pt-1">
+        <div class="row pt-1">
             <div class="col">
                 <table id="table1"class="table table-stripped table-hover dataTable table-condensed table-sm">
                 <thead class="thead-light">

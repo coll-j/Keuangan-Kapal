@@ -3,7 +3,7 @@
 @section('title', 'Keuangan Kapal | Laba Rugi Proyek')
 
 @section('content_header')
-<h1>Laporan Laba Rugi Proyek</h1>
+<h5 class="pl-3">LAPORAN LABA RUGI PROYEK</h5>
 @endsection
 
 @section('content')
@@ -17,26 +17,23 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <div class="row" style="width: 400px; padding-top: 4px; padding-bottom: 12px;">
-                <div class="center-block"><input class="date form-control text-center" type="text"></div>
-                <div class="center-block"><h6> s/d </h6></div>
-                <div class="center-block"><input class="date form-control  text-center" type="text"></div>
-            </div>
+            <input name="daterange" value="01/01/2018 - 04/01/2018" type="text" style="width: 250px;" class="form-control  text-center">
         </div>
     </div>
     <!-- /.card-header -->
 
     <div class="card-body">
-        <div class="row text-center pt-1">
-            <div class="col">
-                <table id="table1"class="display table table-stripped table-hover dataTable">
+        <div class="dataTables_wrapper">
+            <table id="table-laba-rugi-proyek"class="table table-striped table-bordered table-condensed table-sm dataTable">
                 <thead class="thead-light">
-                    <th style="width: 25%">Keterangan</th>
-                    <th style="width: 18%">Anggaran</th>
-                    <th style="width: 18%">Realisasi</th>
-                    <th style="width: 18%">Selisih</th>
-                    <th style="width: 16%">% dari Anggaran</th>
-                    <th style="width: 5%">Hasil</th>
+                    <tr>
+                        <th style="width: 25%">Keterangan</th>
+                        <th style="width: 18%">Anggaran</th>
+                        <th style="width: 18%">Realisasi</th>
+                        <th style="width: 18%">Selisih</th>
+                        <th style="width: 16%">% dari Anggaran</th>
+                        <th style="width: 5%">Hasil</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
@@ -126,18 +123,17 @@
                         <td class="end-row"><i class="fa fa-arrow-alt-circle-up"></i></td>
                     </tr>
                 </tbody>
-                </table>
-                <div class="col pt-4">
-                    <div class="row"><h6>Keterangan :</h6></div>
-                    <div class="row">
-                        <i class="fa fa-arrow-alt-circle-up"></i>
-                        
-                        <p>&nbsp; Menguntungkan</p>
-                    </div>
-                    <div class="row">
-                        <i class="fa fa-arrow-alt-circle-down"></i>
-                        <p>&nbsp; Merugikan</p>
-                    </div>
+            </table>
+            <div class="col pt-4">
+                <div class="row"><h6>Keterangan :</h6></div>
+                <div class="row">
+                    <i class="fa fa-arrow-alt-circle-up"></i>
+                    
+                    <p>&nbsp; Menguntungkan</p>
+                </div>
+                <div class="row">
+                    <i class="fa fa-arrow-alt-circle-down"></i>
+                    <p>&nbsp; Merugikan</p>
                 </div>
             </div>
         </div>
@@ -195,12 +191,16 @@
 
 @section('js')
 <script type="text/javascript">
-    $('.date').datepicker({  
-       format: 'dd-mm-yyyy',
-       orientation: 'bottom'
-     });  
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'center',
+            locale: {
+                format: 'DD/MM/YYYY',
+            }
+        });
+    });  
      $(document).ready(function() {
-        $('#table1').DataTable({
+        $('#table-laba-rugi-proyek').DataTable({
             'paging'      : true,
             'lengthChange': false,
             'searching'   : false,

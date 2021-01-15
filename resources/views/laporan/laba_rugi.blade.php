@@ -3,7 +3,7 @@
 @section('title', 'Keuangan Kapal | Laporan Laba Rugi')
 
 @section('content_header')
-<h1>Laporan Laba Rugi</h1>
+<h5 class="pl-3">LAPORAN LABA RUGI</h5>
 @endsection
 
 @section('content')
@@ -17,22 +17,19 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <div class="row" style="width: 400px; padding-top: 4px; padding-bottom: 12px;">
-                <div class="center-block"><input class="date form-control text-center" type="text"></div>
-                <div class="center-block"><h6> s/d </h6></div>
-                <div class="center-block"><input class="date form-control  text-center" type="text"></div>
-            </div>
+            <input name="daterange" value="01/01/2018 - 04/01/2018" type="text" style="width: 250px;" class="form-control  text-center"> 
         </div>
     </div>
     <!-- /.card-header -->
 
     <div class="card-body">
-        <div class="row text-center pt-1">
-            <div class="col">
-                <table id="table1"class="display table table-stripped table-hover dataTable">
+        <div class="dataTables_wrapper">
+            <table id="table-laba-rugi"class="table table-striped table-bordered table-condensed table-sm dataTable">
                 <thead class="thead-light">
-                    <th style="width: 70%">Keterangan</th>
-                    <th style="width: 30%">Realisasi</th>
+                    <tr>
+                        <th style="width: 70%">Keterangan</th>
+                        <th style="width: 30%">Realisasi</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
@@ -74,8 +71,7 @@
                         <td class="end-row">265.750.000</td>
                     </tr>
                 </tbody>
-                </table>
-            </div>
+            </table>
         </div>
     </div>
     <!-- /.card-body -->
@@ -124,12 +120,16 @@
 
 @section('adminlte_js')
 <script type="text/javascript">
-    $('.date').datepicker({  
-       format: 'dd-mm-yyyy',
-       orientation: 'bottom'
-     });  
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'center',
+            locale: {
+                format: 'DD/MM/YYYY',
+            }
+        });
+    });
      $(document).ready(function() {
-        $('#table1').DataTable({
+        $('#table-laba-rugi').DataTable({
             'paging'      : false,
             'lengthChange': false,
             'searching'   : false,

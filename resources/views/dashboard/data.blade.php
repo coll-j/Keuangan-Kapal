@@ -5,11 +5,11 @@
 @section('content_header')
 <div class="row">
     <div class="col-md-8">
-        <h5>DAFTAR AKUN & RANGE</h5>
+        <h5 class="pl-3"><b>DAFTAR AKUN & RANGE</b></h5>
     </div>
     <div class="col-md-4">
-        <button class="btn btn-sm btn-outline-primary float-right m-1"><i class="fas fa-plus"></i> Tambah</button>
-        <button class="btn btn-sm btn-outline-primary float-right m-1"><i class="fas fa-pencil-alt"></i> Ubah</button>
+        <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-plus"></i> Tambah</button>
+        <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-pencil-alt"></i> Ubah</button>
     </div>
 </div>
 @endsection
@@ -19,13 +19,13 @@
     <div class="col-md-6 d-inline-block pl-3">
         <div class="card" style="min-height: 100%;">
             <div class="card-header">
-                <h6 class="d-block">Akun Neraca & Saldo</h6>
+                <h6 class="pt-1">Akun Neraca & Saldo</h6>
             </div>
             <div class="card-body">
                 <div class="dataTables_wrapper">
                     <!-- Table Akun -->
                     <table id="table-neraca" class="table table-striped table-bordered table-condensed table-sm">
-                        <thead>
+                        <thead class="thead-light">
                             <tr>
                                 <th>Akun</th>
                                 <th>Saldo</th>

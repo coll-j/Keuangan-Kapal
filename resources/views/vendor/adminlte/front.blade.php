@@ -15,7 +15,6 @@
             html, body {
                 background-color: #fff;
                 color: #636b6f;
-                font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
@@ -72,7 +71,7 @@
     </head>
     <body class="bg-light">
         <div class="top-left">
-            <i class="fa fa-ship h2"></i>
+            <img src="/ship.svg" style="width: 50px; height: 50px;"></img>
         </div>
        @yield('content')
     </body>

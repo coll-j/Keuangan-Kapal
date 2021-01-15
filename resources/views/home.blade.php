@@ -3,11 +3,11 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-<h1>Dashboard</h1>
+<h5 class="pl-3"><b>DASHBOARD</b></h5>
 @endsection
 
 @section('content')
-<p>Welcome to this beautiful admin panel.</p>
+<p class="pl-3">Welcome to this beautiful admin panel.</p>
 
 @endsection
 
