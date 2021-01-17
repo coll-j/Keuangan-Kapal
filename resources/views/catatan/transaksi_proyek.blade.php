@@ -18,11 +18,11 @@
             <input name="daterange" value="01/01/2018" type="text" style="width: 180px;" class="form-control text-center">
         </div>
         <div class="row">
-        <div class="col-sm">
-            <div class="row justify-content-start">
-                <button type="button" class="btn btn-primary mr-2">Edit</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>  
+            <div class="col-sm">
+                <div class="row justify-content-start">
+                    <button type="button" class="btn btn-primary mr-2"><i class="fas fa-pencil-alt"></i> Edit</button>
+                    <button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                </div>
             </div>
             <div class="col-sm">
                 <div class="row justify-content-end">
@@ -162,26 +162,26 @@
 
 @section('js')
 <script type="text/javascript">
-     $(document).ready(function() {
+    $(document).ready(function() {
         $('#table-transaksi-proyek').DataTable({
-            'paging'      : true,
+            'paging': true,
             'lengthChange': false,
-            'searching'   : false,
-            'ordering'    : true,
-            'info'        : false,
-            'autoWidth'   : false,
-            'scrollX'     : true,
+            'searching': false,
+            'ordering': true,
+            'info': false,
+            'autoWidth': false,
+            'scrollX': true,
         });
-    } );
-</script> 
+    });
+</script>
 <script>
-$(function() {
-  $('input[name="daterange"]').daterangepicker({
-    singleDatePicker: true,
-    showDropdowns: true,
-    minYear: 1901,
-    maxYear: parseInt(moment().format('YYYY'),10)
-  });
-});
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'), 10)
+        });
+    });
 </script>
 @endsection
