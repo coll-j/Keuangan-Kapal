@@ -8,7 +8,7 @@
         <h5 class="pl-3"><b>DAFTAR AKUN & RANGE</b></h5>
     </div>
     <div class="col-md-4">
-        <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-plus"></i> Tambah</button>
+        <button class="btn btn-sm btn-primary float-right m-1" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button>
         <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-pencil-alt"></i> Ubah</button>
     </div>
 </div>
@@ -301,6 +301,46 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Kategori</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                <option>Akun Neraca & Saldo</option>
+                <option>Akun Transaksi Kantor</option>
+                <option>Akun Transaksi Proyek</option>
+                <option>Pemasok</option>
+                <option>Proyek</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Nama</label>
+                <input type="text" id="exampleFormControlTextarea1">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea2">Saldo</label>
+                <input type="text" id="exampleFormControlTextarea2">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
 
