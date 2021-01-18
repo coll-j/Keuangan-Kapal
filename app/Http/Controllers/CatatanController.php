@@ -40,4 +40,9 @@ class CatatanController extends Controller
     public function pageHutangPiutang(){
         return view('catatan/hutang_piutang');
     }
+
+    public function pageGudang(){
+        return view('catatan/gudang');
+    }
+
 }

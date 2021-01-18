@@ -274,6 +274,12 @@ return [
             'logo' => 'HP',
             'icon_color' => 'secondary'
         ],
+        [
+            'text' => 'Gudang',
+            'url'  => 'gudang',
+            'logo' => 'G',
+            'icon_color' => 'secondary'
+        ],
 
         ['header' => 'laporan'],
         [
