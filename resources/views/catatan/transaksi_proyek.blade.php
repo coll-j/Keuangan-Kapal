@@ -48,12 +48,12 @@
 
     <div class="card-body " style="max-width: 1200px;">
         <div class="dataTables_wrapper">
-            <table id="table-transaksi-proyek" class="display table table-stripped table-hover table-condensed table-sm dataTable">
+            <table id="table-transaksi-proyek" class="display table table-hover table-condensed table-sm dataTable">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
                         <th scope="col">Tanggal</th>
-                        <th width="20%">Transaksi</th>
+                        <th scope="col">Transaksi</th>
                         <th scope="col">Kode Pemasok</th>
                         <th scope="col">Pemasok</th>
                         <th scope="col">Kode Proyek</th>
@@ -246,7 +246,12 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
+        $('table').SetEditable();
+
         $('#table-transaksi-proyek').DataTable({
+            'columnDefs': [
+                { "width": "50%", "targets": 0 }
+            ],
             'paging': true,
             'lengthChange': false,
             'searching': false,
@@ -267,4 +272,6 @@
         });
     });
 </script>
+<script src="{{ asset('js/bootstable-transaksi-proyek.js') }}"></script>
+
 @endsection
