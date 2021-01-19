@@ -322,7 +322,7 @@
         <form>
             <div class="form-group">
                 <label for="nama-akun">Tanggal</label>
-                <input type="text" id="nama-akun" class="form-control">
+                <input name="daterange" value="01/01/2018" type="text" class="form-control">
             </div>
             <div class="form-group">
                 <label for="jenis-akun">Jenis Transaksi</label>
@@ -353,7 +353,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary">Save</button>
       </div>
     </div>
   </div>

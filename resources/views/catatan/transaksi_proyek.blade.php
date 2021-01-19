@@ -20,8 +20,7 @@
         <div class="row">
             <div class="col-sm">
                 <div class="row justify-content-start">
-                    <button type="button" class="btn btn-primary mr-2"><i class="fas fa-pencil-alt"></i> Edit</button>
-                    <button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <a href="#"><button type="button" class="btn btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
                 </div>
             </div>
             <div class="col-sm">
@@ -152,6 +151,90 @@
     <div class="card-footer">
     </div>
     <!-- /.card-footer -->
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="nama-akun">Tanggal</label>
+                <input name="daterange" value="01/01/2018" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="jenis-akun">Jenis Akun</label>
+                <select class="form-control" id="jenis-akun">
+                <option>Biaya Administrasi dan Umum</option>
+                <option>Biaya Lain-lain (tak terduga)</option>
+                <option>Biaya Listrik</option>
+                <option>Biaya Material</option>
+                <option>Biaya Pengawas</option>
+                <option>Biaya Pemasaran</option>
+                <option>Biaya Persiapan dan Perijinan</option>
+                <option>Biaya Sewa Alat</option>
+                <option>Biaya Telepon/Internet</option>
+                <option>Biaya Tenaga Kerja</option>
+                <option>Pembayaran Utang</option>
+                <option>Pendapatan Proyek</option>
+                <option>Penerimaan Piutang Proyek</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="saldo-akun">Pemasok</label>
+                <select class="form-control" id="kode-pemasok">
+                <option>PT. Kayu A</option>
+                <option>PT. Kayu</option>
+                <option>PT. C</option>
+                <option>CV. Udud</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="saldo-akun">Proyek</label>
+                <select class="form-control" id="kode-proyek">
+                <option>Pak Saikhu</option>
+                <option>Pak Muhtadin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="kas-bank">Jenis Transaksi</label>
+                <select class="form-control" id="kas-bank">
+                <option>Kas</option>
+                <option>Bank</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="nama-transaksi">Jumlah</label>
+                    <input type="text" id="jumlah-transaksi" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="nama-transaksi">Dibayar/Diterima</label>
+                    <input type="text" id="jumlah-transaksi-dibayar" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="kas-bank">Utang/Piutang</label>
+                <select class="form-control" id="utang-piutang">
+                <option>Utang</option>
+                <option>Piutang</option>
+                </select>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 @endsection
