@@ -9,16 +9,16 @@ Bootstable
 var params = null;  		//Parameters
 var colsEdi =null;
 var newColHtml = '<div class="btn-group pull-right">'+
-'<button id="bEdit" type="button" class="btn btn-sm btn-link p-0 px-1 ml-2" onclick="rowEdit(this);">' +
+'<button id="bEdit" type="button" class="btn btn-sm btn-default pb-0" onclick="rowEdit(this);">' +
 '<i class="fas fa-pencil-alt" > </i>'+
 '</button>'+
-'<button id="bElim" type="button" class="btn btn-sm btn-link p-0 px-1 ml-2" onclick="rowElim(this);">' +
+'<button id="bElim" type="button" class="btn btn-sm btn-default pb-0" onclick="rowElim(this);">' +
 '<i class="fas fa-trash-alt" > </i>'+
 '</button>'+
-'<button id="bAcep" type="button" class="btn btn-sm btn-link p-0 px-1 ml-2" style="display:none;" onclick="rowAcep(this);">' + 
+'<button id="bAcep" type="button" class="btn btn-sm btn-default pb-0" style="display:none;" onclick="rowAcep(this);">' + 
 '<i class="fas fa-check" > </i>'+
 '</button>'+
-'<button id="bCanc" type="button" class="btn btn-sm btn-link p-0 px-1 ml-2" style="display:none;" onclick="rowCancel(this);">' + 
+'<button id="bCanc" type="button" class="btn btn-sm btn-default pb-0" style="display:none;" onclick="rowCancel(this);">' + 
 '<i class="fas fa-times" > </i>'+
 '</button>'+
   '</div>';
@@ -103,7 +103,8 @@ function rowAcep(but) {
   if (!ModoEdicion($row)) return;  //Ya está en edición
   //Está en edición. Hay que finalizar la edición
   IterarCamposEdit($cols, function($td) {  //itera por la columnas
-    var cont = $td.find('input').val(); //lee contenido del input
+    var cont = $td.find('option:selected').text(); //lee contenido del input
+    console.log(cont);
     $td.html(cont);  //fija contenido y elimina controles
   });
   FijModoNormal(but);
@@ -129,7 +130,54 @@ function rowEdit(but) {  //Inicia la edición de una fila
   IterarCamposEdit($cols, function($td) {  //itera por la columnas
       var cont = $td.html(); //lee contenido
       var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
-      var input = '<input class="form-control input-sm"  value="' + cont + '">';
+      switch(cont)
+      {
+        case "CEO":
+          var input = '<select> \
+          <option>Pemilik Perusahaan</option> \
+          <option selected>CEO</option> \
+          <option>Manajer Proyek</option> \
+          <option>Admin</option> \
+          <option>Akuntan</option> \
+          </select>';
+          break;
+        case "Manajer Proyek":
+          var input = '<select> \
+          <option>Pemilik Perusahaan</option> \
+          <option>CEO</option> \
+          <option selected>Manajer Proyek</option> \
+          <option>Admin</option> \
+          <option>Akuntan</option> \
+          </select>';
+          break;
+        case "Admin":
+          var input = '<select> \
+          <option>Pemilik Perusahaan</option> \
+          <option>CEO</option> \
+          <option>Manajer Proyek</option> \
+          <option selected>Admin</option> \
+          <option>Akuntan</option> \
+          </select>';
+          break;
+        case "Akuntan":
+          var input = '<select> \
+          <option>Pemilik Perusahaan</option> \
+          <option>CEO</option> \
+          <option>Manajer Proyek</option> \
+          <option>Admin</option> \
+          <option selected>Akuntan</option> \
+          </select>';
+          break;
+        default:
+          var input = '<select> \
+          <option>Pemilik Perusahaan</option> \
+          <option>CEO</option> \
+          <option>Manajer Proyek</option> \
+          <option>Admin</option> \
+          <option>Akuntan</option> \
+          </select>';
+          break;
+      }
       $td.html(div + input);  //fija contenido
   });
   FijModoEdit(but);

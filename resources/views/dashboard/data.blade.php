@@ -9,7 +9,7 @@
     </div>
     <div class="col-md-4">
         <button class="btn btn-sm btn-primary float-right m-1" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button>
-        <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-pencil-alt"></i> Ubah</button>
+        <!-- <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-pencil-alt"></i> Ubah</button> -->
     </div>
 </div>
 @endsection
@@ -332,7 +332,7 @@
                 </div>
                 <div class="form-group">
                     <label for="saldo-akun">Saldo (Rp)</label>
-                    <input type="text" id="saldo-akun" class="form-control">
+                    <input autocomplete="off" type="text" id="saldo-akun" class="form-control">
                 </div>
             </div>
             <div id="form-transaksi" style="display: none;">
@@ -380,22 +380,16 @@
 @endsection
 
 @section('css')
-<!-- <link rel="stylesheet" href="/css/admin_custom.css"> -->
-<style>
-    .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-    background-color: #fff;
-    }
 
-    .table-keuangan table tr td:last-child {
-    text-align: right;
-    }
-</style>
 @endsection
 
 @section('js')
+<script src="https://unpkg.com/autonumeric"></script>
 <script>
     $(document).ready(function() {
-        table1 = $('#table-neraca').DataTable({
+        $('table').SetEditable();
+        new AutoNumeric('#saldo-akun');
+        $('#table-neraca').DataTable({
             paging      : false,
             searching   : false,
             scrollY : 300,
@@ -434,6 +428,7 @@
             scrollY : 100,
             scrollCollapse    : true,
             info        : false,
+            sorting: false,
         });
 
         $('#jenis-akun').change(function(){
@@ -476,5 +471,6 @@
         });
     } );
 </script>
+<script src="{{ asset('js/bootstable.js') }}"></script>
 
 @endsection

@@ -89,31 +89,31 @@
                                 </tr>
                                 <tr>
                                     <td>Dr. Ahmad Saikhu</td>
-                                    <td>Project Manager</td>
+                                    <td>Manajer Proyek</td>
                                 </tr>
                                 <tr>
                                     <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Direktur</td>
+                                    <td>Manajer Proyek</td>
                                 </tr>
                                 <tr>
                                     <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Direktur</td>
+                                    <td>Admin</td>
                                 </tr>
                                 <tr>
                                     <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Direktur</td>
+                                    <td>Akuntan</td>
                                 </tr>
                                 <tr>
                                     <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Direktur</td>
+                                    <td>Admin</td>
                                 </tr>
                                 <tr>
                                     <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Direktur</td>
+                                    <td>Akuntan</td>
                                 </tr>
                                 <tr>
                                     <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Direktur</td>
+                                    <td>Akuntan</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -178,7 +178,9 @@ h5 {
 @section('js')
 <script>
     $(document).ready(function() {
-        $('table').SetEditable();
+        $('table').SetEditable({
+            columnsEd: "1"
+        });
         var table = $('#table-member').DataTable({
             paging      : false,
             searching   : true,
@@ -221,6 +223,6 @@ h5 {
         });
     } );
 </script>
-<script src="{{ asset('js/bootstable.js') }}"></script>
+<script src="{{ asset('js/bootstable-perusahaan.js') }}"></script>
 
 @endsection

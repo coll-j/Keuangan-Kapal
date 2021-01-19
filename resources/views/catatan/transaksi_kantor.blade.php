@@ -20,8 +20,8 @@
         <div class="row">
             <div class="col-sm">
                 <div class="row justify-content-start">
-                    <a href="#"><button type="button" class="btn btn-primary mr-2 "><i class="fas fa-pencil-alt"></i> Edit</button></a>
-                    <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a>
+                    <a href="#"><button type="button" class="btn btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
+                    <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
                 </div>
             </div>
             <div class="col-sm">
@@ -308,6 +308,56 @@
     <!-- /.card-footer -->
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="nama-akun">Tanggal</label>
+                <input type="text" id="nama-akun" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="jenis-akun">Jenis Transaksi</label>
+                <select class="form-control" id="jenis-akun">
+                <option>Biaya Gaji Karyawan</option>
+                <option>Biaya Administrasi Umum</option>
+                <option>Biaya Bunga Pinjaman</option>
+                <option>Tambahan Dana dari Bank</option>
+                <option>Tambahan Dana ke Kas</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="saldo-akun">Keterangan</label>
+                <input autocomplete="off" type="text" id="saldo-akun" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="kas-bank">Jenis Transaksi</label>
+                <select class="form-control" id="kas-bank">
+                <option>Kas</option>
+                <option>Bank</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nama-transaksi">Jumlah</label>
+                <input type="text" id="nama-transaksi" class="form-control">
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('css')
@@ -317,6 +367,7 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
+        $('table').SetEditable();
         $('#table-transaksi-proyek').DataTable({
             paging: true,
             lengthChange: false,
@@ -342,4 +393,6 @@
 
     });
 </script>
+<script src="{{ asset('js/bootstable.js') }}"></script>
+
 @endsection
