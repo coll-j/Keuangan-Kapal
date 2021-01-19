@@ -99,19 +99,19 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="width: 20%;">A</td>
-                                <td style="width: 80%">Pemasok Material Kayu</td>
+                                <td style="width: 40%;">PT. Kayu A</td>
+                                <td style="width: 60%">Pemasok Material Kayu</td>
                             </tr>
                             <tr>
-                                <td>B</td>
+                                <td>PT. Kayu</td>
                                 <td>Pemasok Material Besi</td>
                             </tr>
                             <tr>
-                                <td>C</td>
+                                <td>PT. C</td>
                                 <td>Pemasok Perlengkapan Lainnya</td>
                             </tr>
                             <tr>
-                                <td>C</td>
+                                <td>CV. Udud</td>
                                 <td>Pemasok Perlengkapan Lainnya</td>
                             </tr>
                             <tr>
@@ -146,15 +146,15 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="width: 20%;">1</td>
-                                <td style="width: 80%">Kapal 1</td>
+                                <td style="width: 40%;">Pak Saikhu</td>
+                                <td style="width: 60%">Kapal 1</td>
                             </tr>
                             <tr>
-                                <td>2</td>
+                                <td>Pak Muhtadin</td>
                                 <td>Kapal 2</td>
                             </tr>
                             <tr>
-                                <td>3</td>
+                                <td>Pak Saikhu</td>
                                 <td>Kapal 3</td>
                             </tr>
                         </tbody>
@@ -316,8 +316,8 @@
       <div class="modal-body">
         <form>
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Kategori</label>
-                <select class="form-control" id="exampleFormControlSelect1">
+                <label for="jenis-akun">Kategori</label>
+                <select class="form-control" id="jenis-akun">
                 <option>Akun Neraca & Saldo</option>
                 <option>Akun Transaksi Kantor</option>
                 <option>Akun Transaksi Proyek</option>
@@ -325,13 +325,48 @@
                 <option>Proyek</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Nama</label>
-                <input type="text" id="exampleFormControlTextarea1">
+            <div id="form-neraca">
+                <div class="form-group">
+                    <label for="nama-akun">Nama Akun</label>
+                    <input type="text" id="nama-akun" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="saldo-akun">Saldo (Rp)</label>
+                    <input type="text" id="saldo-akun" class="form-control">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea2">Saldo</label>
-                <input type="text" id="exampleFormControlTextarea2">
+            <div id="form-transaksi" style="display: none;">
+                <div class="form-group">
+                    <label for="nama-transaksi">Nama Transaksi</label>
+                    <input type="text" id="nama-transaksi" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="jenis-transaksi">Jenis Transaksi</label>
+                    <select class="form-control" id="jenis-transaksi">
+                    <option>Keluar</option>
+                    <option>Masuk</option>
+                    </select>
+                </div>
+            </div>
+            <div id="form-pemasok" style="display: none;">
+                <div class="form-group">
+                    <label for="nama-perusahaan">Nama Perusahaan</label>
+                    <input type="text" id="nama-perusahaan" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="nama-barang">Barang yang dipasok</label>
+                    <input type="text" id="nama-barang" class="form-control">
+                </div>
+            </div>
+            <div id="form-proyek" style="display: none;">
+                <div class="form-group">
+                    <label for="nama-pemilik-proyek">Pemilik Proyek</label>
+                    <input type="text" id="nama-pemilik-proyek" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="nama-proyek">Nama Proyek</label>
+                    <input type="text" id="nama-proyek" class="form-control">
+                </div>
             </div>
         </form>
       </div>
@@ -390,6 +425,7 @@
             scrollY : 100,
             scrollCollapse    : true,
             info        : false,
+            sorting: false,
         });
 
         $('#table-proyekan').DataTable({
@@ -400,13 +436,45 @@
             info        : false,
         });
 
-    } );
+        $('#jenis-akun').change(function(){
+            var selected = $("#jenis-akun").find("option:selected").text();
+            // console.log();
+            switch(selected){
+                case "Akun Transaksi Kantor":
+                case "Akun Transaksi Proyek":
+                    $('#form-neraca').hide();
+                    $('#form-transaksi').show();
+                    $('#form-pemasok').hide();
+                    $('#form-proyek').hide();
+                    break;
+                case "Pemasok": 
+                    $('#form-neraca').hide();
+                    $('#form-transaksi').hide();
+                    $('#form-pemasok').show();
+                    $('#form-proyek').hide();
+                    break;
+                case "Proyek":
+                    $('#form-neraca').hide();
+                    $('#form-transaksi').hide();
+                    $('#form-pemasok').hide();
+                    $('#form-proyek').show();
+                    break;
+                default:
+                    $('#form-neraca').show();
+                    $('#form-transaksi').hide();
+                    $('#form-pemasok').hide();
+                    $('#form-proyek').hide();
+                    break;
+            }
+        });
+
         $(document).on('shown.lte.pushmenu collapsed.lte.pushmenu', function() {
             console.log("hey gamtenk");
             setTimeout(function(){
                 $.fn.dataTable.tables( {api: true} ).columns.adjust();
             }, 300);
         });
+    } );
 </script>
 
 @endsection
