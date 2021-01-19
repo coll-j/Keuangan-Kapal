@@ -48,31 +48,29 @@
 
     <div class="card-body " style="max-width: 1200px;">
         <div class="dataTables_wrapper">
-            <table id="table-transaksi-proyek" class="display table table-hover table-condensed table-sm dataTable">
+            <table id="table-transaksi-proyek" class="display table table-hover table-condensed table-sm dataTable" style="min-width: 2000px;">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Tanggal</th>
-                        <th scope="col">Transaksi</th>
-                        <th scope="col">Kode Pemasok</th>
-                        <th scope="col">Pemasok</th>
-                        <th scope="col">Kode Proyek</th>
-                        <th scope="col">Proyek</th>
-                        <th scope="col">Kas/Bank</th>
-                        <th scope="col">Jenis</th>
-                        <th scope="col">Jumlah</th>
-                        <th scope="col">Dibayar/Diterima</th>
-                        <th scope="col">Sisa</th>
-                        <th scope="col">Utang/Piutang</th>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Transaksi</th>
+                        <th>Pemasok</th>
+                        <th>Kode Proyek</th>
+                        <th>Proyek</th>
+                        <th>Kas/Bank</th>
+                        <th>Jenis</th>
+                        <th>Jumlah</th>
+                        <th>Dibayar/Diterima</th>
+                        <th>Sisa</th>
+                        <th>Utang/Piutang</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <th scope="row">1</th>
                         <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>A</td>
-                        <td>Pemasok</td>
+                        <td>Biaya Material</td>
+                        <td>PT. Pemasok</td>
                         <td>1</td>
                         <td>Pak David</td>
                         <td>Bank</td>
@@ -86,8 +84,7 @@
                         <th scope="row">2</th>
                         <td>1/2/2019</td>
                         <td>Biaya Persiapan dan Perijinan</td>
-                        <td>A</td>
-                        <td>Pemasok</td>
+                        <td>PT. Pemasok</td>
                         <td>1</td>
                         <td>Pak David</td>
                         <td>Bank</td>
@@ -101,7 +98,6 @@
                         <th scope="row">3</th>
                         <td>1/2/2019</td>
                         <td>Biaya Persiapan dan Perijinan</td>
-                        <td>A</td>
                         <td>Pemasok</td>
                         <td>1</td>
                         <td>Pak David</td>
@@ -116,7 +112,6 @@
                         <th scope="row">4</th>
                         <td>1/2/2019</td>
                         <td>Biaya Persiapan dan Perijinan</td>
-                        <td>A</td>
                         <td>Pemasok</td>
                         <td>1</td>
                         <td>Pak David</td>
@@ -131,7 +126,6 @@
                         <th scope="row">5</th>
                         <td>1/2/2019</td>
                         <td>Biaya Persiapan dan Perijinan</td>
-                        <td>A</td>
                         <td>Pemasok</td>
                         <td>1</td>
                         <td>Pak David</td>
@@ -250,7 +244,7 @@
 
         $('#table-transaksi-proyek').DataTable({
             'columnDefs': [
-                { "width": "50%", "targets": 0 }
+                { "width": "300px", "targets": 3 }
             ],
             'paging': true,
             'lengthChange': false,
