@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TablePerusahaan extends Migration
+class CreatePemasoksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,10 @@ class TablePerusahaan extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('perusahaan', function (Blueprint $table) {
+        Schema::create('pemasoks', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_perusahaan');
-            $table->string('kode_perusahaan')->unique();
-            $table->text('alamat')->nullable();
-            $table->string('email')->nullable();
-            $table->string('website')->nullable();
-            $table->string('telp')->nullable();
+            $table->string('kode')->unique();
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ class TablePerusahaan extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('pemasoks');
     }
 }
