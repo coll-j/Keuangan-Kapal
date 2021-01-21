@@ -57,4 +57,8 @@ class User extends Authenticatable
     {
         return 'profile/username';
     }
+
+    public function perusahaan(){
+        return $this->belongsTo('\App\Models\Perusahaan', 'kode_perusahaan', 'kode_perusahaan');
+    }
 }

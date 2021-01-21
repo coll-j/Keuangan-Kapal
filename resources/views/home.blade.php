@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<p class="pl-3">Welcome to this beautiful admin panel.</p>
+<p class="pl-3">{{ Auth::user()->kode_perusahaan }}</p>
 
 @endsection
 

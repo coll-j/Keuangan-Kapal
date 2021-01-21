@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Perusahaan;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -22,7 +24,10 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function pageProfilPerusahaan(){
-        return view('dashboard/profil_perusahaan');
+        // $perusahaan = Perusahaan::with('user')->get();
+        $perusahaan = Perusahaan::with('user')->get()->where('kode_perusahaan', '=', Auth::user()->kode_perusahaan)->first();
+        // dd($perusahaan->user->first());
+        return view('dashboard/profil_perusahaan', compact('perusahaan'));
     }
 
     public function pageData(){

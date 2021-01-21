@@ -17,7 +17,8 @@ class TablePerusahaan extends Migration
         Schema::create('perusahaan', function (Blueprint $table) {
             $table->id();
             $table->string('nama_perusahaan');
-            $table->string('kode_perusahaan')->unique();
+            $table->unsignedBigInteger('pemilik')->references('id')->on('users');
+            $table->string('kode_perusahaan', 10)->unique();
             $table->text('alamat')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
@@ -34,5 +35,6 @@ class TablePerusahaan extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('perusahaan');
     }
 }
