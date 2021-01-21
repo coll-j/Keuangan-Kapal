@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TablePerusahaan extends Migration
+class CreatePerusahaansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,7 @@ class TablePerusahaan extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('perusahaan', function (Blueprint $table) {
+        Schema::create('perusahaans', function (Blueprint $table) {
             $table->id();
             $table->string('nama_perusahaan');
             $table->unsignedBigInteger('pemilik')->references('id')->on('users');
@@ -34,7 +33,6 @@ class TablePerusahaan extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('perusahaan');
+        Schema::dropIfExists('perusahaans');
     }
 }
