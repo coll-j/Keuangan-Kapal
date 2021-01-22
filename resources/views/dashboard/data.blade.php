@@ -32,50 +32,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($akun_neraca_saldos as $akun_neraca_saldo)
                             <tr>
-                                <td>Kas</td>
-                                <td>999.999</td>
+                                <td style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
+                                <td style="width: 30%;">{{ $akun_neraca_saldo['saldo'] }}</td>
                             </tr>
-                            <tr>
-                                <td>Bank</td>
-                                <td>999.999</td>
-                            </tr>
-                            <tr>
-                                <td>Piutang Usaha</td>
-                                <td>999.999</td>
-                            </tr>
-                            <tr>
-                                <td>Kendaraan</td>
-                                <td>99.999</td>
-                            </tr>
-                            <tr>
-                                <td>Peralatan Kantor</td>
-                                <td>999.999</td>
-                            </tr>
-                            <tr>
-                                <td>Akumulasi Penyusutan Aset</td>
-                                <td>9.999</td>
-                            </tr>
-                            <tr>
-                                <td>Utang Usaha</td>
-                                <td>999.999</td>
-                            </tr>
-                            <tr>
-                                <td>Utang Bank</td>
-                                <td>999.999</td>
-                            </tr>
-                            <tr>
-                                <td>Modal</td>
-                                <td>999.999</td>
-                            </tr>
-                            <tr>
-                                <td>Saldo Laba</td>
-                                <td>999.999</td>
-                            </tr>
-                            <tr>
-                                <td>Laba (Rugi) Berjalan</td>
-                                <td>999.999</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <!-- END Table akun -->
@@ -98,34 +60,12 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($pemasoks as $pemasok)
                             <tr>
-                                <td style="width: 40%;">PT. Kayu A</td>
-                                <td style="width: 60%">Pemasok Material Kayu</td>
+                                <td style="width: 30%;">{{ $pemasok['kode'] }}</td>
+                                <td style="width: 70%;">{{ $pemasok['nama'] }}</td>
                             </tr>
-                            <tr>
-                                <td>PT. Kayu</td>
-                                <td>Pemasok Material Besi</td>
-                            </tr>
-                            <tr>
-                                <td>PT. C</td>
-                                <td>Pemasok Perlengkapan Lainnya</td>
-                            </tr>
-                            <tr>
-                                <td>CV. Udud</td>
-                                <td>Pemasok Perlengkapan Lainnya</td>
-                            </tr>
-                            <tr>
-                                <td>C</td>
-                                <td>Pemasok Perlengkapan Lainnya</td>
-                            </tr>
-                            <tr>
-                                <td>C</td>
-                                <td>Pemasok Perlengkapan Lainnya</td>
-                            </tr>
-                            <tr>
-                                <td>C</td>
-                                <td>Pemasok Perlengkapan Lainnya</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -140,23 +80,17 @@
                     <table id="table-proyekan" class="table table-striped table-bordered table-condensed table-sm">
                         <thead style="display: none;">
                             <tr>
-                                <th>Akun</th>
-                                <th>Saldo</th>
+                                <th >Akun</th>
+                                <th >Saldo</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($proyeks as $proyek)
                             <tr>
-                                <td style="width: 40%;">Pak Saikhu</td>
-                                <td style="width: 60%">Kapal 1</td>
+                                <td style="width: 30%;">{{ $proyek['kode'] }}</td>
+                                <td style="width: 70%;">{{ $proyek['nama'] }}</td>
                             </tr>
-                            <tr>
-                                <td>Pak Muhtadin</td>
-                                <td>Kapal 2</td>
-                            </tr>
-                            <tr>
-                                <td>Pak Saikhu</td>
-                                <td>Kapal 3</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -179,54 +113,15 @@
                             <th style="width: 30%;">Ket.</th>
                         </thead>
                         <tbody>
+                            <!-- @if($akun_transaksi_kantors->isEmpty())
+                                <tr><td colspan="2" class="bg-light">Data masih kosong.</td></tr>
+                            @endif -->
+                            @foreach($akun_transaksi_kantors as $akun_transaksi_kantor)
                             <tr>
-                                <td>Biaya Administrasi Umum</td>
-                                <td>Keluar</td>
+                                <td>{{ $akun_transaksi_kantor['nama'] }}</td>
+                                <td>{{ $akun_transaksi_kantor['jenis'] }}</td>
                             </tr>
-                            <tr>
-                                <td>Biaya Bunga Pinjaman</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Gaji Karyawan</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Listrik</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Penyusutan Aset</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Rumah Tangga Kantor</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Sewa Kantor</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Telepon/Internet</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Pembayaran Utang Bank</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Perawatan/Pemeliharaan Aset</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Tambahan Dana Dari Bank</td>
-                                <td>Masuk</td>
-                            </tr>
-                            <tr>
-                                <td>Tambahan Dana Ke Kas</td>
-                                <td>Masuk</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <!-- END Table akun -->
@@ -247,54 +142,12 @@
                             <th style="width: 30%;">Ket.</th>
                         </thead>
                         <tbody>
+                            @foreach($akun_transaksi_proyeks as $akun_transaksi_proyek)
                             <tr>
-                                <td>Biaya Administrasi dan Umum</td>
-                                <td>Keluar</td>
+                                <td>{{ $akun_transaksi_proyek['nama'] }}</td>
+                                <td>{{ $akun_transaksi_proyek['jenis'] }}</td>
                             </tr>
-                            <tr>
-                                <td>Biaya lain-lain (tak terduga)</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Listrik</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Material</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Pengawas</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Persiapan dan Perizinan</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Sewa Alat</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Tenaga Kerja</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Pembayaran Utang</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Biaya Sewa Lahan</td>
-                                <td>Keluar</td>
-                            </tr>
-                            <tr>
-                                <td>Pendapatan Proyek</td>
-                                <td>Masuk</td>
-                            </tr>
-                            <tr>
-                                <td>Penerimaan Piutang Proyek</td>
-                                <td>Masuk</td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
