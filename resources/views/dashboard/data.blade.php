@@ -167,7 +167,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="form-akun-all" method="POST" action="{{ route('form_neraca') }}">
+            @csrf
             <div class="form-group">
                 <label for="jenis-akun">Kategori</label>
                 <select class="form-control" id="jenis-akun">
@@ -181,51 +182,48 @@
             <div id="form-neraca">
                 <div class="form-group">
                     <label for="nama-akun">Nama Akun</label>
-                    <input type="text" id="nama-akun" class="form-control">
+                    <input name="n_nama" type="text" id="nama-akun" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="saldo-akun">Saldo (Rp)</label>
-                    <input autocomplete="off" type="text" id="saldo-akun" class="form-control">
+                    <input autocomplete="off" type="text" name="n_saldo" id="saldo-akun" class="form-control">
                 </div>
             </div>
             <div id="form-transaksi" style="display: none;">
                 <div class="form-group">
                     <label for="nama-transaksi">Nama Transaksi</label>
-                    <input type="text" id="nama-transaksi" class="form-control">
+                    <input name="at_nama" type="text" id="nama-transaksi" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="jenis-transaksi">Jenis Transaksi</label>
-                    <select class="form-control" id="jenis-transaksi">
-                    <option>Keluar</option>
-                    <option>Masuk</option>
-                    </select>
+                    <input name="at_jenis" type="text" id="nama-transaksi" class="form-control">
                 </div>
             </div>
             <div id="form-pemasok" style="display: none;">
                 <div class="form-group">
                     <label for="nama-perusahaan">Nama Perusahaan</label>
-                    <input type="text" id="nama-perusahaan" class="form-control">
+                    <input name="pe_kode" type="text" id="nama-perusahaan" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="nama-barang">Barang yang dipasok</label>
-                    <input type="text" id="nama-barang" class="form-control">
+                    <input name="pe_nama" type="text" id="nama-barang" class="form-control">
                 </div>
             </div>
             <div id="form-proyek" style="display: none;">
                 <div class="form-group">
                     <label for="nama-pemilik-proyek">Pemilik Proyek</label>
-                    <input type="text" id="nama-pemilik-proyek" class="form-control">
+                    <input name="pr_kode" type="text" id="nama-pemilik-proyek" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="nama-proyek">Nama Proyek</label>
-                    <input type="text" id="nama-proyek" class="form-control">
+                    <input name="pr_nama" type="text" id="nama-proyek" class="form-control">
                 </div>
             </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" form="form-akun-all" class="btn btn-primary">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
@@ -289,29 +287,39 @@
             // console.log();
             switch(selected){
                 case "Akun Transaksi Kantor":
+                    $('#form-neraca').hide();
+                    $('#form-transaksi').show();
+                    $('#form-pemasok').hide();
+                    $('#form-proyek').hide();
+                    $('#form-akun-all').prop('action', "{{ route('form_transaksi_kantor') }}");
+                    break;
                 case "Akun Transaksi Proyek":
                     $('#form-neraca').hide();
                     $('#form-transaksi').show();
                     $('#form-pemasok').hide();
                     $('#form-proyek').hide();
+                    $('#form-akun-all').prop('action', "{{ route('form_transaksi_proyek') }}");
                     break;
                 case "Pemasok": 
                     $('#form-neraca').hide();
                     $('#form-transaksi').hide();
                     $('#form-pemasok').show();
                     $('#form-proyek').hide();
+                    $('#form-akun-all').prop('action', "{{ route('form_pemasok') }}");
                     break;
                 case "Proyek":
                     $('#form-neraca').hide();
                     $('#form-transaksi').hide();
                     $('#form-pemasok').hide();
                     $('#form-proyek').show();
+                    $('#form-akun-all').prop('action', "{{ route('form_proyek') }}");
                     break;
                 default:
                     $('#form-neraca').show();
                     $('#form-transaksi').hide();
                     $('#form-pemasok').hide();
                     $('#form-proyek').hide();
+                    $('#form-akun-all').prop('action', "{{ route('form_neraca') }}");
                     break;
             }
         });
