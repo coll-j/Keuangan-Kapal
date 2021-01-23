@@ -12,8 +12,8 @@ class Perusahaan extends Model
 
     protected $fillable = [
         'nama_perusahaan',
+        'id_perusahaan',
         'pemilik',
-        'kode_perusahaan',
         'alamat',
         'email',
         'website',
@@ -21,10 +21,10 @@ class Perusahaan extends Model
     ];
 
     protected $hidden = [
-        'kode_perusahaan',
+        'id_perusahaan',
     ];
 
     public function user(){
-        return $this->hasMany('\App\Models\User', 'kode_perusahaan', 'kode_perusahaan');
+        return $this->hasMany('\App\Models\User', 'id_perusahaan');
     }
 }

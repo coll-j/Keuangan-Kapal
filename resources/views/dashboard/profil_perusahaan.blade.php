@@ -8,25 +8,18 @@
 
 @section('content')
 <div class="container h-100">
-    @if(!empty(Auth::user()->kode_perusahaan) && !(is_null($perusahaan)))
+    @if(!empty(Auth::user()->id_perusahaan) && !(is_null($perusahaan)))
     <div id="detail-perusahaan" class="row" >
         <div class="col-md-5">
             <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
-                    <h1 class="text-center">{{ $perusahaan->nama_perusahaan }}</h1>
-                    <p class="text-muted text-center" style="font-size: 12px;">(Id: {{ $perusahaan->kode_perusahaan }})</p>
+                    <h1 class="text-center pb-3">{{ $perusahaan->nama_perusahaan }}</h1>
 
                     <ul class="list-group list-group-unbordered mb-3">
                         <li class="list-group-item">
                             <div class="row">
                                 <b class="col-md-3">Alamat</b> 
                                 <a id="alamat" class="col">{{ $perusahaan->alamat }}</a>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <b class="col-md-3">Pemilik</b> 
-                                <a id="pemilik" class="col">{{ $perusahaan->user->first()->name }}</a>
                             </div>
                         </li>
                         <li class="list-group-item">
@@ -68,7 +61,6 @@
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Lihat</a></li>
                         <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Undang</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#request" data-toggle="tab">Permintaan</a></li>
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
@@ -81,75 +73,60 @@
                                 <th style="width: 40%">Jabatan</th>
                             </thead>
                             <tbody>
+                                @foreach($perusahaan->user as $anggota)
                                 <tr>
-                                    <td>Dr. Angka</td>
-                                    <td>Pemilik Perusahaan</td>
+                                    <td>{{ $anggota->name }}</td>
+                                    @switch($anggota->role)
+                                        @case(1)
+                                            <td>Administrator</td>
+                                            @break
+                                        @case(2)
+                                            <td>Akuntan</td>
+                                            @break
+                                        @case(3)
+                                            <td>Pemilik</td>
+                                            @break
+                                        @case(4)
+                                            <td>Manajer Proyek</td>
+                                            @break
+                                        @default
+                                            <td>Super Admin</td>
+                                            @break
+                                    @endswitch
                                 </tr>
-                                <tr>
-                                    <td>Prof. Mochamad Ashari</td>
-                                    <td>CEO</td>
-                                </tr>
-                                <tr>
-                                    <td>Dr. Ahmad Saikhu</td>
-                                    <td>Manajer Proyek</td>
-                                </tr>
-                                <tr>
-                                    <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Manajer Proyek</td>
-                                </tr>
-                                <tr>
-                                    <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Admin</td>
-                                </tr>
-                                <tr>
-                                    <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Akuntan</td>
-                                </tr>
-                                <tr>
-                                    <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Admin</td>
-                                </tr>
-                                <tr>
-                                    <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Akuntan</td>
-                                </tr>
-                                <tr>
-                                    <td>Dr. Eng. Chastine Fatichah</td>
-                                    <td>Akuntan</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                     <!-- /.tab-pane -->
 
-                    <div class="tab-pane" id="request">
-                        <!-- <button class="btn btn-sm btn-primary float-left ml-1"><i class="fas fa-pencil-alt"></i></button> -->
-                        <h5>Tab under construction...</h5>
-                    </div>
-                    <!-- /.tab-pane -->
-
                     <div class="tab-pane" id="settings">
-                        <form class="form-horizontal">
-                            <div class="form-group row">
-                                <label for="inputName" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" id="inputName" placeholder="Name">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="jabatan" class="col-sm-2 col-form-label">Jabatan</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" id="jabatan">
-                                        <option>Pemilik</option>
-                                        <option>Manajer Proyek</option>
-                                        <option>Administrator</option>
-                                        <option>Akuntan</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <form class="form-horizontal" method="POST" action="{{ route('invite_anggota') }}">
+                            @csrf
+                            <table id="table-undang" class="display table table-sm table-condensed">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <td>E-mail</td>
+                                        <td>Jabatan</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="email" class="form-control" name="add_email[]" placeholder="Masukkan e-mail untuk diundang"></td>
+                                        <td>
+                                            <select class="form-control" name="add_jabatan[]">
+                                                <option>Pemilik</option>
+                                                <option>Manajer Proyek</option>
+                                                <option>Administrator</option>
+                                                <option>Akuntan</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <div class="offset-sm-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
+                                <button type="submit" class="btn btn-sm btn-success float-right">Submit</button>
+                                <button id="add-anggota" type="button" class="btn btn-sm btn-outline-success float-right mx-1"><i class="fas fa-plus"></i></button>
                             </div>
                         </form>
                     </div>
@@ -167,9 +144,7 @@
     @else
     <div id="no-perusahaan" class="row">
         <div class="col text-center">
-                <h2 class="my-5">Anda belum tergabung perusahaan</h2>
-                <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modalJoin">Gabung Perusahaan</button>
-                <h5 class="my-3">atau</h5>
+                <h2 class="my-5">Anda belum tergabung perusahaan dan belum ada undangan</h2>
                 <button class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">Buat Perusahaan</button>
         </div>
     </div>
@@ -177,32 +152,7 @@
     <!-- /.row -->
 </div>
 
-@if(empty(Auth::user()->kode_perusahaan))
-<!-- Modal Create Company -->
-<div class="modal fade" id="modalJoin" tabindex="-1" role="dialog" aria-labelledby="modalJoinLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalJoinLabel">Gabung Perusahaan</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <form>
-            <div class="form-group">
-                <label for="kode-perusahaan">Masukkan Kode Perusahaan</label>
-                <input type="text" id="kode-perusahaan" class="form-control" placeholder="contoh: 3uyu90rw1r">
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-      </div>
-    </div>
-  </div>
-</div>
+@if(empty(Auth::user()->id_perusahaan))
 
 <!-- Modal Create Company -->
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-labelledby="modalCreateLabel" aria-hidden="true">
@@ -289,12 +239,11 @@ h5 {
             $(this).hide();
             $('#save-perusahaan').show();
             $('#alamat').html('<textarea rows="2" cols="30" style="resize: none;">' + temp_alamat + '</textarea>');
-            $('#pemilik').html('<input type="text" value="' + temp_pemilik + '">');
-            $('#email').html('<input type="text" value="' + temp_email + '">');
+            $('#email').html('<input type="email" size="30" value="' + temp_email + '">');
 
             $('#web').removeAttr("target href");
-            $('#web').html('<input type="text" value="' + temp_web + '">');
-            $('#telp').html('<input type="text" value="' + temp_telp + '">');
+            $('#web').html('<input type="text" size="30" value="' + temp_web + '">');
+            $('#telp').html('<input type="text" size="30" value="' + temp_telp + '">');
         });
 
         $('#save-perusahaan').click(function(){
@@ -310,6 +259,20 @@ h5 {
             $('#web').html( $($('#web').children("input")[0]).val());
             $('#telp').html( $($('#telp').children("input")[0]).val());
             
+        });
+
+        $('#add-anggota').click(function(){
+            $('#table-undang tr:last').after('<tr> \
+            <td><input type="email" class="form-control" name="add_email[]" placeholder="Masukkan e-mail untuk diundang"></td> \
+            <td> \
+                <select class="form-control" name="add_jabatan[]"> \
+                    <option>Pemilik</option> \
+                    <option>Manajer Proyek</option> \
+                    <option>Administrator</option> \
+                    <option>Akuntan</option> \
+                </select> \
+            </td> \
+        </tr>');
         });
     } );
 </script>
