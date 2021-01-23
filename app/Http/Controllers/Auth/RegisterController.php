@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Invitation;
 
 class RegisterController extends Controller
 {
@@ -68,7 +69,17 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 1,
         ]);
+    }
+
+    public function view($token = null){
+        // dd('test');
+        $email = null;
+        if(!(is_null($token)))
+        {
+            $email = Invitation::where('token', '=', $token)->firstOrFail()->email;
+        }
+        // dd($email);
+        return view('vendor.adminlte.auth.register', compact('email'));
     }
 }

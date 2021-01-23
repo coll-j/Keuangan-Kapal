@@ -137,7 +137,7 @@ function rowEdit(but) {  //Inicia la edición de una fila
           <option>Pemilik Perusahaan</option> \
           <option selected>CEO</option> \
           <option>Manajer Proyek</option> \
-          <option>Admin</option> \
+          <option>Administrator</option> \
           <option>Akuntan</option> \
           </select>';
           break;
@@ -146,16 +146,16 @@ function rowEdit(but) {  //Inicia la edición de una fila
           <option>Pemilik Perusahaan</option> \
           <option>CEO</option> \
           <option selected>Manajer Proyek</option> \
-          <option>Admin</option> \
+          <option>Administrator</option> \
           <option>Akuntan</option> \
           </select>';
           break;
-        case "Admin":
+        case "Administrator":
           var input = '<select> \
           <option>Pemilik Perusahaan</option> \
           <option>CEO</option> \
           <option>Manajer Proyek</option> \
-          <option selected>Admin</option> \
+          <option selected>Administrator</option> \
           <option>Akuntan</option> \
           </select>';
           break;
@@ -164,7 +164,7 @@ function rowEdit(but) {  //Inicia la edición de una fila
           <option>Pemilik Perusahaan</option> \
           <option>CEO</option> \
           <option>Manajer Proyek</option> \
-          <option>Admin</option> \
+          <option>Administrator</option> \
           <option selected>Akuntan</option> \
           </select>';
           break;
@@ -173,7 +173,7 @@ function rowEdit(but) {  //Inicia la edición de una fila
           <option>Pemilik Perusahaan</option> \
           <option>CEO</option> \
           <option>Manajer Proyek</option> \
-          <option>Admin</option> \
+          <option>Administrator</option> \
           <option>Akuntan</option> \
           </select>';
           break;
