@@ -8,10 +8,5 @@ class Gudang extends Model
 {
 
     protected $tabel = 'gudangs';
-    protected $fillable = [
-        'nama_barang',
-        'satuan',
-        'jumlah',
-        'harga_satuan',
-    ];
+    protected $guarded = [];
 }
