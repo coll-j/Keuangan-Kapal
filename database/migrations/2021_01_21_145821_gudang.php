@@ -13,7 +13,7 @@ class Gudang extends Migration
      */
     public function up()
     {
-        Schema::create('Gudang', function (Blueprint $table) {
+        Schema::create('gudangs', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('nama_barang');
             $table->string('satuan');
