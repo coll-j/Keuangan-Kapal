@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return view('front.welcome');
 });
@@ -20,7 +21,7 @@ Route::get('/', function () {
 //     return view('front.login');
 // })->name('login');
 
-Route::get('/register', function() {
+Route::get('/register', function () {
     return view('front.register');
 })->name('register');
 
@@ -41,7 +42,7 @@ Route::get('/laba_rugi_kantor', [App\Http\Controllers\LaporanController::class, 
 Route::get('/laba_rugi_proyek', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiProyek'])->name('laba_rugi_proyek');
 
 Route::post('create_perusahaan', [App\Http\Controllers\dashboard\PerusahaanController::class, 'insert'])->name('create_perusahaan');
-Route::post('create_gudang', [App\Http\Controllers\dashboard\GudangController::class, 'store'])->name('create_gudang');
+Route::post('create_gudang', [App\Http\Controllers\GudangController::class, 'create'])->name('create_gudang');
 
 Route::post('form_neraca', [App\Http\Controllers\AkunController::class, 'addAkunNeraca'])->name('form_neraca');
 Route::post('form_pemasok', [App\Http\Controllers\AkunController::class, 'addPemasok'])->name('form_pemasok');

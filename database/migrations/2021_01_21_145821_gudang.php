@@ -15,10 +15,12 @@ class Gudang extends Migration
     {
         Schema::create('gudangs', function (Blueprint $table) {
             $table->id()->autoIncrement();
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
             $table->string('nama_barang');
             $table->string('satuan');
             $table->integer('jumlah');
             $table->decimal('harga_satuan');
+            $table->timestamps();
         });
     }
 

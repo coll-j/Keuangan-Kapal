@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Gudang extends Model
 {
 
-    protected $tabel = 'gudang';
+    protected $tabel = 'gudangs';
     protected $fillable = [
         'nama_barang',
         'satuan',
