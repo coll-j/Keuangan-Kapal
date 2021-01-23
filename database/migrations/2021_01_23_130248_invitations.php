@@ -18,6 +18,8 @@ class Invitations extends Migration
             $table->id();
             $table->string('token')->unique();
             $table->string('email');
+            $table->integer('role');
+            $table->unsigneBigInteger('id_perusahaan');
             $table->timestamps();
         });
     }

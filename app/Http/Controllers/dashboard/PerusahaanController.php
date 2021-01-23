@@ -40,12 +40,36 @@ class PerusahaanController extends Controller
 
     public function invite (Request $request){
         // $email = 'zumazaki@gmail.com';
-        $token = Str::random(20);
-        Invitation::create([
-            'token' => $token,
-            'email' => 'boots.anak.monyet@gelandangan.com',
-        ]);
-        Mail::to('zumazaki@gmail.com')->send(new PerusahaanInvitation($token));
+        for ($i = 0; $i < count($request->add_email); $i++)
+        {
+            switch($request->add_jabatan[$i])
+            {
+                case 'Administrator':
+                    $role = 1;
+                    break;
+                case 'Akuntan':
+                    $role = 2;
+                    break;
+                case 'Pemilik':
+                    $role = 3;
+                    break;
+                case 'Manajer Proyek':
+                    $role = 4;
+                    break;
+                default:
+                    $role = 0;
+                    break;
+            }
+            $token = Str::random(20);
+            Invitation::create([
+                'token' => $token,
+                'email' => $request->add_email[$i],
+                'id_perusahaan' => Auth::user()->id_perusahaan,
+                'role' => $role,
+            ]);
+            Mail::to($request->add_email[$i])->send(new PerusahaanInvitation($token));
+
+        }
 
         return redirect()->route('profil_perusahaan');
     }
