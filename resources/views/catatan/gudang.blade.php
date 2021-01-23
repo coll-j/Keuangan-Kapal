@@ -52,7 +52,7 @@
     <!-- /.card-footer -->
 </div>
 
-<!-- Modal -->
+<!-- Modal create gudang-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -63,7 +63,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id = "create-form" method = "POST" action ="{{route ('create_gudang')}}">
+                {{ csrf_field() }}
                     <div class="form-group">
                         <label for="nama-akun">Nama Barang</label>
                         <input type="text" id="nama-akun" class="form-control">

@@ -41,3 +41,4 @@ Route::get('/laba_rugi_kantor', [App\Http\Controllers\LaporanController::class, 
 Route::get('/laba_rugi_proyek', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiProyek'])->name('laba_rugi_proyek');
 
 Route::post('create_perusahaan', [App\Http\Controllers\dashboard\PerusahaanController::class, 'insert'])->name('create_perusahaan');
+Route::post('create_gudang', [App\Http\Controllers\dashboard\GudangController::class, 'store'])->name('create_gudang');

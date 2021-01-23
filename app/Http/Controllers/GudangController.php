@@ -38,7 +38,15 @@ class GudangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gudang::create([
+            'nama_barang' => $request->nama_barang,
+            'satuan' => $request->satuan,
+            'jumlah'=> $request->jumlah,
+            'harga_satuan'=> $request->harga_satuan,
+        ]);
+
+        //alihkan ke halaman gudang
+        //return redirect('catatan/gudang');
     }
 
     /**
