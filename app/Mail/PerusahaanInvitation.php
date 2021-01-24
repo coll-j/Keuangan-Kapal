@@ -11,16 +11,18 @@ class PerusahaanInvitation extends Mailable
 {
     use Queueable, SerializesModels;
     private $token_;
+    private $nama;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token, $nama_perusahaan)
     {
         //
         $this->token_ = $token;
+        $this->nama = $nama_perusahaan;
     }
 
     /**
@@ -30,7 +32,7 @@ class PerusahaanInvitation extends Mailable
      */
     public function build()
     {
-        return $this->view('invitation')->subject('Undangan Bergabung Perusahaan PT.XYZ')
+        return $this->view('invitation')->subject('Undangan Bergabung Perusahaan '.$this->nama)
                     ->with(['token' => $this->token_]);
     }
 }

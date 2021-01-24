@@ -60,6 +60,8 @@ class PerusahaanController extends Controller
                     $role = 0;
                     break;
             }
+
+            $perusahaan = Perusahaan::where('id', '=', Auth::user()->id_perusahaan)->first();
             $token = Str::random(20);
             Invitation::create([
                 'token' => $token,
@@ -68,7 +70,7 @@ class PerusahaanController extends Controller
                 'role' => $role,
                 'status' => 0,
             ]);
-            Mail::to($request->add_email[$i])->send(new PerusahaanInvitation($token));
+            Mail::to($request->add_email[$i])->send(new PerusahaanInvitation($token, $perusahaan->nama_perusahaan));
 
         }
 
