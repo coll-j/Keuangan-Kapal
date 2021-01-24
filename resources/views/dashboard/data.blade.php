@@ -7,10 +7,12 @@
     <div class="col-md-8">
         <h5 class="pl-3"><b>DAFTAR AKUN & RANGE</b></h5>
     </div>
+    @if(!empty(Auth::user()->id_perusahaan))
     <div class="col-md-4">
         <button class="btn btn-sm btn-primary float-right m-1" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button>
         <!-- <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-pencil-alt"></i> Ubah</button> -->
     </div>
+    @endif
 </div>
 @endsection
 

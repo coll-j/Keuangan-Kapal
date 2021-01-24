@@ -64,8 +64,7 @@ function IterarCamposEdit($cols, tarea) {
   //Indica si la columna pasada está configurada para ser editable
       if (colsEdi==null) {  //no se definió
           return true;  //todas son editable
-      } else {  //hay filtro de campos
-//alert('verificando: ' + idx);
+      } else {  
           for (var i = 0; i < colsEdi.length; i++) {
             if (idx == colsEdi[i]) return true;
           }
@@ -129,7 +128,7 @@ function rowAcep(but) {
   }
 
   var nama, var2, id;
-    IterarCamposEdit($cols, function($td) {  //itera por la columnas
+    IterarCamposEdit($cols, function($td) {  
     id = $td.attr("id");
    
     var cont = $td.find('input').val();
@@ -138,8 +137,7 @@ function rowAcep(but) {
       } else {
         var2= cont;
       }
-      //lee contenido del input
-      $td.html(cont);  //fija contenido y elimina controles
+      $td.html(cont); 
     });
 
     var request =  $.ajax({
@@ -159,14 +157,12 @@ function rowAcep(but) {
   params.onEdit($row);
 }
 function rowCancel(but) {
-//Rechaza los cambios de la edición
-  var $row = $(but).parents('tr');  //accede a la fila
-  var $cols = $row.find('td');  //lee campos
-  if (!ModoEdicion($row)) return;  //Ya está en edición
-  //Está en edición. Hay que finalizar la edición
-  IterarCamposEdit($cols, function($td) {  //itera por la columnas
-      var cont = $td.find('div').html(); //lee contenido del div
-      $td.html(cont);  //fija contenido y elimina controles
+  var $row = $(but).parents('tr'); 
+  var $cols = $row.find('td');  
+  if (!ModoEdicion($row)) return; 
+  IterarCamposEdit($cols, function($td) {  
+      var cont = $td.find('div').html(); 
+      $td.html(cont);  
   });
   FijModoNormal(but);
 }
@@ -174,13 +170,12 @@ function rowEdit(but) {  //Inicia la edición de una fila
   var $row = $(but).parents('tr');  //accede a la fila
   var $cols = $row.find('td');  //lee campos
  
-  if (ModoEdicion($row)) return;  //Ya está en edición
-  //Pone en modo de edición
-  IterarCamposEdit($cols, function($td) {  //itera por la columnas
-      var cont = $td.html(); //lee contenido
-      var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
+  if (ModoEdicion($row)) return;  
+  IterarCamposEdit($cols, function($td) { 
+      var cont = $td.html(); 
+      var div = '<div style="display: none;">' + cont + '</div>'; 
       var input = '<input class="form-control input-sm"  value="' + cont + '">';
-      $td.html(div + input);  //fija contenido
+      $td.html(div + input);  
   });
   
   FijModoEdit(but);
