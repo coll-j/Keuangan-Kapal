@@ -10,7 +10,7 @@ class Pemasok extends Model
     use HasFactory;
 
     protected $fillable = [
-        'kode', 'nama','id_perusahaan',
+        'nama', 'jenis','id_perusahaan',
     ];
     
 }

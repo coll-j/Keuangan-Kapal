@@ -34,9 +34,9 @@
                         </thead>
                         <tbody>
                             @foreach($akun_neraca_saldos as $akun_neraca_saldo)
-                            <tr id="table-neraca">
-                                <td style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
-                                <td style="width: 30%;">{{ $akun_neraca_saldo['saldo'] }}</td>
+                            <tr id="table-neraca" name="table-neraca">
+                                <td id="nama" style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
+                                <td id="saldo" style="width: 30%;">{{ $akun_neraca_saldo['saldo'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -62,9 +62,9 @@
                         </thead>
                         <tbody>
                             @foreach($pemasoks as $pemasok)
-                            <tr id="table-pemasok">
-                                <td style="width: 30%;">{{ $pemasok['kode'] }}</td>
-                                <td style="width: 70%;">{{ $pemasok['nama'] }}</td>
+                            <tr id="table-pemasok" name="table-pemasok">
+                                <td id="nama" style="width: 30%;">{{ $pemasok['nama'] }}</td>
+                                <td id="jenis" style="width: 70%;">{{ $pemasok['jenis'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -87,9 +87,9 @@
                         </thead>
                         <tbody>
                             @foreach($proyeks as $proyek)
-                            <tr id="table-proyekan">
-                                <td style="width: 30%;">{{ $proyek['kode'] }}</td>
-                                <td style="width: 70%;">{{ $proyek['nama'] }}</td>
+                            <tr id="table-proyekan" name="table-proyekan">
+                                <td id="nama" style="width: 30%;">{{ $proyek['nama'] }}</td>
+                                <td id="jenis" style="width: 70%;">{{ $proyek['jenis'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -118,9 +118,9 @@
                                 <tr><td colspan="2" class="bg-light">Data masih kosong.</td></tr>
                             @endif -->
                             @foreach($akun_transaksi_kantors as $akun_transaksi_kantor)
-                            <tr id= "table-kantor">
-                                <td>{{ $akun_transaksi_kantor['nama'] }}</td>
-                                <td>{{ $akun_transaksi_kantor['jenis'] }}</td>
+                            <tr id= "table-kantor" name="table-kantor">
+                                <td id="nama">{{ $akun_transaksi_kantor['nama'] }}</td>
+                                <td id="jenis">{{ $akun_transaksi_kantor['jenis'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -144,9 +144,9 @@
                         </thead>
                         <tbody>
                             @foreach($akun_transaksi_proyeks as $akun_transaksi_proyek)
-                            <tr id="table-proyek">
-                                <td>{{ $akun_transaksi_proyek['nama'] }}</td>
-                                <td>{{ $akun_transaksi_proyek['jenis'] }}</td>
+                            <tr id="table-proyek" name="table-proyek">
+                                <td id="nama">{{ $akun_transaksi_proyek['nama'] }}</td>
+                                <td id="jenis">{{ $akun_transaksi_proyek['jenis'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>

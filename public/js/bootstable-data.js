@@ -102,10 +102,48 @@ function rowAcep(but) {
   var $cols = $row.find('td');  //lee campos
   if (!ModoEdicion($row)) return;  //Ya está en edición
   //Está en edición. Hay que finalizar la edición
-  IterarCamposEdit($cols, function($td) {  //itera por la columnas
-    var cont = $td.find('input').val(); //lee contenido del input
-    $td.html(cont);  //fija contenido y elimina controles
-  });
+  var tableId = $row.attr("name");
+  var prefix_url;
+  window.alert(tableId);
+  switch(tableId){
+    case 'table-kantor':
+      prefix_url = '/edit_akun_kantor';
+      break;
+    case 'table-proyek':
+      prefix_url = '/edit_akun_proyek';
+      break;
+    case 'table-pemasok':
+      prefix_url = '/edit_pemasok';
+      break;
+    case 'table-proyekan':
+      prefix_url = '/edit_proyek';
+      break;
+    default:
+      prefix_url = '/edit_neraca';
+      break;
+  }
+  var nama, var2, id;
+    IterarCamposEdit($cols, function($td) {  //itera por la columnas
+    id = $td.attr("id");
+   
+    var cont = $td.find('input').val();
+      if(id == "nama") {
+        nama = cont;
+      } else {
+        var2= cont;
+      }
+      //lee contenido del input
+      $td.html(cont);  //fija contenido y elimina controles
+    });
+    // window.alert(id+" " +nama +"  " +var2);
+    $.ajax({
+      url: prefix_url,
+      type:'POST',
+      data:{nama:nama, var2:var2},
+      success:function(data){
+        window.alert("Success edit row in " + tableId);
+      }
+    })
   FijModoNormal(but);
   params.onEdit($row);
 }
@@ -124,6 +162,7 @@ function rowCancel(but) {
 function rowEdit(but) {  //Inicia la edición de una fila
   var $row = $(but).parents('tr');  //accede a la fila
   var $cols = $row.find('td');  //lee campos
+ 
   if (ModoEdicion($row)) return;  //Ya está en edición
   //Pone en modo de edición
   IterarCamposEdit($cols, function($td) {  //itera por la columnas
@@ -132,16 +171,16 @@ function rowEdit(but) {  //Inicia la edición de una fila
       var input = '<input class="form-control input-sm"  value="' + cont + '">';
       $td.html(div + input);  //fija contenido
   });
+  
   FijModoEdit(but);
 }
 function rowElim(but) {  //Elimina la fila actual
   var $row = $(but).parents('tr');  //accede a la fila
   params.onBeforeDelete($row);
   $row.remove();
-  var nama = $row[0].cells[0].innerText;
+  var name = $row[0].cells[0].innerText;
   var prefix_url;
-  var tableId = $row.attr("id");
-  // window.alert(tableId);
+  var tableId = $row.attr("name");
   switch(tableId){
     case 'table-kantor':
       prefix_url = '/delete_akun_kantor/';
@@ -160,9 +199,9 @@ function rowElim(but) {  //Elimina la fila actual
       break;
   }
     $.ajax({
-      url: prefix_url + nama,
+      url: prefix_url + name,
       method:'GET',
-      data:{nama:nama},
+      data:{nama:name},
       success:function(data){
         window.alert("Success delete row in " + tableId);
       }

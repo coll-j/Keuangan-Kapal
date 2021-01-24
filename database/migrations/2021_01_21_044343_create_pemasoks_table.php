@@ -16,8 +16,8 @@ class CreatePemasoksTable extends Migration
         Schema::create('pemasoks', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
-            $table->string('kode')->unique();
-            $table->string('nama');
+            $table->string('nama')->unique();
+            $table->string('jenis');
             $table->timestamps();
             $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });

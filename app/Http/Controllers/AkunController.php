@@ -51,8 +51,8 @@ class AkunController extends Controller
     function addProyek(Request $req) 
     {
         Proyek::create([
-            'kode' => $req->pr_kode,
-            'nama' => $req->pr_nama,
+            'nama' => $req->pr_kode,
+            'jenis' => $req->pr_nama,
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');
@@ -61,8 +61,8 @@ class AkunController extends Controller
     function addPemasok(Request $req) 
     {
         Pemasok::create([
-            'kode' => $req->pe_kode,
-            'nama' => $req->pe_nama,
+            'nama' => $req->pe_kode,
+            'jenis' => $req->pe_nama,
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');
@@ -89,18 +89,25 @@ class AkunController extends Controller
         return redirect()->route('data');
     }
 
-    function delPemasok($kode)
+    function delPemasok($nama)
     {
-        $data = Pemasok::where('kode', '=', $kode)->first();
+        $data = Pemasok::where('nama', '=', $nama)->first();
         $data->delete();
         return redirect()->route('data');
     }
 
-    function delProyek($kode)
+    function delProyek($nama)
     {
-        $data = Proyek::where('kode', '=', $kode)->first();
+        $data = Proyek::where('nama', '=', $nama)->first();
         $data->delete();
         return redirect()->route('data');
     }
     
+    function editAkunNeraca(Request $req)
+    {
+        $data = AkunNeracaSaldo::where('nama', '=', $req->nama)->first();
+        $data->saldo = $req->var2; 
+        $data->save();
+        return redirect()->route('data');
+    }
 }

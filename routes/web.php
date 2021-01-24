@@ -53,5 +53,7 @@ Route::post('form_transaksi_kantor', [App\Http\Controllers\AkunController::class
 Route::get('/delete_neraca/{nama}', [App\Http\Controllers\AkunController::class, 'delAkunNeraca']);
 Route::get('/delete_akun_kantor/{nama}', [App\Http\Controllers\AkunController::class, 'delAkunTransaksiKantor']);
 Route::get('/delete_akun_proyek/{nama}', [App\Http\Controllers\AkunController::class, 'delAkunTransaksiProyek']);
-Route::get('/delete_pemasok/{kode}', [App\Http\Controllers\AkunController::class, 'delPemasok']);
-Route::get('/delete_proyek/{kode}', [App\Http\Controllers\AkunController::class, 'delProyek']);
+Route::get('/delete_pemasok/{nama}', [App\Http\Controllers\AkunController::class, 'delPemasok']);
+Route::get('/delete_proyek/{nama}', [App\Http\Controllers\AkunController::class, 'delProyek']);
+
+Route::post('edit_neraca', [App\Http\Controllers\AkunController::class, 'editAkunNeraca'])->name('edit_neraca');
