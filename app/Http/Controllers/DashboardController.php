@@ -10,6 +10,7 @@ use App\Models\AkunNeracaSaldo;
 use App\Models\Pemasok;
 use App\Models\Perusahaan;
 use App\Models\Proyek;
+use App\Models\Invitation;
 
 class DashboardController extends Controller
 {
@@ -31,8 +32,10 @@ class DashboardController extends Controller
     public function pageProfilPerusahaan(){
         // $perusahaan = Perusahaan::with('user')->get();
         $perusahaan = Perusahaan::with('user')->get()->where('id', '=', Auth::user()->id_perusahaan)->first();
-        // dd(count($perusahaan->user));
-        return view('dashboard/profil_perusahaan', compact('perusahaan'));
+        $invite = Invitation::with('perusahaan')->get()->where('email', '=', Auth::user()->email)->first();
+        
+        // dd($invite->perusahaan->first()->nama_perusahaan);
+        return view('dashboard/profil_perusahaan', compact('perusahaan', 'invite'));
     }
 
     public function pageData(){

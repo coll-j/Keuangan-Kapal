@@ -61,6 +61,7 @@
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Lihat</a></li>
                         <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Undang</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#terkirim" data-toggle="tab">Undangan Terkirim</a></li>
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
@@ -132,7 +133,10 @@
                     </div>
                     <!-- /.tab-pane -->
 
-                    
+                    <div class="tab-pane" id="terkirim">
+                        <h5>Bentaran gan capek</h5>
+                    </div>
+                    <!-- /.tab-pane -->
                 </div>
                 <!-- /.tab-content -->
                 </div><!-- /.card-body -->
@@ -140,6 +144,24 @@
             <!-- /.card -->
         </div>
         <!-- /.col -->
+    </div>
+    @elseif(!(is_null($invite)))
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h5>Undangan</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class="col-sm-3">Perusahaan</dt>
+                        <dd class="col-sm-9">{{ $invite->perusahaan->first()->nama_perusahaan }}</dd>
+                        <dt class="col-sm-3">Posisi</dt>
+                        <dd class="col-sm-9">{{ $invite->role }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
     </div>
     @else
     <div id="no-perusahaan" class="row">

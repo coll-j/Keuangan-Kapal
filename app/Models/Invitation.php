@@ -14,9 +14,16 @@ class Invitation extends Model
     protected $fillable = [
         'token',
         'email',
+        'id_perusahaan',
+        'role',
     ];
 
     protected $hidden = [
         'token',
+        'id_perusahaan'
     ];
+
+    public function perusahaan(){
+        return $this->belongsTo('\App\Models\Perusahaan', 'id_perusahaan', 'id');
+    }
 }

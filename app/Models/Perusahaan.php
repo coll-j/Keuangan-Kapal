@@ -27,4 +27,8 @@ class Perusahaan extends Model
     public function user(){
         return $this->hasMany('\App\Models\User', 'id_perusahaan');
     }
+
+    public function invitation(){
+        return $this->hasMany('\App\Models\Invitation', 'id_perusahaan');
+    }
 }
