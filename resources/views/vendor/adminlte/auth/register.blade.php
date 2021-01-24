@@ -35,8 +35,13 @@
 
         {{-- Email field --}}
         <div class="input-group mb-3">
+            @if(isset($email) && (!(is_null($email))))
+            <input type="email" name="email" class="form-control"
+                   value="{{ $email }}" readonly>
+            @else
             <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}"
                    value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
+            @endif
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>

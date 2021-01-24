@@ -30,8 +30,8 @@ class DashboardController extends Controller
      */
     public function pageProfilPerusahaan(){
         // $perusahaan = Perusahaan::with('user')->get();
-        $perusahaan = Perusahaan::with('user')->get()->where('kode_perusahaan', '=', Auth::user()->kode_perusahaan)->first();
-        // dd($perusahaan->user->first());
+        $perusahaan = Perusahaan::with('user')->get()->where('id', '=', Auth::user()->id_perusahaan)->first();
+        // dd(count($perusahaan->user));
         return view('dashboard/profil_perusahaan', compact('perusahaan'));
     }
 

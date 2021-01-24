@@ -52,7 +52,7 @@
     <!-- /.card-footer -->
 </div>
 
-<!-- Modal -->
+<!-- Modal create gudang-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -63,14 +63,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="form-gudang" method="POST" action="{{route ('create_gudang')}}">
+                    @csrf
                     <div class="form-group">
-                        <label for="nama-akun">Nama Barang</label>
-                        <input type="text" id="nama-akun" class="form-control">
+                        <label for="nama_barang">Nama Barang</label>
+                        <input type="text" id="nama_barang" class="form-control" name="nama_barang">
                     </div>
                     <div class="form-group">
                         <label for="jenis-akun">Satuan</label>
-                        <select class="form-control" id="jenis-akun">
+                        <select class="form-control" id="jenis-akun" name="satuan">
                             <option>Buah</option>
                             <option>Liter</option>
                             <option>Hektar</option>
@@ -79,18 +80,18 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="saldo-akun">Jumlah</label>
-                        <input autocomplete="off" type="number" id="saldo-akun" class="form-control">
+                        <label for="jumlah">Jumlah</label>
+                        <input autocomplete="off" type="number" id="jumlah" class="form-control" name="jumlah">
                     </div>
                     <div class="form-group">
-                        <label for="nama-transaksi">Harga Satuan</label>
-                        <input type="text" id="nama-transaksi" class="form-control">
+                        <label for="harga_satuan">Harga Satuan</label>
+                        <input type="text" id="harga_satuan" class="form-control" name="harga_satuan">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary" form="form-gudang">Save changes</button>
             </div>
         </div>
     </div>
@@ -103,6 +104,21 @@
 
 @section('js')
 <script>
+    $(document).ready(function() {
+        $('table').SetEditable();
+        $('#table1').DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: false,
+            autoWidth: false,
+            //            'scrollX': true,
+            scrollY: 300,
+            scrollCollapse: true,
+        });
+    });
     console.log('Hi!');
 </script>
+<script src="{{ asset('js/bootstable.js') }}"></script>
 @endsection

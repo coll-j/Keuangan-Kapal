@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Gudang;
+use App\Models\Perusahaan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class GudangController extends Controller
@@ -25,9 +27,23 @@ class GudangController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $perusahaan = Perusahaan::with('user')->get()->where('kode_perusahaan', '=', Auth::user()->kode_perusahaan)->first();
+        if (!empty($perusahaan)) {
+
+            Gudang::create([
+                'nama_barang' => $request->nama_barang,
+                'satuan' => $request->satuan,
+                'jumlah' => $request->jumlah,
+                'harga_satuan' => $request->harga_satuan,
+                'id_perusahaan' => $perusahaan->id
+            ]);
+            return redirect()->route('gudang');
+        } else {
+            //kalau belum ada perusahaan, data tidak bisa masuk hehehe
+            return redirect()->route('gudang');
+        }
     }
 
     /**
@@ -38,7 +54,6 @@ class GudangController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -73,6 +88,22 @@ class GudangController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        // $itemGudang = Gudang::find($id);
+        // $itemGudang = Gudang::where('id', $id)->first();
+
+        Gudang::where('id', $id)->update([
+            'nama_barang' => $request->nama_barang,
+            'satuan' => $request->satuan,
+            'jumlah' => $request->jumlah,
+            'harga_satuan' => $request->harga_satuan,
+        ]);
+
+        // $itemGudang->nama_barang = $request->nama_barang;
+        // $itemGudang->satuan = $request->satuan;
+        // $itemGudang->jumlah = $request->jumlah;
+        // $itemGudang->harga_satuan = $request->harga_satuan;
+        // $itemGudang->save();
     }
 
     /**
@@ -84,5 +115,6 @@ class GudangController extends Controller
     public function destroy($id)
     {
         //
+        Gudang::where('id', $id)->destroy();
     }
 }

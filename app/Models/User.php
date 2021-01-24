@@ -55,10 +55,10 @@ class User extends Authenticatable
     
     public function adminlte_profile_url()
     {
-        return 'profile/username';
+        return 'profile/';
     }
 
     public function perusahaan(){
-        return $this->belongsTo('\App\Models\Perusahaan', 'kode_perusahaan', 'kode_perusahaan');
+        return $this->belongsTo('\App\Models\Perusahaan');
     }
 }

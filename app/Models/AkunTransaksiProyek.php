@@ -10,6 +10,6 @@ class AkunTransaksiProyek extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'jenis',
+        'nama', 'jenis','id_perusahaan',
     ];
 }

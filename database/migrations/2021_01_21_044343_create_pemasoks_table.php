@@ -14,10 +14,12 @@ class CreatePemasoksTable extends Migration
     public function up()
     {
         Schema::create('pemasoks', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
             $table->string('kode')->unique();
             $table->string('nama');
             $table->timestamps();
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });
     }
 

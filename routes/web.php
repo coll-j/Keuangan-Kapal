@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', function () {
     return view('front.welcome');
 });
@@ -20,11 +21,10 @@ Route::get('/', function () {
 //     return view('front.login');
 // })->name('login');
 
-Route::get('/register', function() {
-    return view('front.register');
-})->name('register');
-
 Auth::routes();
+Route::get('register/{token?}', [App\Http\Controllers\Auth\RegisterController::class, 'view'])->name('reg');
+Route::get('register', [App\Http\Controllers\Auth\RegisterController::class, 'view']);
+
 // Route::post('add_akun_transaksi_kantor', 'AkunController@insertTransaksiKantor')->name('add_akun_transaksi_kantor');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profil_perusahaan', [App\Http\Controllers\DashboardController::class, 'pageProfilPerusahaan'])->name('profil_perusahaan');
@@ -41,6 +41,9 @@ Route::get('/laba_rugi_kantor', [App\Http\Controllers\LaporanController::class, 
 Route::get('/laba_rugi_proyek', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiProyek'])->name('laba_rugi_proyek');
 
 Route::post('create_perusahaan', [App\Http\Controllers\dashboard\PerusahaanController::class, 'insert'])->name('create_perusahaan');
+Route::post('invite_anggota', [App\Http\Controllers\dashboard\PerusahaanController::class, 'invite'])->name('invite_anggota');
+Route::post('create_gudang', [App\Http\Controllers\GudangController::class, 'create'])->name('create_gudang');
+
 Route::post('form_neraca', [App\Http\Controllers\AkunController::class, 'addAkunNeraca'])->name('form_neraca');
 Route::post('form_pemasok', [App\Http\Controllers\AkunController::class, 'addPemasok'])->name('form_pemasok');
 Route::post('form_proyek', [App\Http\Controllers\AkunController::class, 'addProyek'])->name('form_proyek');

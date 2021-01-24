@@ -15,6 +15,7 @@
 @endsection
 
 @section('content')
+@if(!empty(Auth::user()->id_perusahaan))
 <div class="row">
     <div class="col-md-6 d-inline-block pl-3">
         <div class="card" style="min-height: 100%;">
@@ -228,6 +229,7 @@
     </div>
   </div>
 </div>
+@endif
 @endsection
 
 @section('css')

@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\AkunNeracaSaldo;
 use App\Models\AkunTransaksiProyek;
 use App\Models\AkunTransaksiKantor;
 use App\Models\Pemasok;
 use App\Models\Proyek;
+
 
 class AkunController extends Controller
 {
@@ -21,6 +23,7 @@ class AkunController extends Controller
         AkunNeracaSaldo::create([
             'nama' => $req->n_nama,
             'saldo' => $req->n_saldo,
+            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');
     }
@@ -30,6 +33,7 @@ class AkunController extends Controller
         AkunTransaksiProyek::create([
             'nama' => $req->at_nama,
             'jenis' => $req->at_jenis,
+            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');
     }
@@ -39,6 +43,7 @@ class AkunController extends Controller
         AkunTransaksiKantor::create([
             'nama' => $req->at_nama,
             'jenis' => $req->at_jenis,
+            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');
     }
@@ -48,6 +53,7 @@ class AkunController extends Controller
         Proyek::create([
             'kode' => $req->pr_kode,
             'nama' => $req->pr_nama,
+            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');
     }
@@ -57,6 +63,7 @@ class AkunController extends Controller
         Pemasok::create([
             'kode' => $req->pe_kode,
             'nama' => $req->pe_nama,
+            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');
     }
