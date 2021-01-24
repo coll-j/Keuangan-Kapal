@@ -50,7 +50,25 @@ class User extends Authenticatable
     
     public function adminlte_desc()
     {
-        return 'Direktur Utama';
+        switch($this->role)
+        {
+            case(1):
+                $role="Administrator";
+                break;
+            case(2):
+                $role="Akuntan";
+                break;
+            case(3):
+                $role="Pemilik";
+                break;
+            case(4):
+                $role="Manajer Proyek";
+                break;
+            default:
+                $role="Super Admin";
+                break;
+        }
+        return $role;
     }
     
     public function adminlte_profile_url()
