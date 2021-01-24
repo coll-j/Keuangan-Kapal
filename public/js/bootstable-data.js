@@ -97,14 +97,19 @@ function ModoEdicion($row) {
   }
 }
 function rowAcep(but) {
+
+  $.ajaxSetup({
+    headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
 //Acepta los cambios de la edición
   var $row = $(but).parents('tr');  //accede a la fila
   var $cols = $row.find('td');  //lee campos
-  if (!ModoEdicion($row)) return;  //Ya está en edición
-  //Está en edición. Hay que finalizar la edición
+  if (!ModoEdicion($row)) return; 
   var tableId = $row.attr("name");
   var prefix_url;
-  window.alert(tableId);
+
   switch(tableId){
     case 'table-kantor':
       prefix_url = '/edit_akun_kantor';
@@ -119,9 +124,10 @@ function rowAcep(but) {
       prefix_url = '/edit_proyek';
       break;
     default:
-      prefix_url = '/edit_neraca';
+      prefix_url = "/edit_neraca";
       break;
   }
+
   var nama, var2, id;
     IterarCamposEdit($cols, function($td) {  //itera por la columnas
     id = $td.attr("id");
@@ -135,15 +141,20 @@ function rowAcep(but) {
       //lee contenido del input
       $td.html(cont);  //fija contenido y elimina controles
     });
-    // window.alert(id+" " +nama +"  " +var2);
-    $.ajax({
+
+    var request =  $.ajax({
       url: prefix_url,
-      type:'POST',
+      type:"POST",
       data:{nama:nama, var2:var2},
-      success:function(data){
-        window.alert("Success edit row in " + tableId);
-      }
-    })
+      dataType: "html",
+    });
+    request.done(function( msg ) {
+      window.alert("done");
+    });
+     
+    request.fail(function( jqXHR, textStatus ) {
+      window.alert( "Request failed: " + textStatus );
+    });
   FijModoNormal(but);
   params.onEdit($row);
 }

@@ -15,6 +15,8 @@
 @endsection
 
 @section('content')
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 @if(!empty(Auth::user()->id_perusahaan))
 <div class="row">
     <div class="col-md-6 d-inline-block pl-3">
