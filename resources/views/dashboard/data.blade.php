@@ -38,7 +38,7 @@
                         </thead>
                         <tbody>
                             @foreach($akun_neraca_saldos as $akun_neraca_saldo)
-                            <tr id="table-neraca" name="table-neraca">
+                            <tr id="table-neraca" name="table-neraca" rowId="{{ $akun_neraca_saldo['id'] }}">
                                 <td id="nama" style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
                                 <td id="saldo" style="width: 30%;">{{ $akun_neraca_saldo['saldo'] }}</td>
                             </tr>
@@ -66,7 +66,7 @@
                         </thead>
                         <tbody>
                             @foreach($pemasoks as $pemasok)
-                            <tr id="table-pemasok" name="table-pemasok">
+                            <tr id="table-pemasok" name="table-pemasok" rowId="{{ $pemasok['id'] }}">
                                 <td id="nama" style="width: 30%;">{{ $pemasok['nama'] }}</td>
                                 <td id="jenis" style="width: 70%;">{{ $pemasok['jenis'] }}</td>
                             </tr>
@@ -91,7 +91,7 @@
                         </thead>
                         <tbody>
                             @foreach($proyeks as $proyek)
-                            <tr id="table-proyekan" name="table-proyekan">
+                            <tr id="table-proyekan" name="table-proyekan" rowId="{{ $proyek['id'] }}">
                                 <td id="nama" style="width: 30%;">{{ $proyek['nama'] }}</td>
                                 <td id="jenis" style="width: 70%;">{{ $proyek['jenis'] }}</td>
                             </tr>
@@ -122,7 +122,7 @@
                                 <tr><td colspan="2" class="bg-light">Data masih kosong.</td></tr>
                             @endif -->
                             @foreach($akun_transaksi_kantors as $akun_transaksi_kantor)
-                            <tr id= "table-kantor" name="table-kantor">
+                            <tr id= "table-kantor" name="table-kantor" rowId="{{ $akun_transaksi_kantor['id'] }}">
                                 <td id="nama">{{ $akun_transaksi_kantor['nama'] }}</td>
                                 <td id="jenis">{{ $akun_transaksi_kantor['jenis'] }}</td>
                             </tr>
@@ -148,7 +148,7 @@
                         </thead>
                         <tbody>
                             @foreach($akun_transaksi_proyeks as $akun_transaksi_proyek)
-                            <tr id="table-proyek" name="table-proyek">
+                            <tr id="table-proyek" name="table-proyek" rowId="{{ $akun_transaksi_proyek['id'] }}">
                                 <td id="nama">{{ $akun_transaksi_proyek['nama'] }}</td>
                                 <td id="jenis">{{ $akun_transaksi_proyek['jenis'] }}</td>
                             </tr>

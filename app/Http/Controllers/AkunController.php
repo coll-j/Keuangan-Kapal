@@ -105,8 +105,45 @@ class AkunController extends Controller
     
     function editAkunNeraca(Request $req)
     {
-        $data = AkunNeracaSaldo::where('nama', '=', $req->nama)->first();
+        $data = AkunNeracaSaldo::where('id', '=', $req->id)->first();
+        $data->nama = $req->nama;
         $data->saldo = $req->var2; 
+        $data->save();
+        return redirect()->route('data');
+    }
+
+    function editAkunTransaksiProyek(Request $req)
+    {
+        $data = AkunTransaksiProyek::where('id', '=', $req->id)->first();
+        $data->nama = $req->nama;
+        $data->jenis = $req->var2; 
+        $data->save();
+        return redirect()->route('data');
+    }
+
+    function editAkunTransaksiKantor(Request $req)
+    {
+        $data = AkunTransaksiKantor::where('id', '=', $req->id)->first();
+        $data->nama = $req->nama;
+        $data->jenis = $req->var2; 
+        $data->save();
+        return redirect()->route('data');
+    }
+
+    function editPemasok(Request $req)
+    {
+        $data = Pemasok::where('id', '=', $req->id)->first();
+        $data->nama = $req->nama;
+        $data->jenis = $req->var2; 
+        $data->save();
+        return redirect()->route('data');
+    }
+
+    function editProyek(Request $req)
+    {
+        $data = Proyek::where('id', '=', $req->id)->first();
+        $data->nama = $req->nama;
+        $data->jenis = $req->var2; 
         $data->save();
         return redirect()->route('data');
     }

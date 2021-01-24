@@ -107,6 +107,8 @@ function rowAcep(but) {
   var $cols = $row.find('td');  //lee campos
   if (!ModoEdicion($row)) return; 
   var tableId = $row.attr("name");
+  var dataId = $row.attr("rowId");
+  
   var prefix_url;
 
   switch(tableId){
@@ -143,11 +145,11 @@ function rowAcep(but) {
     var request =  $.ajax({
       url: prefix_url,
       type:"POST",
-      data:{nama:nama, var2:var2},
+      data:{id:dataId, nama:nama, var2:var2},
       dataType: "html",
     });
     request.done(function( msg ) {
-      window.alert("done");
+      window.alert("Done editing data in " + tableId);
     });
      
     request.fail(function( jqXHR, textStatus ) {
