@@ -33,7 +33,7 @@
                         </thead>
                         <tbody>
                             @foreach($akun_neraca_saldos as $akun_neraca_saldo)
-                            <tr>
+                            <tr id="table-neraca">
                                 <td style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
                                 <td style="width: 30%;">{{ $akun_neraca_saldo['saldo'] }}</td>
                             </tr>
@@ -61,7 +61,7 @@
                         </thead>
                         <tbody>
                             @foreach($pemasoks as $pemasok)
-                            <tr>
+                            <tr id="table-pemasok">
                                 <td style="width: 30%;">{{ $pemasok['kode'] }}</td>
                                 <td style="width: 70%;">{{ $pemasok['nama'] }}</td>
                             </tr>
@@ -86,7 +86,7 @@
                         </thead>
                         <tbody>
                             @foreach($proyeks as $proyek)
-                            <tr>
+                            <tr id="table-proyekan">
                                 <td style="width: 30%;">{{ $proyek['kode'] }}</td>
                                 <td style="width: 70%;">{{ $proyek['nama'] }}</td>
                             </tr>
@@ -117,7 +117,7 @@
                                 <tr><td colspan="2" class="bg-light">Data masih kosong.</td></tr>
                             @endif -->
                             @foreach($akun_transaksi_kantors as $akun_transaksi_kantor)
-                            <tr>
+                            <tr id= "table-kantor">
                                 <td>{{ $akun_transaksi_kantor['nama'] }}</td>
                                 <td>{{ $akun_transaksi_kantor['jenis'] }}</td>
                             </tr>
@@ -143,7 +143,7 @@
                         </thead>
                         <tbody>
                             @foreach($akun_transaksi_proyeks as $akun_transaksi_proyek)
-                            <tr>
+                            <tr id="table-proyek">
                                 <td>{{ $akun_transaksi_proyek['nama'] }}</td>
                                 <td>{{ $akun_transaksi_proyek['jenis'] }}</td>
                             </tr>
@@ -332,6 +332,6 @@
         });
     } );
 </script>
-<script src="{{ asset('js/bootstable.js') }}"></script>
+<script src="{{ asset('js/bootstable-data.js') }}"></script>
 
 @endsection

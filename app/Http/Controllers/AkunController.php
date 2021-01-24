@@ -60,4 +60,40 @@ class AkunController extends Controller
         ]);
         return redirect()->route('data');
     }
+
+    function delAkunNeraca($nama)
+    {
+        $data = AkunNeracaSaldo::where('nama', '=', $nama)->first();
+        $data->delete();
+        return redirect()->route('data');
+    }
+
+    function delAkunTransaksiKantor($nama)
+    {
+        $data = AkunTransaksiKantor::where('nama', '=', $nama)->first();
+        $data->delete();
+        return redirect()->route('data');
+    }
+
+    function delAkunTransaksiProyek($nama)
+    {
+        $data = AkunTransaksiProyek::where('nama', '=', $nama)->first();
+        $data->delete();
+        return redirect()->route('data');
+    }
+
+    function delPemasok($kode)
+    {
+        $data = Pemasok::where('kode', '=', $kode)->first();
+        $data->delete();
+        return redirect()->route('data');
+    }
+
+    function delProyek($kode)
+    {
+        $data = Proyek::where('kode', '=', $kode)->first();
+        $data->delete();
+        return redirect()->route('data');
+    }
+    
 }
