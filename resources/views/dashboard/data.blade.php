@@ -7,14 +7,19 @@
     <div class="col-md-8">
         <h5 class="pl-3"><b>DAFTAR AKUN & RANGE</b></h5>
     </div>
+    @if(!empty(Auth::user()->id_perusahaan))
     <div class="col-md-4">
         <button class="btn btn-sm btn-primary float-right m-1" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button>
         <!-- <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-pencil-alt"></i> Ubah</button> -->
     </div>
+    @endif
 </div>
 @endsection
 
 @section('content')
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+@if(!empty(Auth::user()->id_perusahaan))
 <div class="row">
     <div class="col-md-6 d-inline-block pl-3">
         <div class="card" style="min-height: 100%;">
@@ -33,9 +38,9 @@
                         </thead>
                         <tbody>
                             @foreach($akun_neraca_saldos as $akun_neraca_saldo)
-                            <tr>
-                                <td style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
-                                <td style="width: 30%;">{{ $akun_neraca_saldo['saldo'] }}</td>
+                            <tr id="table-neraca" name="table-neraca" rowId="{{ $akun_neraca_saldo['id'] }}">
+                                <td id="nama" style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
+                                <td id="saldo" style="width: 30%;">{{ $akun_neraca_saldo['saldo'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -61,9 +66,9 @@
                         </thead>
                         <tbody>
                             @foreach($pemasoks as $pemasok)
-                            <tr>
-                                <td style="width: 30%;">{{ $pemasok['kode'] }}</td>
-                                <td style="width: 70%;">{{ $pemasok['nama'] }}</td>
+                            <tr id="table-pemasok" name="table-pemasok" rowId="{{ $pemasok['id'] }}">
+                                <td id="nama" style="width: 30%;">{{ $pemasok['nama'] }}</td>
+                                <td id="jenis" style="width: 70%;">{{ $pemasok['jenis'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -86,9 +91,9 @@
                         </thead>
                         <tbody>
                             @foreach($proyeks as $proyek)
-                            <tr>
-                                <td style="width: 30%;">{{ $proyek['kode'] }}</td>
-                                <td style="width: 70%;">{{ $proyek['nama'] }}</td>
+                            <tr id="table-proyekan" name="table-proyekan" rowId="{{ $proyek['id'] }}">
+                                <td id="nama" style="width: 30%;">{{ $proyek['nama'] }}</td>
+                                <td id="jenis" style="width: 70%;">{{ $proyek['jenis'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -117,9 +122,9 @@
                                 <tr><td colspan="2" class="bg-light">Data masih kosong.</td></tr>
                             @endif -->
                             @foreach($akun_transaksi_kantors as $akun_transaksi_kantor)
-                            <tr>
-                                <td>{{ $akun_transaksi_kantor['nama'] }}</td>
-                                <td>{{ $akun_transaksi_kantor['jenis'] }}</td>
+                            <tr id= "table-kantor" name="table-kantor" rowId="{{ $akun_transaksi_kantor['id'] }}">
+                                <td id="nama">{{ $akun_transaksi_kantor['nama'] }}</td>
+                                <td id="jenis">{{ $akun_transaksi_kantor['jenis'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -143,9 +148,9 @@
                         </thead>
                         <tbody>
                             @foreach($akun_transaksi_proyeks as $akun_transaksi_proyek)
-                            <tr>
-                                <td>{{ $akun_transaksi_proyek['nama'] }}</td>
-                                <td>{{ $akun_transaksi_proyek['jenis'] }}</td>
+                            <tr id="table-proyek" name="table-proyek" rowId="{{ $akun_transaksi_proyek['id'] }}">
+                                <td id="nama">{{ $akun_transaksi_proyek['nama'] }}</td>
+                                <td id="jenis">{{ $akun_transaksi_proyek['jenis'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -228,6 +233,7 @@
     </div>
   </div>
 </div>
+@endif
 @endsection
 
 @section('css')
@@ -332,6 +338,6 @@
         });
     } );
 </script>
-<script src="{{ asset('js/bootstable.js') }}"></script>
+<script src="{{ asset('js/bootstable-data.js') }}"></script>
 
 @endsection

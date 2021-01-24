@@ -22,6 +22,7 @@ class CreatePerusahaansTable extends Migration
             $table->string('website')->nullable();
             $table->string('telp')->nullable();
             $table->timestamps();
+            $table->foreign('pemilik')->references('id')->on('users');
         });
     }
 

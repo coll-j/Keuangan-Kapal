@@ -104,6 +104,21 @@
 
 @section('js')
 <script>
+    $(document).ready(function() {
+        $('table').SetEditable();
+        $('#table1').DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: false,
+            autoWidth: false,
+            //            'scrollX': true,
+            scrollY: 300,
+            scrollCollapse: true,
+        });
+    });
     console.log('Hi!');
 </script>
+<script src="{{ asset('js/bootstable.js') }}"></script>
 @endsection

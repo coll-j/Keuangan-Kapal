@@ -14,10 +14,12 @@ class CreateAkunTransaksiKantorsTable extends Migration
     public function up()
     {
         Schema::create('akun_transaksi_kantors', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
             $table->string('nama')->unique();
             $table->enum('jenis', ['Masuk', 'Keluar']);
             $table->timestamps();
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });
     }
 

@@ -21,6 +21,7 @@ class Gudang extends Migration
             $table->integer('jumlah');
             $table->decimal('harga_satuan');
             $table->timestamps();
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });
     }
 
@@ -31,6 +32,6 @@ class Gudang extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('gudangs');
     }
 }

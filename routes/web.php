@@ -41,7 +41,7 @@ Route::get('/laba_rugi_kantor', [App\Http\Controllers\LaporanController::class, 
 Route::get('/laba_rugi_proyek', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiProyek'])->name('laba_rugi_proyek');
 
 Route::post('create_perusahaan', [App\Http\Controllers\dashboard\PerusahaanController::class, 'insert'])->name('create_perusahaan');
-Route::post('invite', [App\Http\Controllers\dashboard\PerusahaanController::class, 'invite'])->name('invite_anggota');
+Route::post('invite_anggota', [App\Http\Controllers\dashboard\PerusahaanController::class, 'invite'])->name('invite_anggota');
 Route::post('create_gudang', [App\Http\Controllers\GudangController::class, 'create'])->name('create_gudang');
 
 Route::post('form_neraca', [App\Http\Controllers\AkunController::class, 'addAkunNeraca'])->name('form_neraca');
@@ -49,3 +49,15 @@ Route::post('form_pemasok', [App\Http\Controllers\AkunController::class, 'addPem
 Route::post('form_proyek', [App\Http\Controllers\AkunController::class, 'addProyek'])->name('form_proyek');
 Route::post('form_transaksi_proyek', [App\Http\Controllers\AkunController::class, 'addAkunTransaksiProyek'])->name('form_transaksi_proyek');
 Route::post('form_transaksi_kantor', [App\Http\Controllers\AkunController::class, 'addAkunTransaksiKantor'])->name('form_transaksi_kantor');
+
+Route::get('/delete_neraca/{nama}', [App\Http\Controllers\AkunController::class, 'delAkunNeraca']);
+Route::get('/delete_akun_kantor/{nama}', [App\Http\Controllers\AkunController::class, 'delAkunTransaksiKantor']);
+Route::get('/delete_akun_proyek/{nama}', [App\Http\Controllers\AkunController::class, 'delAkunTransaksiProyek']);
+Route::get('/delete_pemasok/{nama}', [App\Http\Controllers\AkunController::class, 'delPemasok']);
+Route::get('/delete_proyek/{nama}', [App\Http\Controllers\AkunController::class, 'delProyek']);
+
+Route::post('edit_neraca', [App\Http\Controllers\AkunController::class, 'editAkunNeraca'])->name('edit_neraca');
+Route::post('edit_akun_proyek', [App\Http\Controllers\AkunController::class, 'editAkunTransaksiProyek'])->name('edit_akun_proyek');
+Route::post('edit_akun_kantor', [App\Http\Controllers\AkunController::class, 'editAkunTransaksiKantor'])->name('edit_akun_kantor');
+Route::post('edit_proyek', [App\Http\Controllers\AkunController::class, 'editProyek'])->name('edit_proyek');
+Route::post('edit_pemasok', [App\Http\Controllers\AkunController::class, 'editPemasok'])->name('edit_pemasok');

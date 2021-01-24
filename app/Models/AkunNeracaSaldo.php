@@ -10,6 +10,7 @@ class AkunNeracaSaldo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'saldo',
+        'nama', 'saldo', 'id_perusahaan',
     ];
+    
 }

@@ -35,7 +35,7 @@
 
         {{-- Email field --}}
         <div class="input-group mb-3">
-            @if(!is_null($email))
+            @if(isset($email) && (!(is_null($email))))
             <input type="email" name="email" class="form-control"
                    value="{{ $email }}" readonly>
             @else
