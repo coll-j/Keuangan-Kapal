@@ -16,11 +16,13 @@ class Invitation extends Model
         'email',
         'id_perusahaan',
         'role',
+        'status',
     ];
 
     protected $hidden = [
         'token',
-        'id_perusahaan'
+        'id_perusahaan',
+        'status',
     ];
 
     public function perusahaan(){

@@ -66,9 +66,40 @@ class PerusahaanController extends Controller
                 'email' => $request->add_email[$i],
                 'id_perusahaan' => Auth::user()->id_perusahaan,
                 'role' => $role,
+                'status' => 0,
             ]);
             Mail::to($request->add_email[$i])->send(new PerusahaanInvitation($token));
 
+        }
+
+        return redirect()->route('profil_perusahaan');
+    }
+
+    public function acc_invite (Request $request){
+        $invitation = Invitation::where('token', '=', $request->invite_token)->first();
+        // dd($invitation);
+        if(!(is_null($invitation))){
+            $invitation->status = 1;
+            $invitation->save();
+        }
+
+        $user = User::where('email', '=', $invitation->email)->first();
+        if(!(is_null($user)))
+        {
+            $user->id_perusahaan = $invitation->id_perusahaan;
+            $user->role = $invitation->role;
+            $user->save();
+        }
+
+        return redirect()->route('profil_perusahaan');
+    }
+
+    public function rej_invite (Request $request){
+        $invitation = Invitation::where('token', '=', $request->invite_token)->first();
+
+        if(!(is_null($invitation))){
+            $invitation->status = 2;
+            $invitation->save();
         }
 
         return redirect()->route('profil_perusahaan');

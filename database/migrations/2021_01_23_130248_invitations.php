@@ -20,6 +20,7 @@ class Invitations extends Migration
             $table->string('email');
             $table->integer('role');
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaan')->nullable();
+            $table->integer('status');
             $table->timestamps();
         });
     }

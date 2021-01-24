@@ -32,10 +32,17 @@ class DashboardController extends Controller
     public function pageProfilPerusahaan(){
         // $perusahaan = Perusahaan::with('user')->get();
         $perusahaan = Perusahaan::with('user')->get()->where('id', '=', Auth::user()->id_perusahaan)->first();
-        $invite = Invitation::with('perusahaan')->get()->where('email', '=', Auth::user()->email)->first();
-        
-        // dd($invite->perusahaan->first()->nama_perusahaan);
-        return view('dashboard/profil_perusahaan', compact('perusahaan', 'invite'));
+        $invite = Invitation::with('perusahaan')->get()
+                ->where('email', '=', Auth::user()->email)
+                ->where('status', '=', 0)
+                ->first();
+        $invitations = null;
+        if(!(is_null(Auth::user()->id_perusahaan)))
+        {
+            $invitations = Invitation::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+            // dd(Invitation::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get());
+        }
+        return view('dashboard/profil_perusahaan', compact('perusahaan', 'invite', 'invitations'));
     }
 
     public function pageData(){

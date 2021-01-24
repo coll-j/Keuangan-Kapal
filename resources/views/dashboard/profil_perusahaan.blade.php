@@ -2,6 +2,18 @@
 
 @section('title', 'Keuangan Kapal | Profil Perusahaan')
 
+@section('css')
+<style>
+    .fa-check-circle:hover {
+        color: #007E33;
+    }
+
+    .fa-times-circle:hover {
+        color: #CC0000;
+    }
+</style>
+@endsection
+
 @section('content_header')
 <h5 class="pl-3">PROFIL PERUSAHAAN</h5>
 @endsection
@@ -134,7 +146,50 @@
                     <!-- /.tab-pane -->
 
                     <div class="tab-pane" id="terkirim">
-                        <h5>Bentaran gan capek</h5>
+                        <table id="table-invite" class="display table table-hover table-condensed table-sm">
+                            <thead class="thead-light">
+                                <th style="width: 60%">Email</th>
+                                <th style="width: 20%">Jabatan</th>
+                                <th style="width: 20%">Status</th>
+                            </thead>
+                            <tbody>
+                                @if(!(is_null($invitations)))
+                                    @foreach($invitations as $invitation)
+                                    <tr>
+                                        <td>{{ $invitation->email }}</td>
+                                        @switch($invitation->role)
+                                            @case(1)
+                                                <td>Administrator</td>
+                                                @break
+                                            @case(2)
+                                                <td>Akuntan</td>
+                                                @break
+                                            @case(3)
+                                                <td>Pemilik</td>
+                                                @break
+                                            @case(4)
+                                                <td>Manajer Proyek</td>
+                                                @break
+                                            @default
+                                                <td>Super Admin</td>
+                                                @break
+                                        @endswitch
+                                        @switch($invitation->status)
+                                            @case(1)
+                                                <td><span class="p-1 text-sm bg-success text-white rounded">Diterima</span></td>
+                                                @break
+                                            @case(2)
+                                                <td><span class="p-1 text-sm bg-danger text-white rounded">Ditolak</span></td>
+                                                @break
+                                            @default
+                                                <td><span class="p-1 text-sm bg-light text-dark rounded">Pending</span></td>
+                                                @break
+                                        @endswitch
+                                    </tr>
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                     <!-- /.tab-pane -->
                 </div>
@@ -152,13 +207,43 @@
                 <div class="card-header">
                     <h5>Undangan</h5>
                 </div>
-                <div class="card-body">
-                    <dl class="row">
-                        <dt class="col-sm-3">Perusahaan</dt>
-                        <dd class="col-sm-9">{{ $invite->perusahaan->first()->nama_perusahaan }}</dd>
-                        <dt class="col-sm-3">Posisi</dt>
-                        <dd class="col-sm-9">{{ $invite->role }}</dd>
-                    </dl>
+                <div class="card-body row">
+                    <div class="col-sm-9">
+                        <dl class="row">
+                            <dt class="col-sm-3">Perusahaan</dt>
+                            <dd class="col-sm-9">{{ $invite->perusahaan->first()->nama_perusahaan }}</dd>
+                            <dt class="col-sm-3">Posisi</dt>
+                            @switch($invite->role)
+                                @case(1)
+                                    <dd class="col-sm-9">Administrator</dd>
+                                    @break
+                                @case(2)
+                                    <dd class="col-sm-9">Akuntan</dd>
+                                    @break
+                                @case(3)
+                                    <dd class="col-sm-9">Pemilik</dd>
+                                    @break
+                                @case(4)
+                                    <dd class="col-sm-9">Manajer Proyek</dd>
+                                    @break
+                                @default
+                                    <dd class="col-sm-9">Super Admin</dd>
+                                    @break
+                            @endswitch
+                        </dl>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-lg text-danger float-right" form="rej-invite"><i class="far fa-2x fa-times-circle shadow-sm rounded-circle"></i></button>
+                        <button class="btn btn-lg text-success float-right" form="acc-invite"><i class="far fa-2x fa-check-circle shadow-sm rounded-circle"></i></button>
+                    </div>
+                    <form id="acc-invite" class="d-none" method="POST" action="{{ route('acc_invite') }}">
+                        @csrf
+                        <input type="text" name="invite_token" value="{{ $invite->token }}">
+                    </form>
+                    <form id="rej-invite" class="d-none" method="POST" action="{{ route('rej_invite') }}">
+                        @csrf
+                        <input type="text" name="invite_token" value="{{ $invite->token }}">
+                    </form>
                 </div>
             </div>
         </div>

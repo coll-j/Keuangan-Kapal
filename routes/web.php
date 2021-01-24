@@ -42,6 +42,9 @@ Route::get('/laba_rugi_proyek', [App\Http\Controllers\LaporanController::class, 
 
 Route::post('create_perusahaan', [App\Http\Controllers\dashboard\PerusahaanController::class, 'insert'])->name('create_perusahaan');
 Route::post('invite_anggota', [App\Http\Controllers\dashboard\PerusahaanController::class, 'invite'])->name('invite_anggota');
+Route::post('acc_invite', [App\Http\Controllers\dashboard\PerusahaanController::class, 'acc_invite'])->name('acc_invite');
+Route::post('rej_invite', [App\Http\Controllers\dashboard\PerusahaanController::class, 'rej_invite'])->name('rej_invite');
+
 Route::post('create_gudang', [App\Http\Controllers\GudangController::class, 'create'])->name('create_gudang');
 
 Route::post('form_neraca', [App\Http\Controllers\AkunController::class, 'addAkunNeraca'])->name('form_neraca');
