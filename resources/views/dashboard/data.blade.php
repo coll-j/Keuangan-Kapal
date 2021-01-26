@@ -40,7 +40,7 @@
                             @foreach($akun_neraca_saldos as $akun_neraca_saldo)
                             <tr id="table-neraca" name="table-neraca" rowId="{{ $akun_neraca_saldo['id'] }}">
                                 <td id="nama" style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
-                                <td id="saldo" style="width: 30%;">{{ number_format($akun_neraca_saldo['saldo'], 3, '.', ',') }}</td>
+                                <td id="saldo" style="width: 30%;">{{ number_format($akun_neraca_saldo['saldo'], 2, '.', ',') }}</td>
                             </tr>
                             @endforeach
                         </tbody>
