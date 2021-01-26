@@ -33,14 +33,14 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Akun</th>
-                                <th>Saldo</th>
+                                <th>Saldo (Rp)</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($akun_neraca_saldos as $akun_neraca_saldo)
                             <tr id="table-neraca" name="table-neraca" rowId="{{ $akun_neraca_saldo['id'] }}">
                                 <td id="nama" style="width: 70%;">{{ $akun_neraca_saldo['nama'] }}</td>
-                                <td id="saldo" style="width: 30%;">{{ $akun_neraca_saldo['saldo'] }}</td>
+                                <td id="saldo" style="width: 30%;">{{ number_format($akun_neraca_saldo['saldo'], 3, '.', ',') }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -246,51 +246,56 @@
     $(document).ready(function() {
         $('table').SetEditable();
         new AutoNumeric('#saldo-akun');
-        $('#table-neraca').DataTable({
-            paging      : false,
-            searching   : false,
-            scrollY : 300,
-            scrollCollapse    : true,
-            info        : false,
-        });
+        setTimeout(function(){
+            $('#table-neraca').DataTable({
+                paging      : false,
+                searching   : false,
+                scrollY : 300,
+                scrollCollapse    : true,
+                info        : false,
+            });
 
-        $('#table-kantor').DataTable({
-            paging      : false,
-            searching   : false,
-            scrollY : 300,
-            scrollCollapse    : true,
-            info        : false,
-        });
+            $('#table-kantor').DataTable({
+                paging      : false,
+                searching   : false,
+                scrollY : 300,
+                scrollCollapse    : true,
+                info        : false,
+            });
 
-        $('#table-proyek').DataTable({
-            paging      : false,
-            searching   : false,
-            scrollY : 300,
-            scrollCollapse    : true,
-            info        : false,
-        });
-        
-        $('#table-pemasok').DataTable({
-            paging      : false,
-            searching   : false,
-            scrollY : 100,
-            scrollCollapse    : true,
-            info        : false,
-            sorting: false,
-        });
+            $('#table-proyek').DataTable({
+                paging      : false,
+                searching   : false,
+                scrollY : 300,
+                scrollCollapse    : true,
+                info        : false,
+            });
+            
+            $('#table-pemasok').DataTable({
+                paging      : false,
+                searching   : false,
+                scrollY : 100,
+                scrollCollapse    : true,
+                info        : false,
+                sorting: false,
+            });
 
-        $('#table-proyekan').DataTable({
-            paging      : false,
-            searching   : false,
-            scrollY : 100,
-            scrollCollapse    : true,
-            info        : false,
-            sorting: false,
-        });
+            $('#table-proyekan').DataTable({
+                paging      : false,
+                searching   : false,
+                scrollY : 100,
+                scrollCollapse    : true,
+                info        : false,
+                sorting: false,
+            });
+
+            $.fn.dataTable.tables( {api: true} ).columns.adjust();
+        }, 300);
 
         $('#jenis-akun').change(function(){
             var selected = $("#jenis-akun").find("option:selected").text();
             // console.log();
+
             switch(selected){
                 case "Akun Transaksi Kantor":
                     $('#form-neraca').hide();

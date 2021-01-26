@@ -22,7 +22,7 @@ class AkunController extends Controller
     {
         AkunNeracaSaldo::create([
             'nama' => $req->n_nama,
-            'saldo' => $req->n_saldo,
+            'saldo' => intval(str_replace(",","",$req->n_saldo)),
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');
