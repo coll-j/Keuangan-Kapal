@@ -18,7 +18,7 @@ class CreateAkunNeracaSaldosTable extends Migration
             $table->id()->autoIncrement();
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
             $table->string('nama')->unique();
-            $table->decimal('saldo');
+            $table->double('saldo', 21, 3);
             $table->timestamps();
             $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });
