@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TransaksiKantor;
 use App\Models\AkunTransaksiKantor;
+use App\Models\TransaksiProyek;
+use App\Models\Pemasok;
+use App\Models\Proyek;
+use App\Models\AkunTransaksiProyek;
 
 class CatatanController extends Controller
 {
@@ -32,7 +36,16 @@ class CatatanController extends Controller
     }
 
     public function pageTransaksiProyek(){
-        return view('catatan/transaksi_proyek');
+        $transaksi_proyeks = TransaksiProyek::all();
+        $akun_transaksi_proyeks = AkunTransaksiProyek::all();
+        $pemasoks = Pemasok::all();
+        $proyeks = Proyek::all();
+        return view('catatan/transaksi_proyek', [
+            'transaksi_proyeks' => $transaksi_proyeks, 
+            'akun_transaksi_proyeks' => $akun_transaksi_proyeks, 
+            'pemasoks' => $pemasoks,
+            'proyeks' => $proyeks,
+            ]);
     }
     
     public function pageTransaksiKantor(){

@@ -7,6 +7,9 @@
 @endsection
 
 @section('content')
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+@if(!empty(Auth::user()->id_perusahaan))
 <div class="card">
     <div class="card-header">
         <div class="text-center pt-3 mb-3">
@@ -66,76 +69,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Material</td>
-                        <td>PT. Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
+                    @foreach($transaksi_proyeks as $transaksi_proyek)
+                    <tr id="table-transaksi-proyek" name="table-transaksi-proyek">
+                        <td id="tgl_transaksi">{{ $transaksi_proyek['tgl_transaksi'] }}</td>
+                        <td id="nama_transaksi">{{ $transaksi_proyek['nama_transaksi'] }}</td>
+                        <td id="nama_pemasok">{{ $transaksi_proyek['nama_pemasok'] }}</td>
+                        <td id="nama_proyek">{{ $transaksi_proyek['nama_proyek'] }}</td>
+                        <td id="jenis_proyek">{{ $transaksi_proyek['jenis_proyek'] }}</td>
+                        <td id="jenis_simpanan">{{ $transaksi_proyek['jenis_simpanan'] }}</td>
+                        <td id="jenis_transaksi">{{ $transaksi_proyek['jenis_transaksi'] }}</td>
+                        <td id="jumlah">{{ number_format($transaksi_proyek['jumlah'], 2, '.', ',') }}</td>
+                        <td id="dibayar_diterima">{{ number_format($transaksi_proyek['dibayar_diterima'], 2, '.', ',') }}</td>
+                        <td id="sisa">{{ number_format($transaksi_proyek['sisa'], 2, '.', ',') }}</td>
+                        <td id="utang_piutang">{{ $transaksi_proyek['utang_piutang'] }}</td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>PT. Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -230,7 +178,7 @@
     </div>
   </div>
 </div>
-
+@endif
 @endsection
 
 @section('css')
