@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Keuangan Kapal | Laba Rugi Proyek')
+@section('title', 'Keuangan Kapal | Laporan & Realisasi Anggaran Proyek')
 
 @section('content_header')
-<h5 class="pl-3">LAPORAN LABA RUGI PROYEK</h5>
+<h5 class="pl-3">LAPORAN & REALISASI ANGGARAN PROYEK</h5>
 @endsection
 
 @section('content')

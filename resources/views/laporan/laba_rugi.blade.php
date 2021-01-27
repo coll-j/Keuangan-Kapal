@@ -3,7 +3,7 @@
 @section('title', 'Keuangan Kapal | Laporan Laba Rugi')
 
 @section('content_header')
-<h5 class="pl-3">LAPORAN LABA RUGI</h5>
+<h5 class="pl-3">LAPORAN & REALISASI ANGGARAN </h5>
 @endsection
 
 @section('content')
