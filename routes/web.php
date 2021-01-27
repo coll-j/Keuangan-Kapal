@@ -64,3 +64,5 @@ Route::post('edit_akun_proyek', [App\Http\Controllers\AkunController::class, 'ed
 Route::post('edit_akun_kantor', [App\Http\Controllers\AkunController::class, 'editAkunTransaksiKantor'])->name('edit_akun_kantor');
 Route::post('edit_proyek', [App\Http\Controllers\AkunController::class, 'editProyek'])->name('edit_proyek');
 Route::post('edit_pemasok', [App\Http\Controllers\AkunController::class, 'editPemasok'])->name('edit_pemasok');
+
+Route::post('add_transaksi_kantor', [App\Http\Controllers\TransaksiController::class, 'addTransaksiKantor'])->name('add_transaksi_kantor');

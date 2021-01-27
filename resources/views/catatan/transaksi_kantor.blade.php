@@ -7,6 +7,9 @@
 @endsection
 
 @section('content')
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+@if(!empty(Auth::user()->id_perusahaan))
 <div class="card">
     <div class="card-header">
         <div class="text-center pt-3 mb-3">
@@ -62,241 +65,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>1/2/2019</td>
-                        <td>Uang muka Sewa Kantor</td>
-                        <td>Untuk sewa kantor 2 tahun</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>120,000,000</td>
+                    @foreach($transaksi_kantors as $transaksi_kantor)
+                    <tr id="table-transaksi-kantor" name="table-transaksi-kantor">
+                        <td id="tgl_transaksi">{{ $transaksi_kantor['tgl_transaksi'] }}</td>
+                        <td id="nama_transaksi">{{ $transaksi_kantor['nama_transaksi'] }}</td>
+                        <td id="keterangan">{{ $transaksi_kantor['keterangan'] }}</td>
+                        <td id="jenis_simpanan">{{ $transaksi_kantor['jenis_simpanan'] }}</td>
+                        <td id="jenis_transaksi">{{ $transaksi_kantor['jenis_transaksi'] }}</td>
+                        <td id="jumlah">{{ number_format($transaksi_kantor['jumlah'], 2, '.', ',') }}</td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>1/3/2019</td>
-                        <td>Biaya Gaji Karyawan</td>
-                        <td>bulan Januari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>15,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>1/7/2019</td>
-                        <td>Biaya Telepon/Internet</td>
-                        <td>bulan Januari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>1,975,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>1/8/2019</td>
-                        <td>Pembayaran Utang Bank</td>
-                        <td>bulan Januari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>10,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>1/8/2019</td>
-                        <td>Biaya Bunga Pinjaman</td>
-                        <td>bulan Januari 2019n</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>3,500,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">6</th>
-                        <td>1/10/2019</td>
-                        <td>Biaya Rumah Tangga Kantor</td>
-                        <td>bulan Januari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>2,500,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">7</th>
-                        <td>1/22/2019</td>
-                        <td>Biaya Administrasi Umum</td>
-                        <td>bulan Januari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>250,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">8</th>
-                        <td>1/29/2019</td>
-                        <td>Perawatan/Pemeliharaan Aset</td>
-                        <td>bulan Januari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>1,250,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">9</th>
-                        <td>1/31/2019</td>
-                        <td>Biaya Rumah Tangga Kantor</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>1,725,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">10</th>
-                        <td>2/3/2019</td>
-                        <td>Biaya Gaji Karyawan</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>15,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">11</th>
-                        <td>2/5/2019</td>
-                        <td>Biaya Listrik</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>3,925,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">12</th>
-                        <td>2/5/2019</td>
-                        <td>Biaya Telepon/Internet</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>2,025,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">13</th>
-                        <td>2/8/2019</td>
-                        <td>Pembayaran Utang Bank</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>10,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">14</th>
-                        <td>2/8/2019</td>
-                        <td>Biaya Bunga Pinjaman</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>3,500,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">15</th>
-                        <td>2/15/2019</td>
-                        <td>Biaya Rumah Tangga Kantor</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>4,125,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">16</th>
-                        <td>2/28/2019</td>
-                        <td>Tambahan Dana ke Kas</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>5,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">17</th>
-                        <td>2/28/2019</td>
-                        <td>Tambahan Dana dari Bank</td>
-                        <td>bulan Februari 2019</td>
-                        <td>Kas</td>
-                        <td>Masuuk</td>
-                        <td>5,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">18</th>
-                        <td>3/3/2019</td>
-                        <td>Biaya Gaji Karyawan</td>
-                        <td>bulan Maret 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>15,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">19</th>
-                        <td>3/4/2019</td>
-                        <td>Biaya Listrik</td>
-                        <td>bulan Maret 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>2,195,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">20</th>
-                        <td>3/5/2019</td>
-                        <td>Biaya Telepon/Internet</td>
-                        <td>bulan Maret 2019</td>
-                        <td>Kas</td>
-                        <td>Keluar</td>
-                        <td>1,975,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">21</th>
-                        <td>3/8/2019</td>
-                        <td>Pembayaran Utang Bank</td>
-                        <td>bulan Maret 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>10,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">22</th>
-                        <td>3/8/2019</td>
-                        <td>Biaya Bunga Pinjaman</td>
-                        <td>bulan Maret 2019</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>3,500,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">23</th>
-                        <td>3/21/2019</td>
-                        <td>Biaya Rumah Tangga Kantor</td>
-                        <td>bulan Maret 2019</td>
-                        <td>Kas</td>
-                        <td>Keluar</td>
-                        <td>1,925,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">24</th>
-                        <td>3/25/2019</td>
-                        <td>Biaya Administrasi Umum</td>
-                        <td>bulan Maret 2019</td>
-                        <td>Kas</td>
-                        <td>Keluar</td>
-                        <td>725,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">25</th>
-                        <td>3/31/2019</td>
-                        <td>Biaya Penyusutan Aset</td>
-                        <td>periode Jan s.d. Maret 2019</td>
-                        <td> </td>
-                        <td>Keluar</td>
-                        <td>15,000,000</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">26</th>
-                        <td>3/31/2019</td>
-                        <td>Uang muka Sewa Kantor</td>
-                        <td>periode Jan s.d. Maret 2019</td>
-                        <td> </td>
-                        <td>Keluar</td>
-                        <td>15,000,000</td>
-                    </tr>
-
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -358,6 +136,7 @@
     </div>
   </div>
 </div>
+@endif
 @endsection
 
 @section('css')

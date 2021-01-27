@@ -13,7 +13,18 @@ class TransaksiKantor extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('transaksi_kantors', function (Blueprint $table) {
+            $table->id()->autoIncrement();
+            $table->date('tgl_transaksi');
+            $table->string('nama_transaksi');
+            $table->string('keterangan');
+            $table->enum('jenis_simpanan', ['Kas', 'Bank']);
+            $table->string('jenis_transaksi');
+            $table->double('jumlah', 32, 3);
+            $table->timestamps();
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
+        });
     }
 
     /**
@@ -23,6 +34,6 @@ class TransaksiKantor extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('transaksi_kantors');
     }
 }
