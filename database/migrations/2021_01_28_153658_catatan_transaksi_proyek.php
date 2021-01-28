@@ -17,17 +17,17 @@ class CatatanTransaksiProyek extends Migration
         Schema::create('catatan_transaksi_proyeks', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal_transaksi');
-            $table->unsignedBigInteger('id_akun_tr_proyek')->references('id')->on('akun_transaksi_proyeks');
-            $table->unsignedBigInteger('id_pemasok')->references('id')->on('pemasoks')->nullable();
+            $table->unsignedBigInteger('id_akun_tr_proyek')->references('id')->on('akun_transaksi_proyeks')->onDelete('cascade');
+            $table->unsignedBigInteger('id_pemasok')->references('id')->on('pemasoks')->nullable()->onDelete('cascade');
             $table->string('nama_material')->nullable();
             $table->integer('jumlah_material')->nullable();
             $table->string('satuan_material')->nullable();
-            $table->unsignedBigInteger('id_proyek')->references('id')->on('proyeks');
-            $table->unsignedBigInteger('id_akun_neraca')->references('id')->on('akun_neraca_saldos')->nullable();
+            $table->unsignedBigInteger('id_proyek')->references('id')->on('proyeks')->onDelete('cascade');
+            $table->unsignedBigInteger('id_akun_neraca')->references('id')->on('akun_neraca_saldos')->nullable()->onDelete('cascade');
             $table->double('jumlah', 21, 3);
             $table->double('terbayar', 21, 3);
 
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaan')->nullable();
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaan')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

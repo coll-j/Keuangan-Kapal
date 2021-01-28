@@ -24,7 +24,6 @@ class PerusahaanController extends Controller
     public function insert (Request $request) {
         $perusahaan = Perusahaan::create([
             'nama_perusahaan' => $request->nama_perusahaan,
-            'pemilik' => Auth::user()->id,
             'alamat' => $request->alamat,
             'email' => $request->email,
             'website' => $request->website,

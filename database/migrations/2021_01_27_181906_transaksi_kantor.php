@@ -22,8 +22,7 @@ class TransaksiKantor extends Migration
             $table->string('jenis_transaksi');
             $table->double('jumlah', 32, 3);
             $table->timestamps();
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
-            $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
         });
     }
 

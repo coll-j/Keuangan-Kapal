@@ -15,11 +15,10 @@ class CreateProyeksTable extends Migration
     {
         Schema::create('proyeks', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
-            $table->unsignedBigInteger('id_pemilik')->references('id')->on('users');
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
+            $table->unsignedBigInteger('id_pemilik')->references('id')->on('users')->onDelete('cascade');
             $table->string('jenis');
             $table->timestamps();
-            $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });
     }
 

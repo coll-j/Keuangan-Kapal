@@ -15,11 +15,10 @@ class CreateAkunTransaksiProyeksTable extends Migration
     {
         Schema::create('akun_transaksi_proyeks', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->string('nama')->unique();
             $table->enum('jenis', ['Masuk', 'Keluar']);
             $table->timestamps();
-            $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });
     }
 

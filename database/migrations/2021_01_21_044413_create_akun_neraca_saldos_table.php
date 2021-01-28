@@ -16,11 +16,10 @@ class CreateAkunNeracaSaldosTable extends Migration
     {
         Schema::create('akun_neraca_saldos', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
+            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->string('nama')->unique();
             $table->double('saldo', 21, 3);
             $table->timestamps();
-            $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });
     }
 
