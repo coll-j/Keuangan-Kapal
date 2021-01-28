@@ -3,7 +3,7 @@
 @section('title', 'Keuangan Kapal | Laporan Laba Rugi')
 
 @section('content_header')
-<h5 class="pl-3">LAPORAN & REALISASI ANGGARAN </h5>
+<h5 class="pl-3">LAPORAN ANGGARAN & REALISASI</h5>
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         <div class="text-center pt-3">
             <div class="col">
                 <h5>PT. XYZ</h5>
-                <h6>Laporan Anggaran & Realisasi Laba Rugi</h6>
+                <h6>Laporan Anggaran & Realisasi</h6>
                 <h6>Pembangunan Rumah Pak David</h6>
             </div>
         </div>

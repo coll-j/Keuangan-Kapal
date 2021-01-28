@@ -1,4 +1,4 @@
-<li @if(isset($item['id'])) id="{{ $item['id'] }}" @endif class="nav-item">
+<li @if(isset($item['id'])) id="{{ $item['id'] }}" @endif class="nav-item {{ in_array(Auth::user()->role, $item['role']) ? '' : 'd-none' }}">
 
     <a class="nav-link {{ $item['class'] }} @if(isset($item['shift'])) {{ $item['shift'] }} @endif"
        href="{{ $item['href'] }}" @if(isset($item['target'])) target="{{ $item['target'] }}" @endif

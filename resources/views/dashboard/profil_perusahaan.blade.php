@@ -55,9 +55,10 @@
                         </li>
                     </ul>
 
+                    @if(Auth::user()->role == 1)
                     <a id="edit-perusahaan" href="#" class="btn btn-primary btn-block"><b>Edit</b></a>
                     <a id="save-perusahaan" href="#" class="btn btn-primary btn-block" style="display: none;"><b>Save</b></a>
-
+                    @endif
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -73,8 +74,10 @@
                 <div class="card-header bg-light">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Lihat</a></li>
+                        @if(Auth::user()->role == 1)
                         <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Undang</a></li>
                         <li class="nav-item"><a class="nav-link" href="#terkirim" data-toggle="tab">Undangan Terkirim</a></li>
+                        @endif
                     </ul>
                 </div><!-- /.card-header -->
                 <div class="card-body">
@@ -116,6 +119,7 @@
                     </div>
                     <!-- /.tab-pane -->
 
+                    @if(Auth::user()->role == 1)
                     <div class="tab-pane" id="settings">
                         <form class="form-horizontal" method="POST" action="{{ route('invite_anggota') }}">
                             @csrf
@@ -131,10 +135,10 @@
                                         <td><input type="email" class="form-control" name="add_email[]" placeholder="Masukkan e-mail untuk diundang"></td>
                                         <td>
                                             <select class="form-control" name="add_jabatan[]">
-                                                <option>Pemilik</option>
-                                                <option>Pemilik Proyek</option>
-                                                <option>Administrator</option>
-                                                <option>Akuntan</option>
+                                                <option value="3">Pemilik</option>
+                                                <option value="4">Pemilik Proyek</option>
+                                                <option value="1">Administrator</option>
+                                                <option value="2">Akuntan</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -195,6 +199,7 @@
                         </table>
                     </div>
                     <!-- /.tab-pane -->
+                    @endif
                 </div>
                 <!-- /.tab-content -->
                 </div><!-- /.card-body -->
@@ -328,48 +333,100 @@ h5 {
 @section('js')
 <script>
     $(document).ready(function() {
-        $('#table-member').SetEditable({
-            columnsEd: "2",
-            onEdit: function(selected_val, user_id){
-                console.log('cobs', selected_val, user_id);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+        var role = <?php echo Auth::user()->role; ?>;
+        console.log('role ', role);
 
-                $.ajax({
-                    url: '/edit_role',
-                    method: 'post',
-                    data: {
-                        role: selected_val,
-                        user_id: user_id,
-                    },
-                    success:function(data){
-                        console.log(data);          
-                    }
-                });
-            },
-            onDelete: function(user_id){
-                console.log('delete ', user_id);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+        if(role == 1) // Admin Privilege
+        {
+            $('#table-member').SetEditable({
+                columnsEd: "2",
+                onEdit: function(selected_val, user_id){
+                    console.log('cobs', selected_val, user_id);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+    
+                    $.ajax({
+                        url: '/edit_role',
+                        method: 'post',
+                        data: {
+                            role: selected_val,
+                            user_id: user_id,
+                        },
+                        success:function(data){
+                            console.log(data);          
+                        }
+                    });
+                },
+                onDelete: function(user_id){
+                    console.log('delete ', user_id);
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+    
+                    $.ajax({
+                        url: '/delete_member',
+                        method: 'post',
+                        data: {
+                            user_id: user_id,
+                        },
+                        success:function(data){
+                            console.log(data);          
+                        }
+                    });
+                },
+            });
 
-                $.ajax({
-                    url: '/delete_member',
-                    method: 'post',
-                    data: {
-                        user_id: user_id,
-                    },
-                    success:function(data){
-                        console.log(data);          
-                    }
-                });
-            },
-        });
+            $('#edit-perusahaan').click(function(){
+                var temp_alamat = $('#alamat').html();
+                var temp_pemilik = $('#pemilik').html();
+                var temp_email = $('#email').html();
+                var temp_web = $('#web').html();
+                var temp_telp = $('#telp').html();
+    
+                $(this).hide();
+                $('#save-perusahaan').show();
+                $('#alamat').html('<textarea rows="2" cols="30" style="resize: none;">' + temp_alamat + '</textarea>');
+                $('#email').html('<input type="email" size="30" value="' + temp_email + '">');
+    
+                $('#web').removeAttr("target href");
+                $('#web').html('<input type="text" size="30" value="' + temp_web + '">');
+                $('#telp').html('<input type="text" size="30" value="' + temp_telp + '">');
+            });
+
+            $('#save-perusahaan').click(function(){
+                $(this).hide();
+                $('#edit-perusahaan').show();
+                // console.log();
+                $('#alamat').html($($('#alamat').children("textarea")[0]).html());
+                $('#pemilik').html( $($('#pemilik').children("input")[0]).val());
+                $('#email').html( $($('#email').children("input")[0]).val());
+                $('#web').attr({
+                    href: "http://" + $($('#web').children("input")[0]).val(),
+                    target: "_blank"});
+                $('#web').html( $($('#web').children("input")[0]).val());
+                $('#telp').html( $($('#telp').children("input")[0]).val());
+                
+            });
+            
+            $('#add-anggota').click(function(){
+                $('#table-undang tr:last').after('<tr> \
+                <td><input type="email" class="form-control" name="add_email[]" placeholder="Masukkan e-mail untuk diundang"></td> \
+                <td> \
+                    <select class="form-control" name="add_jabatan[]"> \
+                        <option value="3">Pemilik</option> \
+                        <option value="4">Pemilik Proyek</option> \
+                        <option value="1">Administrator</option> \
+                        <option value="2">Akuntan</option> \
+                    </select> \
+                </td> \
+            </tr>');
+            });
+        }
         var table = $('#table-member').DataTable({
             paging      : false,
             searching   : true,
@@ -378,51 +435,8 @@ h5 {
             info        : false,
         });
         
-        $('#edit-perusahaan').click(function(){
-            var temp_alamat = $('#alamat').html();
-            var temp_pemilik = $('#pemilik').html();
-            var temp_email = $('#email').html();
-            var temp_web = $('#web').html();
-            var temp_telp = $('#telp').html();
 
-            $(this).hide();
-            $('#save-perusahaan').show();
-            $('#alamat').html('<textarea rows="2" cols="30" style="resize: none;">' + temp_alamat + '</textarea>');
-            $('#email').html('<input type="email" size="30" value="' + temp_email + '">');
 
-            $('#web').removeAttr("target href");
-            $('#web').html('<input type="text" size="30" value="' + temp_web + '">');
-            $('#telp').html('<input type="text" size="30" value="' + temp_telp + '">');
-        });
-
-        $('#save-perusahaan').click(function(){
-            $(this).hide();
-            $('#edit-perusahaan').show();
-            // console.log();
-            $('#alamat').html($($('#alamat').children("textarea")[0]).html());
-            $('#pemilik').html( $($('#pemilik').children("input")[0]).val());
-            $('#email').html( $($('#email').children("input")[0]).val());
-            $('#web').attr({
-                href: "http://" + $($('#web').children("input")[0]).val(),
-                target: "_blank"});
-            $('#web').html( $($('#web').children("input")[0]).val());
-            $('#telp').html( $($('#telp').children("input")[0]).val());
-            
-        });
-
-        $('#add-anggota').click(function(){
-            $('#table-undang tr:last').after('<tr> \
-            <td><input type="email" class="form-control" name="add_email[]" placeholder="Masukkan e-mail untuk diundang"></td> \
-            <td> \
-                <select class="form-control" name="add_jabatan[]"> \
-                    <option>Pemilik</option> \
-                    <option>Pemilik Proyek</option> \
-                    <option>Administrator</option> \
-                    <option>Akuntan</option> \
-                </select> \
-            </td> \
-        </tr>');
-        });
     } );
 </script>
 <script src="{{ asset('js/bootstable-perusahaan.js') }}"></script>

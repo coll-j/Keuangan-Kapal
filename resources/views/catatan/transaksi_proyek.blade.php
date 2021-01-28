@@ -22,9 +22,11 @@
         </div>
         <div class="row">
             <div class="col-sm">
+                @if(Auth::user()->role == 1 || Auth::user()->role == 2)
                 <div class="row justify-content-start">
                     <a href="#"><button type="button" class="btn btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
                 </div>
+                @endif
             </div>
             <div class="col-sm">
                 <div class="row justify-content-end">
@@ -109,6 +111,7 @@
     <!-- /.card-footer -->
 </div>
 
+@if(Auth::user()->role == 1 || Auth::user()->role == 2)
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -194,6 +197,7 @@
   </div>
 </div>
 @endif
+@endif
 @endsection
 
 @section('css')
@@ -204,9 +208,18 @@
 <script src="https://unpkg.com/autonumeric"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('table').SetEditable();
-        new AutoNumeric('#jumlah-transaksi');
-        new AutoNumeric('#jumlah-transaksi-dibayar');
+        var role = <?php echo Auth::user()->role; ?>;
+
+        if(role == 1)
+        {
+            $('table').SetEditable();
+        }
+
+        if(role == 1 || role == 2)
+        {
+            new AutoNumeric('#jumlah-transaksi');
+            new AutoNumeric('#jumlah-transaksi-dibayar');
+        }
 
         $('#table-transaksi-proyek').DataTable({
             'columnDefs': [

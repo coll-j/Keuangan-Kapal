@@ -3,7 +3,7 @@
 @section('title', 'Keuangan Kapal | Laporan & Realisasi Anggaran Kantor')
 
 @section('content_header')
-<h5 class="pl-3">LAPORAN & REALISASI ANGGARAN KANTOR</h5>
+<h5 class="pl-3">LAPORAN ANGGARAN & REALISASI KANTOR</h5>
 @endsection
 
 @section('content')
@@ -12,8 +12,8 @@
         <div class="text-center pt-3">
             <div class="col">
                 <h5>PT. XYZ</h5>
-                <h6>Laporan Laba Rugi</h6>
-                <h6>Kantor Pusat</h6>
+                <h6>Laporan Anggaran dan Realisasi</h6>
+                <h6>Kantor</h6>
             </div>
         </div>
         <div class="d-flex justify-content-center">

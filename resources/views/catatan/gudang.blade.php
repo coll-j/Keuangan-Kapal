@@ -21,7 +21,9 @@
         <div class="row pt-1">
             <div class="col">
                 <div class="row justify-content-start">
+                    @if(Auth::user()->role == 1 || Auth::user()->role == 2)
                     <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah Pemakaian Material</button></a>
+                    @endif
                     <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
                 </div>
                 <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
@@ -54,6 +56,7 @@
     <!-- /.card-footer -->
 </div>
 
+@if(Auth::user()->role == 1 || Auth::user()->role == 2)
 <!-- Modal create gudang-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -88,6 +91,7 @@
         </div>
     </div>
 </div>
+@endif
 @endsection
 
 @section('css')
@@ -97,7 +101,12 @@
 @section('js')
 <script>
     $(document).ready(function() {
-        $('table').SetEditable();
+        var role = <?php echo Auth::user()->role; ?>;
+        
+        if(role == 1)
+        {
+            $('table').SetEditable();
+        }
         $('#table1').DataTable({
             paging: true,
             lengthChange: false,

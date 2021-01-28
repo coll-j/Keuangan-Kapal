@@ -231,74 +231,86 @@ return [
     'menu' => [
         [   'text' => 'Dashboard',
             'url' => 'home',
-            'icon' => 'fas fa-fw fa-tachometer-alt'
+            'icon' => 'fas fa-fw fa-tachometer-alt',
+            'role' => [0, 1, 2, 3, 4],
         ],
         [
             'text' => 'profil_perusahaan',
             'url'  => 'profil_perusahaan',
             'icon' => 'fas fa-fw fa-building',
+            'role' => [0, 1, 2, 3],
         ],
         [
             'text' => 'data',
             'url'  => 'data',
             'icon' => 'fas fa-fw fa-database',
+            'role' => [0, 1, 2, 3],
         ],
-        ['header' => 'catatan'],
+        ['header' => 'catatan', 'role' => [0, 1, 2, 3]],
         [
             'text' => 'neraca',
             'url'  => 'neraca',
             'logo' => 'N',
-            'icon_color' => 'secondary'
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3],
         ],
         [
             'text' => 'anggaran',
             'url'  => 'anggaran',
             'logo' => 'A',
-            'icon_color' => 'secondary'
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3]
         ],
         [
             'text' => 'transaksi_kantor',
             'url'  => 'transaksi_kantor',
             'logo' => 'TK',
-            'icon_color' => 'secondary'
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3],
         ],
         [
             'text' => 'transaksi_proyek',
             'url'  => 'transaksi_proyek',
             'logo' => 'TP',
-            'icon_color' => 'secondary'
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3],
         ],
         [
             'text' => 'hutang_piutang',
             'url'  => 'hutang_piutang',
             'logo' => 'HP',
-            'icon_color' => 'secondary'
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3],
         ],
         [
             'text' => 'Gudang',
             'url'  => 'gudang',
             'logo' => 'G',
-            'icon_color' => 'secondary'
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3],
         ],
 
-        ['header' => 'laporan'],
+        ['header' => 'laporan', 'role' => [0, 1, 2, 3, 4],],
         [
             'text' => 'l_laba_rugi_kantor',
             'url'  => 'laba_rugi_kantor',
-            'logo' => 'LRK',
-            'icon_color' => 'secondary'
+            'logo' => 'ARK',
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3],
         ],
         [
             'text'    => 'l_laba_rugi_proyek',
             'url'     => 'laba_rugi_proyek',
-            'logo' => 'LRP',
-            'icon_color' => 'secondary'
+            'logo' => 'ARP',
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3, 4],
         ],
         [
             'text' => 'l_laba_rugi',
             'url'  => 'laba_rugi',
-            'logo' => 'LR',
-            'icon_color' => 'secondary'
+            'logo' => 'AR',
+            'icon_color' => 'secondary',
+            'role' => [0, 1, 2, 3],
         ],
          // [
         //     'text' => 'search',

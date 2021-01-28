@@ -23,7 +23,9 @@
         <div class="row">
             <div class="col-sm">
                 <div class="row justify-content-start">
+                    @if(Auth::user()->role == 1 || Auth::user()->role == 2)
                     <a href="#"><button type="button" class="btn btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
+                    @endif
                     <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
                 </div>
             </div>
@@ -146,7 +148,12 @@
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('table').SetEditable();
+        var role = <?php echo Auth::user()->role; ?>;
+
+        if(role == 1)
+        {
+            $('table').SetEditable();
+        }
         $('#table-transaksi-proyek').DataTable({
             paging: true,
             lengthChange: false,

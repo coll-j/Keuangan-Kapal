@@ -9,7 +9,9 @@
     </div>
     @if(!empty(Auth::user()->id_perusahaan))
     <div class="col-md-4">
+        @if(Auth::user()->role == 1 || Auth::user()->role == 2)
         <button class="btn btn-sm btn-primary float-right m-1" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button>
+        @endif
         <!-- <button class="btn btn-sm btn-primary float-right m-1"><i class="fas fa-pencil-alt"></i> Ubah</button> -->
     </div>
     @endif
@@ -264,8 +266,60 @@
 <script src="https://unpkg.com/autonumeric"></script>
 <script>
     $(document).ready(function() {
-        $('table').SetEditable();
-        new AutoNumeric('#saldo-akun');
+        var role = <?php echo Auth::user()->role; ?>;
+
+        if(role == 1)
+        {
+            $('table').SetEditable();
+        }
+
+        if(role == 1 || role == 2)
+        {
+            new AutoNumeric('#saldo-akun');
+            $('#jenis-akun').change(function(){
+                var selected = $("#jenis-akun").find("option:selected").text();
+                // console.log();
+    
+                switch(selected){
+                    case "Akun Transaksi Kantor":
+                        $('#form-neraca').hide();
+                        $('#form-transaksi').show();
+                        $('#form-pemasok').hide();
+                        $('#form-proyek').hide();
+                        $('#form-akun-all').prop('action', "{{ route('form_transaksi_kantor') }}");
+                        break;
+                    case "Akun Transaksi Proyek":
+                        $('#form-neraca').hide();
+                        $('#form-transaksi').show();
+                        $('#form-pemasok').hide();
+                        $('#form-proyek').hide();
+                        $('#form-akun-all').prop('action', "{{ route('form_transaksi_proyek') }}");
+                        break;
+                    case "Pemasok": 
+                        $('#form-neraca').hide();
+                        $('#form-transaksi').hide();
+                        $('#form-pemasok').show();
+                        $('#form-proyek').hide();
+                        $('#form-akun-all').prop('action', "{{ route('form_pemasok') }}");
+                        break;
+                    case "Proyek":
+                        $('#form-neraca').hide();
+                        $('#form-transaksi').hide();
+                        $('#form-pemasok').hide();
+                        $('#form-proyek').show();
+                        $('#form-akun-all').prop('action', "{{ route('form_proyek') }}");
+                        break;
+                    default:
+                        $('#form-neraca').show();
+                        $('#form-transaksi').hide();
+                        $('#form-pemasok').hide();
+                        $('#form-proyek').hide();
+                        $('#form-akun-all').prop('action', "{{ route('form_neraca') }}");
+                        break;
+                }
+            });
+            
+        }
         setTimeout(function(){
             $('#table-neraca').DataTable({
                 paging      : false,
@@ -312,48 +366,6 @@
             $.fn.dataTable.tables( {api: true} ).columns.adjust();
         }, 300);
 
-        $('#jenis-akun').change(function(){
-            var selected = $("#jenis-akun").find("option:selected").text();
-            // console.log();
-
-            switch(selected){
-                case "Akun Transaksi Kantor":
-                    $('#form-neraca').hide();
-                    $('#form-transaksi').show();
-                    $('#form-pemasok').hide();
-                    $('#form-proyek').hide();
-                    $('#form-akun-all').prop('action', "{{ route('form_transaksi_kantor') }}");
-                    break;
-                case "Akun Transaksi Proyek":
-                    $('#form-neraca').hide();
-                    $('#form-transaksi').show();
-                    $('#form-pemasok').hide();
-                    $('#form-proyek').hide();
-                    $('#form-akun-all').prop('action', "{{ route('form_transaksi_proyek') }}");
-                    break;
-                case "Pemasok": 
-                    $('#form-neraca').hide();
-                    $('#form-transaksi').hide();
-                    $('#form-pemasok').show();
-                    $('#form-proyek').hide();
-                    $('#form-akun-all').prop('action', "{{ route('form_pemasok') }}");
-                    break;
-                case "Proyek":
-                    $('#form-neraca').hide();
-                    $('#form-transaksi').hide();
-                    $('#form-pemasok').hide();
-                    $('#form-proyek').show();
-                    $('#form-akun-all').prop('action', "{{ route('form_proyek') }}");
-                    break;
-                default:
-                    $('#form-neraca').show();
-                    $('#form-transaksi').hide();
-                    $('#form-pemasok').hide();
-                    $('#form-proyek').hide();
-                    $('#form-akun-all').prop('action', "{{ route('form_neraca') }}");
-                    break;
-            }
-        });
 
         $(document).on('shown.lte.pushmenu collapsed.lte.pushmenu', function() {
             console.log("hey gamtenk");

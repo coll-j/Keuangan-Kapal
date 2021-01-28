@@ -26,6 +26,8 @@ class CatatanTransaksiProyek extends Migration
             $table->unsignedBigInteger('id_akun_neraca')->references('id')->on('akun_neraca_saldos')->nullable()->onDelete('cascade');
             $table->double('jumlah', 21, 3);
             $table->double('terbayar', 21, 3);
+            $table->double('sisa', 21, 3);
+            $table->enum('jenis', ['Utang', 'Piutang', '-']);
 
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaan')->nullable()->onDelete('cascade');
             $table->timestamps();

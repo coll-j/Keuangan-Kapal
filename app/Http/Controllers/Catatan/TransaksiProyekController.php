@@ -25,6 +25,14 @@ class TransaksiProyekController extends Controller
     public function insert (Request $request) {
         // dd(DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi));
         // create transaksi proyek
+        $akun = AkunTransaksiProyek::find($request->jenis_transaksi);
+        $jml = floatval(str_replace(",","",$request->jumlah_transaksi));
+        $terbayar = floatval(str_replace(",","",$request->jumlah_dibayar));
+        $sisa = $jml - $terbayar;
+        $jenis = '-';
+        if($sisa > 0 && $akun->jenis == 'Keluar') $jenis = 'Utang';
+        else if($sisa > 0 && $akun->jenis == 'Masuk') $jenis = 'Piutang';
+
         TransaksiProyek::create([
             'tanggal_transaksi' => DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi),
             'id_akun_tr_proyek' => $request->jenis_transaksi,
@@ -34,8 +42,10 @@ class TransaksiProyekController extends Controller
             'satuan_material' => $request->satuan_material,
             'id_proyek' => $request->id_proyek,
             'id_akun_neraca' => $request->akun_neraca,
-            'jumlah' => floatval(str_replace(",","",$request->jumlah_transaksi)),
-            'terbayar' => floatval(str_replace(",","",$request->jumlah_dibayar)),
+            'jumlah' => $jml,
+            'terbayar' => $terbayar,
+            'sisa' => $sisa,
+            'jenis' => $jenis,
             'id_perusahaan' => Auth::user()->id_perusahaan,
         ]);
         // create gudang
