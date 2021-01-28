@@ -11,6 +11,8 @@ use App\Models\AkunNeracaSaldo;
 use App\Models\Gudang;
 
 use App\Models\Catatan\TransaksiProyek;
+use App\Models\TransaksiKantor;
+use App\Models\AkunTransaksiKantor;
 
 class CatatanController extends Controller
 {
@@ -61,7 +63,12 @@ class CatatanController extends Controller
     }
     
     public function pageTransaksiKantor(){
-        return view('catatan/transaksi_kantor');
+        $transaksi_kantors = TransaksiKantor::all();
+        $akun_transaksi_kantors = AkunTransaksiKantor::all();
+        return view('catatan/transaksi_kantor', [
+            'transaksi_kantors' => $transaksi_kantors, 
+            'akun_transaksi_kantors' => $akun_transaksi_kantors, 
+            ]);
     }
 
     public function pageHutangPiutang(){

@@ -7,6 +7,9 @@
 @endsection
 
 @section('content')
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+@if(!empty(Auth::user()->id_perusahaan))
 <div class="card">
     <div class="card-header">
         <div class="text-center pt-3 mb-3">
@@ -190,7 +193,7 @@
     </div>
   </div>
 </div>
-
+@endif
 @endsection
 
 @section('css')

@@ -238,6 +238,17 @@
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" form="form-akun-all" class="btn btn-primary">Save changes</button>
         </div>
+        <?php
+        if(isset($_POST['submit'])){
+            if(!empty($_POST['jenis-transaksi'])) {
+            foreach($_POST['jenis-transaksi'] as $selected){
+                echo '  ' . $selected;
+            }          
+            } else {
+            echo 'Please select the value.';
+            }
+        }
+        ?>
       </div>
     </div>
   </div>

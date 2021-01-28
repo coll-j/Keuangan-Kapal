@@ -70,3 +70,5 @@ Route::post('edit_pemasok', [App\Http\Controllers\AkunController::class, 'editPe
 
 // Route Catatan Transaksi Proyek
 Route::post('create_transaksi_proyek', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'insert'])->name('create_transaksi_proyek');
+Route::post('add_transaksi_kantor', [App\Http\Controllers\TransaksiController::class, 'addTransaksiKantor'])->name('add_transaksi_kantor');
+// Route::post('add_transaksi_proyek', [App\Http\Controllers\TransaksiController::class, 'addTransaksiProyek'])->name('add_transaksi_proyek');
