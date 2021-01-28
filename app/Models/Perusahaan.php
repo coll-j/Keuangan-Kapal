@@ -12,7 +12,6 @@ class Perusahaan extends Model
 
     protected $fillable = [
         'nama_perusahaan',
-        'id_perusahaan',
         'pemilik',
         'alamat',
         'email',
@@ -21,7 +20,6 @@ class Perusahaan extends Model
     ];
 
     protected $hidden = [
-        'id_perusahaan',
     ];
 
     public function user(){
@@ -30,5 +28,9 @@ class Perusahaan extends Model
 
     public function invitation(){
         return $this->hasMany('\App\Models\Invitation', 'id_perusahaan');
+    }
+
+    public function catatan_transaksi_proyek(){
+        return $this->hasMany('\App\Models\Catatan\TransaksiProyek', 'id', 'id_perusahaan');
     }
 }

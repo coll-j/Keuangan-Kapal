@@ -16,7 +16,7 @@ class CreateProyeksTable extends Migration
         Schema::create('proyeks', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
-            $table->string('nama')->unique();
+            $table->unsignedBigInteger('id_pemilik')->references('id')->on('users');
             $table->string('jenis');
             $table->timestamps();
             $table->foreign('id_perusahaan')->references('id')->on('perusahaans');

@@ -40,10 +40,13 @@ Route::get('/laba_rugi', [App\Http\Controllers\LaporanController::class, 'pageLa
 Route::get('/laba_rugi_kantor', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiKantor'])->name('laba_rugi_kantor');
 Route::get('/laba_rugi_proyek', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiProyek'])->name('laba_rugi_proyek');
 
+// Route perusahaan
 Route::post('create_perusahaan', [App\Http\Controllers\dashboard\PerusahaanController::class, 'insert'])->name('create_perusahaan');
 Route::post('invite_anggota', [App\Http\Controllers\dashboard\PerusahaanController::class, 'invite'])->name('invite_anggota');
 Route::post('acc_invite', [App\Http\Controllers\dashboard\PerusahaanController::class, 'acc_invite'])->name('acc_invite');
 Route::post('rej_invite', [App\Http\Controllers\dashboard\PerusahaanController::class, 'rej_invite'])->name('rej_invite');
+Route::post('edit_role', [App\Http\Controllers\dashboard\PerusahaanController::class, 'edit_role'])->name('edit_role');
+Route::post('delete_member', [App\Http\Controllers\dashboard\PerusahaanController::class, 'delete_member'])->name('delete_member');
 
 Route::post('create_gudang', [App\Http\Controllers\GudangController::class, 'create'])->name('create_gudang');
 
@@ -64,3 +67,6 @@ Route::post('edit_akun_proyek', [App\Http\Controllers\AkunController::class, 'ed
 Route::post('edit_akun_kantor', [App\Http\Controllers\AkunController::class, 'editAkunTransaksiKantor'])->name('edit_akun_kantor');
 Route::post('edit_proyek', [App\Http\Controllers\AkunController::class, 'editProyek'])->name('edit_proyek');
 Route::post('edit_pemasok', [App\Http\Controllers\AkunController::class, 'editPemasok'])->name('edit_pemasok');
+
+// Route Catatan Transaksi Proyek
+Route::post('create_transaksi_proyek', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'insert'])->name('create_transaksi_proyek');

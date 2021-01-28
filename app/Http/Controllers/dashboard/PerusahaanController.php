@@ -106,4 +106,23 @@ class PerusahaanController extends Controller
 
         return redirect()->route('profil_perusahaan');
     }
+
+    public function edit_role(Request $request){
+        // dd(true);
+        $user = User::find($request->user_id);
+        $user->role = $request->role;
+        $user->save();
+
+        return $request;
+    }
+
+    public function delete_member(Request $request){
+        // dd(true);
+        $user = User::find($request->user_id);
+        $user->role = null;
+        $user->id_perusahaan = null;
+        $user->save();
+        
+        return $request;
+    }
 }

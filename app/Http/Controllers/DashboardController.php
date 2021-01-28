@@ -11,6 +11,7 @@ use App\Models\Pemasok;
 use App\Models\Perusahaan;
 use App\Models\Proyek;
 use App\Models\Invitation;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -46,17 +47,20 @@ class DashboardController extends Controller
     }
 
     public function pageData(){
-        $akun_transaksi_kantors = AkunTransaksiKantor::all();
-        $akun_transaksi_proyeks = AkunTransaksiProyek::all();
-        $akun_neraca_saldos = AkunNeracaSaldo::all();
-        $pemasoks = Pemasok::all();
-        $proyeks = Proyek::all();
+        $akun_transaksi_kantors = AkunTransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $akun_transaksi_proyeks = AkunTransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $akun_neraca_saldos = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $pemasoks = Pemasok::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $proyeks = Proyek::with('user')->where('id_perusahaan', '=', 1)->get();
+        $man_proyek = User::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->where('role', '=', 4)->get();
+        // dd($proyeks->first()->user->name);
         return view('dashboard/data', [
             'akun_transaksi_kantors' => $akun_transaksi_kantors, 
             'akun_transaksi_proyeks' => $akun_transaksi_proyeks,
             'akun_neraca_saldos' => $akun_neraca_saldos,
             'pemasoks' => $pemasoks,
             'proyeks' => $proyeks,
+            'man_proyek' => $man_proyek,
             ]);
     }  
 

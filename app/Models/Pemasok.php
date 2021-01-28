@@ -13,4 +13,7 @@ class Pemasok extends Model
         'nama', 'jenis','id_perusahaan',
     ];
     
+    public function catatan_transaksi_proyek(){
+        return $this->hasMany('\App\Models\Catatan\TransaksiProyek', 'id', 'id_pemasok');
+    }
 }

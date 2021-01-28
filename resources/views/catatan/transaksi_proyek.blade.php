@@ -55,7 +55,9 @@
                         <th>Tanggal</th>
                         <th>Transaksi</th>
                         <th>Pemasok</th>
-                        <th>Kode Proyek</th>
+                        <th>Nama Material</th>
+                        <th>Jumlah</th>
+                        <th>Satuan Material</th>
                         <th>Proyek</th>
                         <th>Kas/Bank</th>
                         <th>Jenis</th>
@@ -66,76 +68,33 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($catatan_tr_proyeks as $catatan_tr_proyek)
                     <tr>
-                        <th scope="row">1</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Material</td>
-                        <td>PT. Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
+                        <th>1</th>
+                        <td>{{$catatan_tr_proyek->tanggal_transaksi}}</td>
+                        <td>{{$catatan_tr_proyek->akun_tr_proyek->nama}}</td>
+                        <td>{{$catatan_tr_proyek->pemasok->nama ?? ''}}</td>
+                        <td>{{$catatan_tr_proyek->nama_material}}</td>
+                        <td>{{$catatan_tr_proyek->jumlah_material}}</td>
+                        <td>{{$catatan_tr_proyek->satuan_material}}</td>
+                        <td>{{$catatan_tr_proyek->proyek->jenis}}</td>
+                        <td>{{$catatan_tr_proyek->akun_neraca->nama}}</td>
+                        <td>{{$catatan_tr_proyek->akun_tr_proyek->jenis}}</td>
+                        <td>{{ number_format($catatan_tr_proyek->jumlah, 2, '.', ',') }}</td>
+                        <td>{{ number_format($catatan_tr_proyek->terbayar, 2, '.', ',') }}</td>
+                        @php
+                        $sisa = $catatan_tr_proyek->jumlah - $catatan_tr_proyek->terbayar;
+                        @endphp
+                        <td>{{ number_format($sisa, 2, '.', ',') }}</td>
+                        @if($sisa > 0 && $catatan_tr_proyek->akun_tr_proyek->jenis == 'Keluar')
+                        <td> Utang </td>
+                        @elseif($sisa > 0 && $catatan_tr_proyek->akun_tr_proyek->jenis == 'Masuk')
+                        <td> Piutang </td>
+                        @else
+                        <td> - </td>
+                        @endif
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>PT. Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>1/2/2019</td>
-                        <td>Biaya Persiapan dan Perijinan</td>
-                        <td>Pemasok</td>
-                        <td>1</td>
-                        <td>Pak David</td>
-                        <td>Bank</td>
-                        <td>Keluar</td>
-                        <td>12,500,000</td>
-                        <td>12,500,000</td>
-                        <td>0</td>
-                        <td>Utang</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -158,74 +117,75 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="add-transaksi" method="post" action="{{ route('create_transaksi_proyek') }}">
+        @csrf
             <div class="form-group">
                 <label for="nama-akun">Tanggal</label>
-                <input name="daterange" value="01/01/2018" type="text" class="form-control">
+                <input id="daterange-form" name="tanggal_transaksi" value="01/01/2018" type="text" class="form-control">
             </div>
             <div class="form-group">
-                <label for="jenis-akun">Jenis Akun</label>
-                <select class="form-control" id="jenis-akun">
-                <option>Biaya Administrasi dan Umum</option>
-                <option>Biaya Lain-lain (tak terduga)</option>
-                <option>Biaya Listrik</option>
-                <option>Biaya Material</option>
-                <option>Biaya Pengawas</option>
-                <option>Biaya Pemasaran</option>
-                <option>Biaya Persiapan dan Perijinan</option>
-                <option>Biaya Sewa Alat</option>
-                <option>Biaya Telepon/Internet</option>
-                <option>Biaya Tenaga Kerja</option>
-                <option>Pembayaran Utang</option>
-                <option>Pendapatan Proyek</option>
-                <option>Penerimaan Piutang Proyek</option>
+                <label for="jenis-akun">Jenis Transaksi</label>
+                <select class="form-control" id="jenis-akun" name="jenis_transaksi">
+                <option disabled selected value> -- pilih jenis transaksi -- </option>
+                @foreach($akun_tr_proyeks as $akun_tr_proyek)
+                <option value="{{ $akun_tr_proyek->id }}">{{ $akun_tr_proyek->nama}}</option>
+                @endforeach
                 </select>
             </div>
             <div class="form-group">
-                <label for="saldo-akun">Pemasok</label>
-                <select class="form-control" id="kode-pemasok">
-                <option>PT. Kayu A</option>
-                <option>PT. Kayu</option>
-                <option>PT. C</option>
-                <option>CV. Udud</option>
+                <label for="saldo-akun">Pemasok <span class="text-muted">(opsional)</span></label>
+                <select class="form-control" id="kode-pemasok" name="id_pemasok">
+                <option disabled selected value> -- pilih pemasok -- </option>
+                @foreach($pemasoks as $pemasok)
+                <option value="{{ $pemasok->id }}">{{ $pemasok->nama}}</option>
+                @endforeach
                 </select>
             </div>
             <div class="form-group">
-                <label for="saldo-akun">Proyek</label>
-                <select class="form-control" id="kode-proyek">
-                <option>Pak Saikhu</option>
-                <option>Pak Muhtadin</option>
+                <label for="nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
+                <input type="text" id="nama-material" name="nama_material" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="jumlah-material">Jumlah Material <span class="text-muted">(opsional)</span></label>
+                <input type="number" id="jumlah-material" class="form-control" name="jumlah_material">
+            </div>
+            <div class="form-group">
+                <label for="satuan-material">Satuan Material <span class="text-muted">(opsional)</span></label>
+                <input type="text" id="satuan-material" name="satuan_material" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="kode-proyek">Proyek</label>
+                <select class="form-control" id="kode-proyek" name="id_proyek">
+                <option disabled selected value> -- pilih proyek -- </option>
+                @foreach($proyeks as $proyek)
+                <option value="{{ $proyek->id }}">{{ $proyek->jenis }}</option>
+                @endforeach
                 </select>
             </div>
             <div class="form-group">
-                <label for="kas-bank">Jenis Transaksi</label>
-                <select class="form-control" id="kas-bank">
-                <option>Kas</option>
-                <option>Bank</option>
+                <label for="kas-bank">Akun Neraca</label>
+                <select class="form-control" id="kas-bank" name="akun_neraca">
+                <option disabled selected value> -- pilih akun neraca -- </option>
+                @foreach($akun_neracas as $akun_neraca)
+                <option value="{{ $akun_neraca->id }}">{{ $akun_neraca->nama }}</option>
+                @endforeach
                 </select>
             </div>
             <div class="form-group">
                 <div class="form-group">
-                    <label for="nama-transaksi">Jumlah</label>
-                    <input type="text" id="jumlah-transaksi" class="form-control">
+                    <label for="jumlah-transaksi">Jumlah (Rp)</label>
+                    <input type="text" id="jumlah-transaksi" class="form-control" name="jumlah_transaksi">
                 </div>
                 <div class="form-group">
-                    <label for="nama-transaksi">Dibayar/Diterima</label>
-                    <input type="text" id="jumlah-transaksi-dibayar" class="form-control">
+                    <label for="jumlah-transaksi-transaksi">Jumlah Dibayar/Diterima (Rp)</label>
+                    <input type="text" id="jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar">
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="kas-bank">Utang/Piutang</label>
-                <select class="form-control" id="utang-piutang">
-                <option>Utang</option>
-                <option>Piutang</option>
-                </select>
             </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" form="add-transaksi">Simpan</button>
       </div>
     </div>
   </div>
@@ -238,9 +198,12 @@
 @endsection
 
 @section('js')
+<script src="https://unpkg.com/autonumeric"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('table').SetEditable();
+        new AutoNumeric('#jumlah-transaksi');
+        new AutoNumeric('#jumlah-transaksi-dibayar');
 
         $('#table-transaksi-proyek').DataTable({
             'columnDefs': [
@@ -262,7 +225,19 @@
             singleDatePicker: true,
             showDropdowns: true,
             minYear: 1901,
-            maxYear: parseInt(moment().format('YYYY'), 10)
+            maxYear: parseInt(moment().format('YYYY'), 10),
+            locale: {
+                format: 'DD/MM/YYYY',
+            }
+        });
+        $('input[name="tanggal_transaksi"]').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'), 10),
+            locale: {
+                format: 'DD/MM/YYYY',
+            }
         });
     });
 </script>

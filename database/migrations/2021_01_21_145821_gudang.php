@@ -16,10 +16,12 @@ class Gudang extends Migration
         Schema::create('gudangs', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans');
+            $table->unsignedBigInteger('id_parent')->nullable();
             $table->string('nama_barang');
-            $table->string('satuan');
+            $table->string('satuan')->nullable();
             $table->integer('jumlah');
-            $table->decimal('harga_satuan');
+            $table->decimal('harga_satuan')->nullable();
+            $table->enum('jenis', ['Masuk', 'Keluar']);
             $table->timestamps();
             $table->foreign('id_perusahaan')->references('id')->on('perusahaans');
         });

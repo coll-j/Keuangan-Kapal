@@ -10,7 +10,14 @@ class Proyek extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'jenis', 'id_perusahaan',
+        'id_pemilik', 'jenis', 'id_perusahaan',
     ];
     
+    public function user(){
+        return $this->belongsTo('\App\Models\User', 'id_pemilik', 'id');
+    }
+
+    public function catatan_transaksi_proyek(){
+        return $this->hasMany('\App\Models\Catatan\TransaksiProyek', 'id', 'id_proyek');
+    }
 }

@@ -104,11 +104,33 @@ function rowAcep(but) {
   //Está en edición. Hay que finalizar la edición
   IterarCamposEdit($cols, function($td) {  //itera por la columnas
     var cont = $td.find('option:selected').text(); //lee contenido del input
-    console.log(cont);
+    
+    // var val = $td.find('select').val();
+    // var user_id = 
     $td.html(cont);  //fija contenido y elimina controles
   });
+  var role;
+  switch($row.find('td:nth-child(3)').html()){
+    case 'Pemilik Perusahaan':
+      role = 3;
+      break;
+    case 'Pemilik Proyek':
+      role = 4;
+      break;
+    case 'Administrator':
+      role = 1;
+      break;
+    case 'Akuntan':
+      role = 2;
+      break;
+    default:
+      role = 0;
+      break;
+  }
+  var user_id =  $row.find('td:first-child').html();
+  params.onEdit(role, user_id);
+
   FijModoNormal(but);
-  params.onEdit($row);
 }
 function rowCancel(but) {
 //Rechaza los cambios de la edición
@@ -132,49 +154,36 @@ function rowEdit(but) {  //Inicia la edición de una fila
       var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
       switch(cont)
       {
-        case "CEO":
+        case "Pemilik Proyek":
           var input = '<select> \
-          <option>Pemilik Perusahaan</option> \
-          <option selected>CEO</option> \
-          <option>Manajer Proyek</option> \
-          <option>Administrator</option> \
-          <option>Akuntan</option> \
-          </select>';
-          break;
-        case "Manajer Proyek":
-          var input = '<select> \
-          <option>Pemilik Perusahaan</option> \
-          <option>CEO</option> \
-          <option selected>Manajer Proyek</option> \
-          <option>Administrator</option> \
-          <option>Akuntan</option> \
+          <option value="3">Pemilik Perusahaan</option> \
+          <option selected value="4">Pemilik Proyek</option> \
+          <option value="1">Administrator</option> \
+          <option value="2">Akuntan</option> \
           </select>';
           break;
         case "Administrator":
           var input = '<select> \
-          <option>Pemilik Perusahaan</option> \
-          <option>CEO</option> \
-          <option>Manajer Proyek</option> \
-          <option selected>Administrator</option> \
-          <option>Akuntan</option> \
+          <option value="3">Pemilik Perusahaan</option> \
+          <option value="4">Pemilik Proyek</option> \
+          <option selected value="1">Administrator</option> \
+          <option value="2">Akuntan</option> \
           </select>';
           break;
         case "Akuntan":
           var input = '<select> \
-          <option>Pemilik Perusahaan</option> \
-          <option>CEO</option> \
-          <option>Manajer Proyek</option> \
-          <option>Administrator</option> \
-          <option selected>Akuntan</option> \
+          <option value="3">Pemilik Perusahaan</option> \
+          <option value="4">Pemilik Proyek</option> \
+          <option value="1">Administrator</option> \
+          <option selected value="2">Akuntan</option> \
           </select>';
           break;
         default:
           var input = '<select> \
-          <option>Pemilik Perusahaan</option> \
-          <option>CEO</option> \
-          <option>Manajer Proyek</option> \
-          <option>Administrator</option> \
-          <option>Akuntan</option> \
+          <option value="3">Pemilik Perusahaan</option> \
+          <option value="4">Pemilik Proyek</option> \
+          <option value="1">Administrator</option> \
+          <option value="2">Akuntan</option> \
           </select>';
           break;
       }
@@ -183,11 +192,18 @@ function rowEdit(but) {  //Inicia la edición de una fila
   FijModoEdit(but);
 }
 function rowElim(but) {  //Elimina la fila actual
+  var conf = confirm('Yakin menghapus?');
+  console.log(conf);
+  if(!conf) return;
+
   var $row = $(but).parents('tr');  //accede a la fila
   params.onBeforeDelete($row);
   $row.remove();
-  params.onDelete();
+  var user_id =  $row.find('td:first-child').html();
+  console.log(user_id);
+  params.onDelete(user_id);
 }
+
 function rowAddNew(tabId) {  //Agrega fila a la tabla indicada.
 var $tab_en_edic = $("#" + tabId);  //Table to edit
   var $filas = $tab_en_edic.find('tbody tr');

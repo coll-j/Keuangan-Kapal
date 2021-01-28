@@ -12,6 +12,7 @@
         color: #CC0000;
     }
 </style>
+<meta name="csrf-token" content="{{ Session::token() }}"> 
 @endsection
 
 @section('content_header')
@@ -82,12 +83,14 @@
                         <!-- <button class="btn btn-sm btn-primary float-left ml-1"><i class="fas fa-pencil-alt"></i></button> -->
                         <table id="table-member" class="display table table-hover table-condensed table-sm">
                             <thead class="thead-light">
+                                <th class="d-none"></th>
                                 <th style="width: 60%">Nama</th>
                                 <th style="width: 40%">Jabatan</th>
                             </thead>
                             <tbody>
                                 @foreach($perusahaan->user as $anggota)
                                 <tr>
+                                    <td class="d-none">{{ $anggota->id }}</td>
                                     <td>{{ $anggota->name }}</td>
                                     @switch($anggota->role)
                                         @case(1)
@@ -97,10 +100,10 @@
                                             <td>Akuntan</td>
                                             @break
                                         @case(3)
-                                            <td>Pemilik</td>
+                                            <td>Pemilik Perusahaan</td>
                                             @break
                                         @case(4)
-                                            <td>Manajer Proyek</td>
+                                            <td>Pemilik Proyek</td>
                                             @break
                                         @default
                                             <td>Super Admin</td>
@@ -129,7 +132,7 @@
                                         <td>
                                             <select class="form-control" name="add_jabatan[]">
                                                 <option>Pemilik</option>
-                                                <option>Manajer Proyek</option>
+                                                <option>Pemilik Proyek</option>
                                                 <option>Administrator</option>
                                                 <option>Akuntan</option>
                                             </select>
@@ -168,7 +171,7 @@
                                                 <td>Pemilik</td>
                                                 @break
                                             @case(4)
-                                                <td>Manajer Proyek</td>
+                                                <td>Pemilik Proyek</td>
                                                 @break
                                             @default
                                                 <td>Super Admin</td>
@@ -224,7 +227,7 @@
                                     <dd class="col-sm-9">Pemilik</dd>
                                     @break
                                 @case(4)
-                                    <dd class="col-sm-9">Manajer Proyek</dd>
+                                    <dd class="col-sm-9">Pemilik Proyek</dd>
                                     @break
                                 @default
                                     <dd class="col-sm-9">Super Admin</dd>
@@ -326,7 +329,46 @@ h5 {
 <script>
     $(document).ready(function() {
         $('#table-member').SetEditable({
-            columnsEd: "1"
+            columnsEd: "2",
+            onEdit: function(selected_val, user_id){
+                console.log('cobs', selected_val, user_id);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: '/edit_role',
+                    method: 'post',
+                    data: {
+                        role: selected_val,
+                        user_id: user_id,
+                    },
+                    success:function(data){
+                        console.log(data);          
+                    }
+                });
+            },
+            onDelete: function(user_id){
+                console.log('delete ', user_id);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: '/delete_member',
+                    method: 'post',
+                    data: {
+                        user_id: user_id,
+                    },
+                    success:function(data){
+                        console.log(data);          
+                    }
+                });
+            },
         });
         var table = $('#table-member').DataTable({
             paging      : false,
@@ -374,7 +416,7 @@ h5 {
             <td> \
                 <select class="form-control" name="add_jabatan[]"> \
                     <option>Pemilik</option> \
-                    <option>Manajer Proyek</option> \
+                    <option>Pemilik Proyek</option> \
                     <option>Administrator</option> \
                     <option>Akuntan</option> \
                 </select> \

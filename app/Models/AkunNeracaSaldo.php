@@ -13,4 +13,7 @@ class AkunNeracaSaldo extends Model
         'nama', 'saldo', 'id_perusahaan',
     ];
     
+    public function catatan_transaksi_proyek(){
+        return $this->hasMany('\App\Models\Catatan\TransaksiProyek', 'id', 'id_akun_neraca');
+    }
 }

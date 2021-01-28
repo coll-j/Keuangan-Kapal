@@ -92,7 +92,7 @@
                         <tbody>
                             @foreach($proyeks as $proyek)
                             <tr id="table-proyekan" name="table-proyekan" rowId="{{ $proyek['id'] }}">
-                                <td id="nama" style="width: 30%;">{{ $proyek['nama'] }}</td>
+                                <td id="nama" style="width: 30%;">{{ $proyek->user->name }}</td>
                                 <td id="jenis" style="width: 70%;">{{ $proyek['jenis'] }}</td>
                             </tr>
                             @endforeach
@@ -200,8 +200,12 @@
                     <input name="at_nama" type="text" id="nama-transaksi" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="jenis-transaksi">Jenis Transaksi</label>
-                    <input name="at_jenis" type="text" id="nama-transaksi" class="form-control">
+                    <label for="at_jenis">Jenis Transaksi</label>
+                    <select class="form-control" id="at_jenis" name="at_jenis">
+                    <option value="Masuk">Masuk</option>
+                    <option value="Keluar">Keluar</option>
+                    </select>
+                    <!-- <input name="at_jenis" type="text" id="nama-transaksi" class="form-control"> -->
                 </div>
             </div>
             <div id="form-pemasok" style="display: none;">
@@ -217,7 +221,12 @@
             <div id="form-proyek" style="display: none;">
                 <div class="form-group">
                     <label for="nama-pemilik-proyek">Pemilik Proyek</label>
-                    <input name="pr_kode" type="text" id="nama-pemilik-proyek" class="form-control">
+                    <select class="form-control" id="nama-pemilik-proyek" name="pr_kode">
+                    @foreach($man_proyek as $man)
+                    <option value="{{ $man->id }}">{{ $man->name }}</option>
+                    @endforeach
+                    </select>
+                    <!-- <input name="pr_kode" type="text" id="nama-pemilik-proyek" class="form-control"> -->
                 </div>
                 <div class="form-group">
                     <label for="nama-proyek">Nama Proyek</label>

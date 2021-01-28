@@ -79,4 +79,8 @@ class User extends Authenticatable
     public function perusahaan(){
         return $this->belongsTo('\App\Models\Perusahaan');
     }
+
+    public function proyek(){
+        return $this->hasMany('\App\Models\Proyek', 'id', 'id_pemilik');
+    }
 }

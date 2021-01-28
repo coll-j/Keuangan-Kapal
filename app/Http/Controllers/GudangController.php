@@ -17,9 +17,11 @@ class GudangController extends Controller
      */
     public function index()
     {
-        $items = Gudang::all();
-        // dd($items);
-        return view('catatan/gudang', compact('items'));
+        $items = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $inventoris = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                    ->where('jenis', '=', 'Masuk')->get();
+        // dd($inventoris);
+        return view('catatan/gudang', compact('items', 'inventoris'));
     }
 
     /**
@@ -29,14 +31,17 @@ class GudangController extends Controller
      */
     public function create(Request $request)
     {
+        // dd($request);
         $perusahaan = Perusahaan::with('user')->get()->where('kode_perusahaan', '=', Auth::user()->kode_perusahaan)->first();
+        $parent = Gudang::find($request->id_parent);
         if (!empty($perusahaan)) {
-
             Gudang::create([
-                'nama_barang' => $request->nama_barang,
-                'satuan' => $request->satuan,
+                'id_parent' => $request->id_parent,
+                'nama_barang' => $parent->nama_barang,
+                'satuan' => $parent->satuan,
                 'jumlah' => $request->jumlah,
-                'harga_satuan' => $request->harga_satuan,
+                'jenis' => 'Keluar',
+                // 'harga_satuan' => $request->harga_satuan,
                 'id_perusahaan' => $perusahaan->id
             ]);
             return redirect()->route('gudang');

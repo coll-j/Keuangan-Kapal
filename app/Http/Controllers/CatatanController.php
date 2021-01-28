@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\AkunTransaksiProyek;
+use App\Models\Pemasok;
+use App\Models\Proyek;
+use App\Models\AkunNeracaSaldo;
+use App\Models\Gudang;
+
+use App\Models\Catatan\TransaksiProyek;
 
 class CatatanController extends Controller
 {
@@ -30,7 +38,26 @@ class CatatanController extends Controller
     }
 
     public function pageTransaksiProyek(){
-        return view('catatan/transaksi_proyek');
+        // get akun transaksi proyek
+        $catatan_tr_proyeks = TransaksiProyek::with('akun_tr_proyek', 'pemasok', 'proyek', 'akun_neraca')->get();
+                         //   ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $akun_tr_proyeks = AkunTransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        // get pemasok
+        $pemasoks = Pemasok::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+
+        // get proyek
+        $proyeks = Proyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+
+        // get akun neraca
+        $akun_neracas = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        // dd($catatan_tr_proyeks->first()->pemasok);
+        return view('catatan/transaksi_proyek', [
+            'catatan_tr_proyeks' => $catatan_tr_proyeks,
+            'akun_tr_proyeks' => $akun_tr_proyeks,
+            'akun_neracas' => $akun_neracas,
+            'pemasoks' => $pemasoks,
+            'proyeks' => $proyeks,
+            ]);
     }
     
     public function pageTransaksiKantor(){
@@ -42,7 +69,9 @@ class CatatanController extends Controller
     }
 
     public function pageGudang(){
-        return view('catatan/gudang');
+        $inventoris = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        dd($inventoris);
+        return view('catatan/gudang', ['inventoris' => $inventoris]);
     }
 
 }

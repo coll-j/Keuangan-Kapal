@@ -21,14 +21,15 @@
         <div class="row pt-1">
             <div class="col">
                 <div class="row justify-content-start">
-                    <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
+                    <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah Pemakaian Material</button></a>
                     <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
                 </div>
                 <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
                     <thead class="thead-light">
                         <th style="width: 40%">Nama Barang</th>
                         <th style="width: 20%">Satuan</th>
-                        <th style="width: 20%">Jumlah</th>
+                        <th style="width: 10%">Jumlah</th>
+                        <th style="width: 10%">Jenis</th>
                         <th style="width: 20%">Harga Satuan (Rp)</th>
                     </thead>
                     <tbody>
@@ -37,6 +38,7 @@
                             <td>{{$item->nama_barang}}</td>
                             <td>{{$item->satuan}}</td>
                             <td>{{$item->jumlah}}</td>
+                            <td>{{$item->jenis}}</td>
                             <td>{{$item->harga_satuan}}</td>
                         </tr>
                         @endforeach
@@ -67,25 +69,15 @@
                     @csrf
                     <div class="form-group">
                         <label for="nama_barang">Nama Barang</label>
-                        <input type="text" id="nama_barang" class="form-control" name="nama_barang">
-                    </div>
-                    <div class="form-group">
-                        <label for="jenis-akun">Satuan</label>
-                        <select class="form-control" id="jenis-akun" name="satuan">
-                            <option>Buah</option>
-                            <option>Liter</option>
-                            <option>Hektar</option>
-                            <option>Kilogram</option>
-                            <option>Meter</option>
+                        <select class="form-control" id="nama_barang" name="id_parent">
+                            @foreach($inventoris as $inventori)
+                            <option value="{{ $inventori->id }}">{{$inventori->nama_barang}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input autocomplete="off" type="number" id="jumlah" class="form-control" name="jumlah">
-                    </div>
-                    <div class="form-group">
-                        <label for="harga_satuan">Harga Satuan</label>
-                        <input type="text" id="harga_satuan" class="form-control" name="harga_satuan">
                     </div>
                 </form>
             </div>
