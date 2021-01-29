@@ -318,7 +318,7 @@
                         break;
                 }
             });
-            
+
         }
         setTimeout(function(){
             $('#table-neraca').DataTable({

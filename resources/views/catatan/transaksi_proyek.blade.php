@@ -75,7 +75,7 @@
                 <tbody>
                     @foreach($catatan_tr_proyeks as $catatan_tr_proyek)
                     <tr>
-                        <th>1</th>
+                        <td></td>
                         <td>{{$catatan_tr_proyek->tanggal_transaksi}}</td>
                         <td>{{$catatan_tr_proyek->akun_tr_proyek->nama}}</td>
                         <td>{{$catatan_tr_proyek->pemasok->nama ?? ''}}</td>
@@ -131,7 +131,7 @@
             </div>
             <div class="form-group">
                 <label for="jenis-akun">Jenis Transaksi</label>
-                <select class="form-control" id="jenis-akun" name="jenis_transaksi">
+                <select class="form-control" id="jenis-akun" name="jenis_transaksi" required>
                 <option disabled selected value> -- pilih jenis transaksi -- </option>
                 @foreach($akun_tr_proyeks as $akun_tr_proyek)
                 <option value="{{ $akun_tr_proyek->id }}">{{ $akun_tr_proyek->nama}}</option>
@@ -162,7 +162,7 @@
             <div class="form-group">
                 <label for="kode-proyek">Proyek</label>
                 <select class="form-control" id="kode-proyek" name="id_proyek">
-                <option disabled selected value> -- pilih proyek -- </option>
+                <option disabled selected value required> -- pilih proyek -- </option>
                 @foreach($proyeks as $proyek)
                 <option value="{{ $proyek->id }}">{{ $proyek->jenis }}</option>
                 @endforeach
@@ -170,7 +170,7 @@
             </div>
             <div class="form-group">
                 <label for="kas-bank">Akun Neraca</label>
-                <select class="form-control" id="kas-bank" name="akun_neraca">
+                <select class="form-control" id="kas-bank" name="akun_neraca" required>
                 <option disabled selected value> -- pilih akun neraca -- </option>
                 @foreach($akun_neracas as $akun_neraca)
                 <option value="{{ $akun_neraca->id }}">{{ $akun_neraca->nama }}</option>
@@ -180,11 +180,11 @@
             <div class="form-group">
                 <div class="form-group">
                     <label for="jumlah-transaksi">Jumlah (Rp)</label>
-                    <input type="text" id="jumlah-transaksi" class="form-control" name="jumlah_transaksi">
+                    <input type="text" id="jumlah-transaksi" class="form-control" name="jumlah_transaksi" required>
                 </div>
                 <div class="form-group">
                     <label for="jumlah-transaksi-transaksi">Jumlah Dibayar/Diterima (Rp)</label>
-                    <input type="text" id="jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar">
+                    <input type="text" id="jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required>
                 </div>
             </div>
         </form>
@@ -202,6 +202,19 @@
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
+<style>
+table tr:first-child{
+  counter-reset: rowNumber;
+}
+table tr {
+  counter-increment: rowNumber;
+}
+table tr td:nth-child(2)::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+</style>
 @endsection
 
 @section('js')

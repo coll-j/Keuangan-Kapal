@@ -143,6 +143,19 @@
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
+<style>
+table tr:first-child{
+  counter-reset: rowNumber;
+}
+table tr {
+  counter-increment: rowNumber;
+}
+table tr td:first-child::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+</style>
 @endsection
 
 @section('js')

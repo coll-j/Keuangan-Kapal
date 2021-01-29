@@ -72,7 +72,26 @@ class CatatanController extends Controller
     }
 
     public function pageHutangPiutang(){
-        return view('catatan/hutang_piutang');
+        $piutangs = TransaksiProyek::with('proyek.user')
+                    ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                    ->where('jenis', '=', 'Piutang')
+                    ->get();
+        $piutang_sum = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                        ->where('jenis', '=', 'Piutang')
+                        ->selectRaw('sum(jumlah) as jumlah, sum(terbayar) as terbayar, sum(sisa) as sisa')
+                        ->first();
+
+        $utangs = TransaksiProyek::with('pemasok')
+                    ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                    ->where('jenis', '=', 'Utang')
+                    ->get();
+
+        $utang_sum = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                    ->where('jenis', '=', 'Utang')
+                    ->selectRaw('sum(jumlah) as jumlah, sum(terbayar) as terbayar, sum(sisa) as sisa')
+                    ->first();
+        // dd($utangs, $piutangs, $piutang_sum, $utang_sum);
+        return view('catatan/hutang_piutang', compact('piutangs', 'piutang_sum', 'utangs', 'utang_sum'));
     }
 
     public function pageGudang(){

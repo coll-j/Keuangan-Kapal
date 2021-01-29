@@ -80,7 +80,7 @@
                     </div>
                     <div class="form-group">
                         <label for="jumlah">Jumlah</label>
-                        <input autocomplete="off" type="number" id="jumlah" class="form-control" name="jumlah">
+                        <input autocomplete="off" type="number" id="jumlah" class="form-control" name="jumlah" required>
                     </div>
                 </form>
             </div>
@@ -96,6 +96,19 @@
 
 @section('css')
 <!-- <link rel="stylesheet" href="/css/admin_custom.css"> -->
+<style>
+table tr:first-child{
+  counter-reset: rowNumber;
+}
+table tr {
+  counter-increment: rowNumber;
+}
+table tr td:nth-child(2)::before {
+  content: counter(rowNumber);
+  min-width: 1em;
+  margin-right: 0.5em;
+}
+</style>
 @endsection
 
 @section('js')
