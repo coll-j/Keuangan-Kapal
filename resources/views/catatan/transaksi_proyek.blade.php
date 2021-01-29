@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!-- <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> -->
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @if(!empty(Auth::user()->id_perusahaan))
 <div class="card">
@@ -18,13 +18,13 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <input name="daterange" value="01/01/2018" type="text" style="width: 180px;" class="form-control text-center">
+        <input name="daterange" type="text" value="{{ $date_range ?? '' }}" style="width: 250px;" class="form-control text-center">
         </div>
         <div class="row">
             <div class="col-sm">
                 @if(Auth::user()->role == 1 || Auth::user()->role == 2)
                 <div class="row justify-content-start">
-                    <a href="#"><button type="button" class="btn btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
+                    <a href="#"><button type="button" class="btn btn-xs btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
                 </div>
                 @endif
             </div>
@@ -34,7 +34,7 @@
                         <b> Kas </b>
                     </div>
                     <div class=" col-3 text-right">
-                        5,550,000
+                        {{ number_format($kas_sum, 2, '.', ',') }}
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                         <b> Bank </b>
                     </div>
                     <div class="col-3 text-right">
-                        507,280,000
+                        {{ number_format($bank_sum, 2, '.', ',') }}
                     </div>
                 </div>
             </div>
@@ -53,10 +53,9 @@
 
     <div class="card-body " style="max-width: 1200px;">
         <div class="dataTables_wrapper">
-            <table id="table-transaksi-proyek" class="display table table-hover table-condensed table-sm dataTable" style="min-width: 2000px;">
+            <table id="table-transaksi-proyek" class="display table table-hover table-condensed table-sm dataTable">
                 <thead>
                     <tr>
-                        <th>No</th>
                         <th>Tanggal</th>
                         <th>Transaksi</th>
                         <th>Pemasok</th>
@@ -69,13 +68,12 @@
                         <th>Jumlah</th>
                         <th>Dibayar/Diterima</th>
                         <th>Sisa</th>
-                        <th>Utang/Piutang</th>
+                        <th>Utang Piutang</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($catatan_tr_proyeks as $catatan_tr_proyek)
                     <tr>
-                        <td></td>
                         <td>{{$catatan_tr_proyek->tanggal_transaksi}}</td>
                         <td>{{$catatan_tr_proyek->akun_tr_proyek->nama}}</td>
                         <td>{{$catatan_tr_proyek->pemasok->nama ?? ''}}</td>
@@ -169,9 +167,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="kas-bank">Akun Neraca</label>
+                <label for="kas-bank">Kas/Bank</label>
                 <select class="form-control" id="kas-bank" name="akun_neraca" required>
-                <option disabled selected value> -- pilih akun neraca -- </option>
+                <option disabled selected value> -- pilih akun -- </option>
                 @foreach($akun_neracas as $akun_neraca)
                 <option value="{{ $akun_neraca->id }}">{{ $akun_neraca->nama }}</option>
                 @endforeach
@@ -203,16 +201,8 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <style>
-table tr:first-child{
-  counter-reset: rowNumber;
-}
-table tr {
-  counter-increment: rowNumber;
-}
-table tr td:nth-child(2)::before {
-  content: counter(rowNumber);
-  min-width: 1em;
-  margin-right: 0.5em;
+.content {
+    font-size: 12px;
 }
 </style>
 @endsection
@@ -234,10 +224,21 @@ table tr td:nth-child(2)::before {
             new AutoNumeric('#jumlah-transaksi-dibayar');
         }
 
+        var columnDefs = [];
+        if(role == 1){
+            columnDefs = [
+                { "width": "20px", "targets": [4,5,6,8,9,13] },
+                { "targets": [2, 3, 4, 5, 6, 7, 8], "orderable": false }
+            ]
+        }
+        else{
+            columnDefs = [
+                { "width": "20px", "targets": [3,4,5,7,8,12] },
+                { "targets": [1, 2, 3, 4, 5, 6, 7], "orderable": false }
+            ]
+        }
         $('#table-transaksi-proyek').DataTable({
-            'columnDefs': [
-                { "width": "300px", "targets": 3 }
-            ],
+            'columnDefs': columnDefs,
             'paging': true,
             'lengthChange': false,
             'searching': false,
@@ -251,13 +252,20 @@ table tr td:nth-child(2)::before {
 <script>
     $(function() {
         $('input[name="daterange"]').daterangepicker({
-            singleDatePicker: true,
-            showDropdowns: true,
-            minYear: 1901,
-            maxYear: parseInt(moment().format('YYYY'), 10),
+            opens: 'center',
+            autoUpdateInput: false,
             locale: {
                 format: 'DD/MM/YYYY',
-            }
+            },
+        }, function(start, end, label) {
+            start = start.format('DD-MM-YYYY');
+            end = end.format('DD-MM-YYYY');
+            var all = start + ' - ' + end;
+            var url = '/transaksi_proyek/' + encodeURIComponent(all);
+            console.log(all);
+            console.log(url);
+            window.location.href = url;
+            // console.log("A new date selection was made: " + start + ' to ' + end);
         });
         $('input[name="tanggal_transaksi"]').daterangepicker({
             singleDatePicker: true,

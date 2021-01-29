@@ -18,6 +18,8 @@ class CreateAkunNeracaSaldosTable extends Migration
             $table->id()->autoIncrement();
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->string('nama')->unique();
+            $table->enum('jenis_akun', ['Kas', 'Bank', 'Lainnya']);
+            $table->enum('jenis_neraca', ['Aset Lancar', 'Aset Tetap', 'Kewajiban Lancar', 'Kewajiban Panjang', 'Ekuitas']);
             $table->double('saldo', 21, 3);
             $table->timestamps();
         });

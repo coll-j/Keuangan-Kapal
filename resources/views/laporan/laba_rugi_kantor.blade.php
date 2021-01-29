@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <input name="daterange" value="01/01/2018 - 04/01/2018" type="text" style="width: 250px;" class="form-control  text-center">
+            <input name="daterange" value="01/01/2018 - 04/01/2018" type="text" style="width: 250px;" class="form-control text-center">
         </div>
     </div>
     <!-- /.card-header -->
@@ -85,6 +85,10 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <style>
+    .content {
+    font-size: 12px;
+    }
+    
     td.right {
         float: right;
     }

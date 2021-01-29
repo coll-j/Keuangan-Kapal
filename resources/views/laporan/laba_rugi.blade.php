@@ -85,6 +85,9 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <style>
+    .content {
+        font-size: 12px;
+    }
     td.right {
         float: right;
     }

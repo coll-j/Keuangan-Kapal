@@ -24,7 +24,7 @@
             <div class="col-sm">
                 <div class="row justify-content-start">
                     @if(Auth::user()->role == 1 || Auth::user()->role == 2)
-                    <a href="#"><button type="button" class="btn btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
+                    <a href="#"><button type="button" class="btn btn-xs btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
                     @endif
                     <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
                 </div>
@@ -57,7 +57,6 @@
             <table id="table-transaksi-proyek" class="display table table-stripped table-hover table-condensed table-sm dataTable">
                 <thead>
                     <tr>
-                        <th scope="col">No</th>
                         <th scope="col">Tanggal</th>
                         <th scope="col">Transaksi</th>
                         <th scope="col">Keterangan</th>
@@ -144,16 +143,8 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <style>
-table tr:first-child{
-  counter-reset: rowNumber;
-}
-table tr {
-  counter-increment: rowNumber;
-}
-table tr td:first-child::before {
-  content: counter(rowNumber);
-  min-width: 1em;
-  margin-right: 0.5em;
+.content {
+    font-size: 12px;
 }
 </style>
 @endsection

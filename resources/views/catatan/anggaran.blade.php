@@ -119,7 +119,12 @@
 @endsection
 
 @section('css')
-<!-- <link rel="stylesheet" href="/css/admin_custom.css"> -->
+<link rel="stylesheet" href="/css/admin_custom.css">
+<style>
+.content {
+    font-size: 12px;
+}
+</style>
 @endsection
 
 @section('js')

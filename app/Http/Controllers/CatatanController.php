@@ -14,6 +14,8 @@ use App\Models\Catatan\TransaksiProyek;
 use App\Models\TransaksiKantor;
 use App\Models\AkunTransaksiKantor;
 
+use DateTime;
+use Carbon\Carbon;
 class CatatanController extends Controller
 {
     /**
@@ -39,26 +41,51 @@ class CatatanController extends Controller
         return view('catatan/anggaran');
     }
 
-    public function pageTransaksiProyek(){
-        // get akun transaksi proyek
-        $catatan_tr_proyeks = TransaksiProyek::with('akun_tr_proyek', 'pemasok', 'proyek', 'akun_neraca')->get();
-                         //   ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+    public function pageTransaksiProyek($date_range = null){
+        if(!(is_null($date_range)))
+        {
+            $separated = explode(' - ', $date_range);
+            $start = Carbon::CreateFromFormat('d-m-Y', $separated[0])->startOfDay();
+            $end = Carbon::CreateFromFormat('d-m-Y', $separated[1])->endOfDay();
+            $catatan_tr_proyeks = TransaksiProyek::with('akun_tr_proyek', 'pemasok', 'proyek', 'akun_neraca')
+            ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereBetween('tanggal_transaksi', [$start, $end])
+            ->get();
+
+            $date_range = str_replace('-', '/', $date_range);
+            $date_range = str_replace(' / ', ' - ', $date_range);
+            // dd($start, $end, $catatan_tr_proyeks);
+        }
+        else
+        {
+            $catatan_tr_proyeks = TransaksiProyek::with('akun_tr_proyek', 'pemasok', 'proyek', 'akun_neraca')
+                               ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        }
+        
         $akun_tr_proyeks = AkunTransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
-        // get pemasok
         $pemasoks = Pemasok::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
-
-        // get proyek
         $proyeks = Proyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $akun_neracas = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                        ->where('jenis_akun', '!=', 'Lainnya')
+                        ->get();
 
-        // get akun neraca
-        $akun_neracas = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
-        // dd($catatan_tr_proyeks->first()->pemasok);
+        $kas_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                    ->where('jenis_akun', '=', 'Kas')
+                    ->sum('saldo');
+        
+        $bank_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                    ->where('jenis_akun', '=', 'Bank')
+                    ->sum('saldo');
+        // dd($akun_neracas, $kas_sum, $bank_sum);
         return view('catatan/transaksi_proyek', [
             'catatan_tr_proyeks' => $catatan_tr_proyeks,
             'akun_tr_proyeks' => $akun_tr_proyeks,
             'akun_neracas' => $akun_neracas,
             'pemasoks' => $pemasoks,
             'proyeks' => $proyeks,
+            'date_range' => $date_range,
+            'kas_sum' => $kas_sum,
+            'bank_sum' => $bank_sum,
             ]);
     }
     

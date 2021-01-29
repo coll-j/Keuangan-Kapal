@@ -9,16 +9,16 @@ Bootstable
 var params = null;  		//Parameters
 var colsEdi =null;
 var newColHtml = '<div class="btn-group pull-right">'+
-'<button id="bEdit" type="button" class="btn btn-sm btn-link p-0 px-1 ml-2" onclick="rowEdit(this);">' +
+'<button id="bEdit" type="button" class="btn btn-sm btn-link p-0 mx-1" onclick="rowEdit(this);">' +
 '<i class="fas fa-pencil-alt" > </i>'+
 '</button>'+
-'<button id="bElim" type="button" class="btn btn-sm btn-link p-0 px-1 ml-2" onclick="rowElim(this);">' +
+'<button id="bElim" type="button" class="btn btn-sm btn-link p-0 mx-1" onclick="rowElim(this);">' +
 '<i class="fas fa-trash-alt" > </i>'+
 '</button>'+
-'<button id="bAcep" type="button" class="btn btn-sm btn-link p-0 px-1 ml-2" style="display:none;" onclick="rowAcep(this);">' + 
+'<button id="bAcep" type="button" class="btn btn-sm btn-link p-0 mx-1" style="display:none;" onclick="rowAcep(this);">' + 
 '<i class="fas fa-check" > </i>'+
 '</button>'+
-'<button id="bCanc" type="button" class="btn btn-sm btn-link p-0 px-1 ml-2" style="display:none;" onclick="rowCancel(this);">' + 
+'<button id="bCanc" type="button" class="btn btn-sm btn-link p-0 mx-1" style="display:none;" onclick="rowCancel(this);">' + 
 '<i class="fas fa-times" > </i>'+
 '</button>'+
   '</div>';

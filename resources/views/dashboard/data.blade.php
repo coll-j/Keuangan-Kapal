@@ -195,6 +195,14 @@
                     <label for="saldo-akun">Saldo (Rp)</label>
                     <input autocomplete="off" type="text" name="n_saldo" id="saldo-akun" class="form-control">
                 </div>
+                <div class="form-group">
+                    <label for="jenis_akun">Jenis Akun</label>
+                    <select class="form-control" id="jenis_akun" name="jenis_akun">
+                    <option value="Kas">Kas</option>
+                    <option value="Bank">Bank</option>
+                    <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
             </div>
             <div id="form-transaksi" style="display: none;">
                 <div class="form-group">
@@ -207,7 +215,6 @@
                     <option value="Masuk">Masuk</option>
                     <option value="Keluar">Keluar</option>
                     </select>
-                    <!-- <input name="at_jenis" type="text" id="nama-transaksi" class="form-control"> -->
                 </div>
             </div>
             <div id="form-pemasok" style="display: none;">
@@ -235,6 +242,16 @@
                     <input name="pr_nama" type="text" id="nama-proyek" class="form-control">
                 </div>
             </div>
+            <div id="jenis_neraca" class="form-group">
+                <label>Jenis Neraca</label>
+                <select class="form-control" name="jenis_neraca">
+                <option value="Aset Lancar">Aset Lancar</option>
+                <option value="Aset Tetap">Aset Tetap</option>
+                <option value="Kewajiban Lancar">Kewajiban Lancar</option>
+                <option value="Kewajiban Panjang">Kewajiban Jangka Panjang</option>
+                <option value="Ekuitas">Ekuitas</option>
+                </select>
+            </div>
         </form>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -259,7 +276,11 @@
 @endsection
 
 @section('css')
-
+<style>
+.content {
+    font-size: 12px;
+}
+</style>
 @endsection
 
 @section('js')
@@ -287,6 +308,8 @@
                         $('#form-pemasok').hide();
                         $('#form-proyek').hide();
                         $('#form-akun-all').prop('action', "{{ route('form_transaksi_kantor') }}");
+                        $('#jenis_neraca').show();
+                        
                         break;
                     case "Akun Transaksi Proyek":
                         $('#form-neraca').hide();
@@ -294,6 +317,7 @@
                         $('#form-pemasok').hide();
                         $('#form-proyek').hide();
                         $('#form-akun-all').prop('action', "{{ route('form_transaksi_proyek') }}");
+                        $('#jenis_neraca').show();
                         break;
                     case "Pemasok": 
                         $('#form-neraca').hide();
@@ -301,6 +325,7 @@
                         $('#form-pemasok').show();
                         $('#form-proyek').hide();
                         $('#form-akun-all').prop('action', "{{ route('form_pemasok') }}");
+                        $('#jenis_neraca').hide();
                         break;
                     case "Proyek":
                         $('#form-neraca').hide();
@@ -308,6 +333,7 @@
                         $('#form-pemasok').hide();
                         $('#form-proyek').show();
                         $('#form-akun-all').prop('action', "{{ route('form_proyek') }}");
+                        $('#jenis_neraca').hide();
                         break;
                     default:
                         $('#form-neraca').show();
@@ -315,6 +341,7 @@
                         $('#form-pemasok').hide();
                         $('#form-proyek').hide();
                         $('#form-akun-all').prop('action', "{{ route('form_neraca') }}");
+                        $('#jenis_neraca').show();
                         break;
                 }
             });

@@ -9,7 +9,7 @@
 @section('content')
 <div class="card card-outline">
     <div class="card-body box-profile">
-        <h1 class="text-center">PT. XYZ</h1>
+        <h4 class="text-center">PT. XYZ</h4>
         <div class="d-flex justify-content-center mb-3">
             <input name="daterange" value="01/01/2021" type="text" style="width: 180px;" class="form-control text-center">
         </div>
@@ -27,52 +27,29 @@
                             <td style="border-top: 1px solid black; width: 30%;"></td>
                         </tr>
                         <tr>
-                            <td style="text-indent: 20px;">Kas</td>
-                            <td>999.999</td>
+                            <td style="text-indent: 20px;"></td>
+                            <td>0</td>
                         </tr>
-                        <tr>
-                            <td style="text-indent: 20px; ">Bank</td>
-                            <td>999.999</td>
-                        </tr>
-                        <tr>
-                            <td style="text-indent: 20px; ">Piutang Usaha</td>
-                            <td>999.999</td>
-                        </tr>
-                        <tr>
-                            <td style="text-indent: 20px; ">Sewa Lahan</td>
-                            <td>999.999</td>
-                        </tr>
+                        
                         <tr class="font-weight-bold">
                             <td style="">Total Aset Lancar</td>
-                            <td>999.999</td>
+                            <td>0</td>
                         </tr>
                         <tr>
                             <td style="border-top: 1px solid black; width: 70%; padding: 0px 5px;" class="font-weight-bold">Aset Tetap</td>
                             <td style="border-top: 1px solid black; width: 30%;"></td>
                         </tr>
                         <tr>
-                            <td style="text-indent: 20px;">Kendaraan</td>
-                            <td>999.999</td>
-                        </tr>
-                        <tr>
-                            <td style="text-indent: 20px; ">Peralatan Kantor</td>
-                            <td>999.999</td>
-                        </tr>
-                        <tr>
-                            <td style="text-indent: 20px; ">Peralatan Proyek</td>
-                            <td>999.999</td>
-                        </tr>
-                        <tr>
-                            <td style="text-indent: 20px; ">Akumulasi Penyusutan Aset</td>
-                            <td>999.999</td>
+                            <td style="text-indent: 20px;"></td>
+                            <td>0</td>
                         </tr>
                         <tr class="font-weight-bold">
                             <td style="">Total Aset Tetap</td>
-                            <td>999.999</td>
+                            <td>0</td>
                         </tr>
                         <tr>
                             <td style="border-top: 1px solid black; width: 70%;" class="font-weight-bold">Total Aset Keseluruhan</td>
-                            <td style="border-top: 1px solid black; width: 30%;" class="font-weight-bold">999.999</td>
+                            <td style="border-top: 1px solid black; width: 30%;" class="font-weight-bold">0</td>
                         </tr>
                     </tbody>
                 </table>
@@ -88,44 +65,36 @@
                             <td style="border-top: 1px solid black; width: 30%;"></td>
                         </tr>
                         <tr>
-                            <td style="text-indent: 20px;">Utang usaha</td>
-                            <td>999.999</td>
+                            <td style="text-indent: 20px;"></td>
+                            <td>0</td>
                         </tr>
                         <tr class="font-weight-bold">
                             <td style="">Total Kewajiban Lancar</td>
-                            <td>999.999</td>
+                            <td>0</td>
                         </tr>
                         <tr>
                             <td style="border-top: 1px solid black; width: 70%; padding: 0px 5px;" class="font-weight-bold">Kewajiban Jangka Panjang</td>
                             <td style="border-top: 1px solid black; width: 30%;"></td>
                         </tr>
                         <tr>
-                            <td style="text-indent: 20px;">Utang Bank</td>
-                            <td>999.999</td>
+                            <td style="text-indent: 20px;"></td>
+                            <td>0</td>
                         </tr>
                         <tr class="font-weight-bold">
                             <td style="">Total Kewajiban Jangka Panjang</td>
-                            <td>999.999</td>
+                            <td>0</td>
                         </tr>
                         <tr>
                             <td style="border-top: 1px solid black; width: 70%; padding: 0px 5px;" class="font-weight-bold">Ekuitas</td>
                             <td style="border-top: 1px solid black; width: 30%;"></td>
                         </tr>
                         <tr>
-                            <td style="text-indent: 20px;">Modal</td>
-                            <td>999.999</td>
-                        </tr>
-                        <tr>
-                            <td style="text-indent: 20px;">Saldo Laba</td>
-                            <td>999.999</td>
-                        </tr>
-                        <tr>
-                            <td style="text-indent: 20px;">Laba (Rugi) Berjalan</td>
-                            <td>999.999</td>
+                            <td style="text-indent: 20px;"></td>
+                            <td>0</td>
                         </tr>
                         <tr class="font-weight-bold">
                             <td style="">Total Ekuitas</td>
-                            <td>999.999</td>
+                            <td>0</td>
                         </tr>
                         <!-- <tr class="font-weight-bold">
                             <td style=""><br/></td>
@@ -133,7 +102,7 @@
                         </tr> -->
                         <tr class="mt-5">
                             <td style="border-top: 1px solid black; width: 70%;" class="font-weight-bold">Total Kewajiban dan Ekuitas</td>
-                            <td style="border-top: 1px solid black; width: 30%;" class="font-weight-bold">999.999</td>
+                            <td style="border-top: 1px solid black; width: 30%;" class="font-weight-bold">0</td>
                         </tr>
                     </tbody>
                 </table>
@@ -161,6 +130,10 @@
 
     table tr td:last-child {
     text-align: right;
+    }
+    
+    .content {
+    font-size: 12px;
     }
 </style>
 @endsection

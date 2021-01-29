@@ -24,6 +24,9 @@ class AkunController extends Controller
             'nama' => $req->n_nama,
             'saldo' => floatval(str_replace(",","",$req->n_saldo)),
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
+            'jenis_akun' => $req->jenis_akun,
+            'jenis_neraca' => $req->jenis_neraca,
+
         ]);
         return redirect()->route('data');
     }
@@ -34,6 +37,8 @@ class AkunController extends Controller
             'nama' => $req->at_nama,
             'jenis' => $req->at_jenis,
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
+            'jenis_neraca' => $req->jenis_neraca,
+
         ]);
         return redirect()->route('data');
     }
@@ -43,6 +48,7 @@ class AkunController extends Controller
         AkunTransaksiKantor::create([
             'nama' => $req->at_nama,
             'jenis' => $req->at_jenis,
+            'jenis_neraca' => $req->jenis_neraca,
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);
         return redirect()->route('data');

@@ -10,7 +10,7 @@ class AkunNeracaSaldo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'saldo', 'id_perusahaan',
+        'nama', 'saldo', 'id_perusahaan', 'jenis_akun', 'jenis_neraca',
     ];
     
     public function catatan_transaksi_proyek(){

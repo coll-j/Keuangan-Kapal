@@ -31,7 +31,7 @@ Route::get('/profil_perusahaan', [App\Http\Controllers\DashboardController::clas
 Route::get('/data', [App\Http\Controllers\DashboardController::class, 'PageData'])->name('data');
 Route::get('/anggaran', [App\Http\Controllers\CatatanController::class, 'pageAnggaran'])->name('anggaran');
 Route::get('/neraca', [App\Http\Controllers\CatatanController::class, 'pageNeraca'])->name('neraca');
-Route::get('/transaksi_proyek', [App\Http\Controllers\CatatanController::class, 'pageTransaksiProyek'])->name('transaksi_proyek');
+Route::get('/transaksi_proyek/{date_range?}', [App\Http\Controllers\CatatanController::class, 'pageTransaksiProyek']);
 Route::get('/transaksi_kantor', [App\Http\Controllers\CatatanController::class, 'pageTransaksiKantor'])->name('transaksi_kantor');
 Route::get('/hutang_piutang', [App\Http\Controllers\CatatanController::class, 'pageHutangPiutang'])->name('hutang_piutang');
 Route::get('/gudang', [App\Http\Controllers\GudangController::class, 'index'])->name('gudang');
