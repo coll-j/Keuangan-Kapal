@@ -33,13 +33,25 @@ class AkunController extends Controller
 
     function addAkunTransaksiProyek(Request $req) 
     {
-        AkunTransaksiProyek::create([
+        $akun = AkunTransaksiProyek::create([
             'nama' => $req->at_nama,
             'jenis' => $req->at_jenis,
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
             'jenis_neraca' => $req->jenis_neraca,
 
         ]);
+
+        $proyeks = Proyek::where('id_perusahaan', Auth::user()->id_perusahaan)->get();
+        foreach($proyeks as $proyek)
+        {
+            Anggaran::create([
+                'id_akun_tr_proyek' => $akun->id,
+                'id_perusahaan' => Auth::user()->id_perusahaan,
+                'id_proyek' => $proyek->id,
+                'nominal' => 0,
+            ]);
+        }
+
         return redirect()->route('data');
     }
 
