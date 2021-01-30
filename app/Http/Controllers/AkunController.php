@@ -58,6 +58,7 @@ class AkunController extends Controller
     {
         Proyek::create([
             'id_pemilik' => $req->pr_kode,
+            'kode_proyek' => $req->kode_proyek,
             'jenis' => $req->pr_nama,
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
         ]);

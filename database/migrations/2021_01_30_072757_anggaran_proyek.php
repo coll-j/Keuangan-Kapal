@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProyeksTable extends Migration
+class AnggaranProyek extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateProyeksTable extends Migration
      */
     public function up()
     {
-        Schema::create('proyeks', function (Blueprint $table) {
+        Schema::create('anggaran_proyek', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('kode_proyek');
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
-            $table->unsignedBigInteger('id_pemilik')->references('id')->on('users')->onDelete('cascade');
-            $table->string('jenis');
+            // TODO: buat kolom
             $table->timestamps();
         });
     }
@@ -30,6 +27,7 @@ class CreateProyeksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proyeks');
+        Schema::dropIfExists('anggaran_proyek');
+        //
     }
 }

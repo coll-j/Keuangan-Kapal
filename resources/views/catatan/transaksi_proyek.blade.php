@@ -73,7 +73,7 @@
                 </thead>
                 <tbody>
                     @foreach($catatan_tr_proyeks as $catatan_tr_proyek)
-                    <tr>
+                    <tr id="{{ $catatan_tr_proyek->id }}">
                         <td>{{$catatan_tr_proyek->tanggal_transaksi}}</td>
                         <td>{{$catatan_tr_proyek->akun_tr_proyek->nama}}</td>
                         <td>{{$catatan_tr_proyek->pemasok->nama ?? ''}}</td>
@@ -85,17 +85,9 @@
                         <td>{{$catatan_tr_proyek->akun_tr_proyek->jenis}}</td>
                         <td>{{ number_format($catatan_tr_proyek->jumlah, 2, '.', ',') }}</td>
                         <td>{{ number_format($catatan_tr_proyek->terbayar, 2, '.', ',') }}</td>
-                        @php
-                        $sisa = $catatan_tr_proyek->jumlah - $catatan_tr_proyek->terbayar;
-                        @endphp
-                        <td>{{ number_format($sisa, 2, '.', ',') }}</td>
-                        @if($sisa > 0 && $catatan_tr_proyek->akun_tr_proyek->jenis == 'Keluar')
-                        <td> Utang </td>
-                        @elseif($sisa > 0 && $catatan_tr_proyek->akun_tr_proyek->jenis == 'Masuk')
-                        <td> Piutang </td>
-                        @else
-                        <td> - </td>
-                        @endif
+                        
+                        <td>{{ number_format($catatan_tr_proyek->sisa, 2, '.', ',') }}</td>
+                        <td>{{ $catatan_tr_proyek->jenis }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -194,6 +186,92 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Tambah Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-transaksi" method="post" action="{{ route('update_transaksi_proyek') }}">
+        @csrf
+            <input id="edit-id" name="id" type="hidden" class="form-control">
+            <div class="form-group">
+                <label for="nama-akun">Tanggal</label>
+                <input id="daterange-edit" name="tanggal_transaksi" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="edit-jenis-akun">Jenis Transaksi</label>
+                <select class="form-control" id="edit-jenis-akun" name="jenis_transaksi" required>
+                <option disabled selected value> -- pilih jenis transaksi -- </option>
+                @foreach($akun_tr_proyeks as $akun_tr_proyek)
+                <option value="{{ $akun_tr_proyek->id }}">{{ $akun_tr_proyek->nama}}</option>
+                @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-kode-pemasok">Pemasok <span class="text-muted">(opsional)</span></label>
+                <select class="form-control" id="edit-kode-pemasok" name="id_pemasok">
+                <option disabled selected value> -- pilih pemasok -- </option>
+                @foreach($pemasoks as $pemasok)
+                <option value="{{ $pemasok->id }}">{{ $pemasok->nama}}</option>
+                @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
+                <input type="text" id="edit-nama-material" name="nama_material" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="edit-jumlah-material">Jumlah Material <span class="text-muted">(opsional)</span></label>
+                <input type="number" id="edit-jumlah-material" class="form-control" name="jumlah_material">
+            </div>
+            <div class="form-group">
+                <label for="edit-satuan-material">Satuan Material <span class="text-muted">(opsional)</span></label>
+                <input type="text" id="edit-satuan-material" name="satuan_material" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="edit-kode-proyek">Proyek</label>
+                <select class="form-control" id="edit-kode-proyek" name="id_proyek">
+                <option disabled selected value required> -- pilih proyek -- </option>
+                @foreach($proyeks as $proyek)
+                <option value="{{ $proyek->id }}">{{ $proyek->jenis }}</option>
+                @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-kas-bank">Kas/Bank</label>
+                <select class="form-control" id="edit-kas-bank" name="akun_neraca" required>
+                <option disabled selected value> -- pilih akun -- </option>
+                @foreach($akun_neracas as $akun_neraca)
+                <option value="{{ $akun_neraca->id }}">{{ $akun_neraca->nama }}</option>
+                @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="edit-jumlah-transaksi">Jumlah (Rp)</label>
+                    <input type="text" id="edit-jumlah-transaksi" class="form-control" name="jumlah_transaksi" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-jumlah-transaksi-dibayar">Jumlah Dibayar/Diterima (Rp)</label>
+                    <input type="text" id="edit-jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" form="edit-transaksi">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
 @endif
 @endif
 @endsection
@@ -204,7 +282,9 @@
 .content {
     font-size: 12px;
 }
+
 </style>
+<meta name="csrf-token" content="{{ Session::token() }}"> 
 @endsection
 
 @section('js')
@@ -212,7 +292,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var role = <?php echo Auth::user()->role; ?>;
-
         if(role == 1)
         {
             $('table').SetEditable();

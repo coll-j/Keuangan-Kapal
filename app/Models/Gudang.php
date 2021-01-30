@@ -14,6 +14,7 @@ class Gudang extends Model
         'id_perusahaan',
         'nama_barang',
         'id_parent',
+        'id_transaksi',
         'satuan',
         'jumlah',
         'jenis',

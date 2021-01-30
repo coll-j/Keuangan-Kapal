@@ -238,7 +238,7 @@ return [
             'text' => 'profil_perusahaan',
             'url'  => 'profil_perusahaan',
             'icon' => 'fas fa-fw fa-building',
-            'role' => [0, 1, 2, 3],
+            'role' => [0, 1, 2, 3, 4],
         ],
         [
             'text' => 'data',

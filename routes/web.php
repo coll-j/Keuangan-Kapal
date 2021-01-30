@@ -31,7 +31,7 @@ Route::get('/profil_perusahaan', [App\Http\Controllers\DashboardController::clas
 Route::get('/data', [App\Http\Controllers\DashboardController::class, 'PageData'])->name('data');
 Route::get('/anggaran', [App\Http\Controllers\CatatanController::class, 'pageAnggaran'])->name('anggaran');
 Route::get('/neraca', [App\Http\Controllers\CatatanController::class, 'pageNeraca'])->name('neraca');
-Route::get('/transaksi_proyek/{date_range?}', [App\Http\Controllers\CatatanController::class, 'pageTransaksiProyek']);
+Route::get('/transaksi_proyek/{date_range?}', [App\Http\Controllers\CatatanController::class, 'pageTransaksiProyek'])->name('transaksi_proyek');
 Route::get('/transaksi_kantor', [App\Http\Controllers\CatatanController::class, 'pageTransaksiKantor'])->name('transaksi_kantor');
 Route::get('/hutang_piutang', [App\Http\Controllers\CatatanController::class, 'pageHutangPiutang'])->name('hutang_piutang');
 Route::get('/gudang', [App\Http\Controllers\GudangController::class, 'index'])->name('gudang');
@@ -70,5 +70,11 @@ Route::post('edit_pemasok', [App\Http\Controllers\AkunController::class, 'editPe
 
 // Route Catatan Transaksi Proyek
 Route::post('create_transaksi_proyek', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'insert'])->name('create_transaksi_proyek');
+Route::post('update_transaksi_proyek', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'edit'])->name('update_transaksi_proyek');
+Route::post('delete_transaksi_proyek', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'delete'])->name('delete_transaksi_proyek');
+
+// Route Anggaran
+Route::post('update_anggaran', [App\Http\Controllers\Catatan\AnggaranController::class, 'edit'])->name('update_anggaran');
+
 Route::post('add_transaksi_kantor', [App\Http\Controllers\TransaksiController::class, 'addTransaksiKantor'])->name('add_transaksi_kantor');
-// Route::post('add_transaksi_proyek', [App\Http\Controllers\TransaksiController::class, 'addTransaksiProyek'])->name('add_transaksi_proyek');
+Route::get('/get_transaksi_proyek/{id}', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'getById']);

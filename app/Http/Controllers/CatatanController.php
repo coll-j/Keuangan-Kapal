@@ -38,7 +38,15 @@ class CatatanController extends Controller
     }
 
     public function pageAnggaran(){
-        return view('catatan/anggaran');
+        $proyeks = Proyek::where('id_perusahaan', Auth::user()->id_perusahaan)->get();
+        $pendapatans = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
+                    ->where('jenis', 'Masuk')
+                    ->get();
+        $biayas = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
+                ->where('jenis', 'Keluar')
+                ->get();
+        // dd($proyeks, $pendapatans, $biayas);
+        return view('catatan/anggaran', compact('proyeks', 'pendapatans', 'biayas'));
     }
 
     public function pageTransaksiProyek($date_range = null){
@@ -76,7 +84,7 @@ class CatatanController extends Controller
         $bank_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
                     ->where('jenis_akun', '=', 'Bank')
                     ->sum('saldo');
-        // dd($akun_neracas, $kas_sum, $bank_sum);
+        // dd($catatan_tr_proyeks->find(1));
         return view('catatan/transaksi_proyek', [
             'catatan_tr_proyeks' => $catatan_tr_proyeks,
             'akun_tr_proyeks' => $akun_tr_proyeks,
