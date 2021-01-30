@@ -35,6 +35,8 @@ Route::get('/transaksi_proyek/{date_range?}', [App\Http\Controllers\CatatanContr
 Route::get('/transaksi_kantor', [App\Http\Controllers\CatatanController::class, 'pageTransaksiKantor'])->name('transaksi_kantor');
 Route::get('/hutang_piutang', [App\Http\Controllers\CatatanController::class, 'pageHutangPiutang'])->name('hutang_piutang');
 Route::get('/gudang', [App\Http\Controllers\GudangController::class, 'index'])->name('gudang');
+Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+Route::post('/users/update', [App\Http\Controllers\ProfileController::class,'update'])->name('users.update');
 
 Route::get('/laba_rugi', [App\Http\Controllers\LaporanController::class, 'pageLabaRugi'])->name('laba_rugi');
 Route::get('/laba_rugi_kantor', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiKantor'])->name('laba_rugi_kantor');

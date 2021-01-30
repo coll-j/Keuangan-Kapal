@@ -58,7 +58,7 @@
                                 <i class="fa fa-user mr-1"></i>User
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Lihat Profil</a>
+                                <a class="dropdown-item" href="/resources/views/old-layouts/profile.blade.php">Lihat Profil</a>
                                 <a class="dropdown-item" href="#">Keluar</a>
                             </div>
                         </li>
