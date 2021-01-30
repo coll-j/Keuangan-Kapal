@@ -28,8 +28,9 @@
 
 
 
-    <button class="btn btn-primary" onclick="history.go(-1);">Back</button>
+    
 </form>
+<button class="btn btn-primary" onclick="goBack()">Back</button>
 @endsection
 
 @section('css')
@@ -42,5 +43,9 @@
 @endsection
 
 @section('js')
-
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 @endsection
