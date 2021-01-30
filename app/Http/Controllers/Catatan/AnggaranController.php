@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Catatan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\Catatan\Anggaran;
 
 class AnggaranController extends Controller
 {
@@ -11,10 +14,20 @@ class AnggaranController extends Controller
     public function edit(Request $request){
         // dd($request);
         foreach ($request->except('_token') as $key => $value) {
-            echo 'key '. $key;
-            echo ' value '. $value;
-            echo '</br>';
-            // $key gives you the key. 2 and 7 in your case.
+            $id_akun = intval(str_replace('akun-', '', $key));
+            $anggaran = Anggaran::where('id_perusahaan', Auth::user()->id_perusahaan)
+                        ->where('id_akun_tr_proyek', $id_akun)
+                        ->where('id_proyek', $request->id_proyek)
+                        ->first();
+
+            if(!(is_null($anggaran)))
+            {
+                $anggaran->nominal = floatval(str_replace(',', '', $value));
+                $anggaran->save();
+            }
+            // echo 'id akun '. $id_akun;
+            // echo ' value '. $value;
+            // echo '</br>';
         }
         // echo $request['akun-1'];
         // find proyek
@@ -29,6 +42,6 @@ class AnggaranController extends Controller
                 record_anggaran->value = request[req.key]
                 record_anggaran->save()
         */
-        return;
+        return redirect()->route('anggaran');
     }
 }

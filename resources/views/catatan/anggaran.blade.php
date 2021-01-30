@@ -41,6 +41,8 @@
                     <th style="width: 16%">Jumlah</th>
                 </thead>
                 <tbody>
+                   
+                    <!-- PENDAPATAN -->
                     <tr>
                         <td class="float-left" colspan="6" style="border: none;"><b>Pendapatan</b></td>
                     </tr>
@@ -48,18 +50,42 @@
                     <tr>
                         <td class="akun-{{ $pendapatan->id }}">{{$pendapatan->nama}}</td>
                         @foreach($proyeks as $proyek)
-                        <td class="akun-{{ $pendapatan->id }} pr-{{ $proyek->id }}">1,350,000,000</td>
+                        <td class="akun-{{ $pendapatan->id }} pr-{{ $proyek->id }}">
+                        {{ number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)
+                        ->where('id_akun_tr_proyek', $pendapatan->id)
+                        ->first()->nominal, 2, '.', ',')}}
+                        </td>
                         @endforeach
-                        <td>JUMLAH</td>
+                        <td>
+                        {{
+                            number_format(\App\Models\Catatan\Anggaran::where('id_akun_tr_proyek', $pendapatan->id)->whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Masuk');
+                            })->sum('nominal'), 2, '.', ',')
+                        }}
+                        </td>
                     </tr>
                     @endforeach
                     <tr>
                         <td class="right" ><b>Jumlah Pendapatan</b></td>
                         @foreach($proyeks as $proyek)
-                        <td>JUMLAH_PER_PROYEK</td>
+                        <td>
+                        {{
+                            number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Masuk');
+                            })->sum('nominal'), 2, '.', ',')
+                        }}
+                        </td>
                         @endforeach
-                        <td class="end-row">2.700.000.000</td>
+                        <td class="end-row">
+                        {{
+                            number_format(\App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Masuk');
+                            })->sum('nominal'), 2, '.', ',')
+                        }}
+                        </td>
                     </tr>
+                    
+                    <!-- BIAYA -->
                     <tr>
                         <td class="float-left" colspan="6" style="border: none;"><b>Biaya</b></td>
                     </tr>
@@ -67,24 +93,65 @@
                     <tr>
                         <td class="akun-{{ $biaya->id }}">{{$biaya->nama}}</td>
                         @foreach($proyeks as $proyek)
-                        <td class="akun-{{ $biaya->id }} pr-{{ $proyek->id }}">15,000,000</td>
+                        <td class="akun-{{ $biaya->id }} pr-{{ $proyek->id }}">
+                        {{ number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)
+                        ->where('id_akun_tr_proyek', $biaya->id)
+                        ->first()->nominal, 2, '.', ',')}}
+                        </td>
                         @endforeach
-                        <td>JUMLAH</td>
+                        <td>
+                        {{
+                            number_format(\App\Models\Catatan\Anggaran::where('id_akun_tr_proyek', $biaya->id)->whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Keluar');
+                            })->sum('nominal'), 2, '.', ',')
+                        }}
+                        </td>
                     </tr>
                     @endforeach
                     <tr>
                         <td class="right" ><b>Jumlah Biaya</b></td>
                         @foreach($proyeks as $proyek)
-                        <td>JUMLAH_PER_PROYEK</td>
+                        <td>
+                        {{
+                            number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Keluar');
+                            })->sum('nominal'), 2, '.', ',')
+                        }}
+                        </td>
                         @endforeach
-                        <td class="end-row">999.999.999</td>
+                        <td class="end-row">
+                        {{
+                            number_format(\App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Keluar');
+                            })->sum('nominal'), 2, '.', ',')
+                        }}
+                        </td>
                     </tr>
+
                     <tr>
                         <td class="right"><b>Laba</b></td>
                         @foreach($proyeks as $proyek)
-                        <td>LABA_PER_PROYEK</td>
+                        @php
+                        $p_proyek = \App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Masuk');
+                            })->sum('nominal');
+
+                        $b_proyek = \App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Keluar');
+                            })->sum('nominal');
+                        @endphp
+                        <td>{{ number_format($p_proyek - $b_proyek, 2, '.', ',') }}</td>
                         @endforeach
-                        <td class="end-row">99.999.999</td>
+                        @php
+                        $p_total = \App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Masuk');
+                            })->sum('nominal');
+
+                        $b_total = \App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
+                            return $query->where('jenis', 'Keluar');
+                            })->sum('nominal')
+                        @endphp
+                        <td class="end-row">{{ number_format($p_total - $b_total, 2, '.', ',') ?? '' }}</td>
                     </tr>
                 </tbody>
                 </table>
@@ -154,6 +221,8 @@
         })
         var form = '<form method="post" action="{{ route("update_anggaran") }}">\
                     @csrf';
+        var id_input = '<input type="text" name="id_proyek" value="' + id_proyek + '">';
+        form = form.concat(id_input);
         for(var i in all_input)
         {
             // console.log();

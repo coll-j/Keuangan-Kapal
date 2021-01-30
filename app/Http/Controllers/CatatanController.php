@@ -13,7 +13,7 @@ use App\Models\Gudang;
 use App\Models\Catatan\TransaksiProyek;
 use App\Models\TransaksiKantor;
 use App\Models\AkunTransaksiKantor;
-
+use App\Models\Catatan\Anggaran;
 use DateTime;
 use Carbon\Carbon;
 class CatatanController extends Controller
@@ -45,8 +45,21 @@ class CatatanController extends Controller
         $biayas = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
                 ->where('jenis', 'Keluar')
                 ->get();
-        // dd($proyeks, $pendapatans, $biayas);
-        return view('catatan/anggaran', compact('proyeks', 'pendapatans', 'biayas'));
+
+        $anggarans = Anggaran::with('akun_tr_proyek')->where('id_perusahaan', Auth::user()->id_perusahaan);
+        // dd($anggarans->whereHas('akun_tr_proyek', function($query){
+        //     return $query->where('jenis', 'Masuk');
+        // })->sum('nominal'));
+        // dd($anggarans);\
+        // $anggarans->where('id_proyek', 2)
+        // ->where('id_akun_tr_proyek', 3)
+        // ->first()->nominal;
+
+        // dd($anggarans->where('id_proyek', 2)
+        // ->where('id_akun_tr_proyek', 3)
+        // ->first()->nominal, $anggarans);
+        // dd($anggarans->where('id_proyek', 2)->where('id_akun_tr_proyek', 3)->first()->nominal);
+        return view('catatan/anggaran', compact('proyeks', 'pendapatans', 'biayas', 'anggarans'));
     }
 
     public function pageTransaksiProyek($date_range = null){
