@@ -9,7 +9,7 @@ use App\Models\AkunTransaksiProyek;
 use App\Models\AkunTransaksiKantor;
 use App\Models\Pemasok;
 use App\Models\Proyek;
-
+use App\Models\Catatan\Anggaran;
 
 class AkunController extends Controller
 {
@@ -33,13 +33,25 @@ class AkunController extends Controller
 
     function addAkunTransaksiProyek(Request $req) 
     {
-        AkunTransaksiProyek::create([
+        $akun = AkunTransaksiProyek::create([
             'nama' => $req->at_nama,
             'jenis' => $req->at_jenis,
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
             'jenis_neraca' => $req->jenis_neraca,
 
         ]);
+
+        $proyeks = Proyek::where('id_perusahaan', Auth::user()->id_perusahaan)->get();
+        foreach($proyeks as $proyek)
+        {
+            Anggaran::create([
+                'id_akun_tr_proyek' => $akun->id,
+                'id_perusahaan' => Auth::user()->id_perusahaan,
+                'id_proyek' => $proyek->id,
+                'nominal' => 0,
+            ]);
+        }
+
         return redirect()->route('data');
     }
 
@@ -56,11 +68,25 @@ class AkunController extends Controller
 
     function addProyek(Request $req) 
     {
-        Proyek::create([
+        $proyek = Proyek::create([
             'id_pemilik' => $req->pr_kode,
+            'kode_proyek' => $req->kode_proyek,
             'jenis' => $req->pr_nama,
             'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
+            ]);
+            
+        $akun_proyeks = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)->get();
+        foreach($akun_proyeks as $akun_proyek)
+        {
+            Anggaran::create([
+                'id_akun_tr_proyek' => $akun_proyek->id,
+                'id_perusahaan' => Auth::user()->id_perusahaan,
+                'id_proyek' => $proyek->id,
+                'nominal' => 0,
+            ]);
+        }
+        // return;
+            
         return redirect()->route('data');
     }
 

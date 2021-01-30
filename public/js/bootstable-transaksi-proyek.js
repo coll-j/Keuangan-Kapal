@@ -123,21 +123,56 @@ function rowCancel(but) {
 }
 function rowEdit(but) {  //Inicia la edición de una fila
   var $row = $(but).parents('tr');  //accede a la fila
-  var $cols = $row.find('td');  //lee campos
-  if (ModoEdicion($row)) return;  //Ya está en edición
-  //Pone en modo de edición
-  IterarCamposEdit($cols, function($td) {  //itera por la columnas
-      var cont = $td.html(); //lee contenido
-      var div = '<div style="display: none;">' + cont + '</div>';  //guarda contenido
-      var input = '<input class="form-control input-sm"  value="' + cont + '">';
-      $td.html(div + input);  //fija contenido
+  // var $cols = $row.find('td');  //lee campos
+  var id = $row.attr('id');
+  var url = '/get_transaksi_proyek/' + id;
+  console.log(url)
+  $.ajax({
+    url: url,
+    method: 'get',
+    success:function(data){
+
+        console.log(JSON.parse(data)); 
+        data = JSON.parse(data);         
+        $('#daterange-edit').val(data['tanggal_transaksi']);
+        $('#edit-jenis-akun').val(data['id_akun_tr_proyek']);
+        $('#edit-kode-pemasok').val(data['id_pemasok']);
+        $('#edit-nama-material').val(data['nama_material']);
+        $('#edit-jumlah-material').val(data['jumlah_material']);
+        $('#edit-satuan-material').val(data['satuan_material']);
+        $('#edit-kode-proyek').val(data['id_proyek']);
+        $('#edit-kas-bank').val(data['id_akun_neraca']);
+        $('#edit-jumlah-transaksi').val(Intl.NumberFormat().format(data['jumlah']));
+        $('#edit-jumlah-transaksi-dibayar').val(Intl.NumberFormat().format(data['terbayar']));
+        $('#edit-id').val(data['id']);
+
+        $('#editModal').modal('show');
+    }
   });
-  FijModoEdit(but);
 }
 function rowElim(but) {  //Elimina la fila actual
   var $row = $(but).parents('tr');  //accede a la fila
+  var id = $row.attr('id');
+  var guard = confirm('Yakin ingin menghapus? id=' + id);
+  if(!guard) return;
+  $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
   params.onBeforeDelete($row);
   $row.remove();
+  $.ajax({
+    url: '/delete_transaksi_proyek',
+    method: 'post',
+    data: {id: id},
+    dataType: 'JSON',
+    success:function(data){
+      console.log('data: ', data);
+      alert('Transaksi berhasil dihapus');
+    }
+  });
   params.onDelete();
 }
 function rowAddNew(tabId) {  //Agrega fila a la tabla indicada.

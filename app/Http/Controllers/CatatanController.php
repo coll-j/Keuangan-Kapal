@@ -13,7 +13,7 @@ use App\Models\Gudang;
 use App\Models\Catatan\TransaksiProyek;
 use App\Models\TransaksiKantor;
 use App\Models\AkunTransaksiKantor;
-
+use App\Models\Catatan\Anggaran;
 use DateTime;
 use Carbon\Carbon;
 class CatatanController extends Controller
@@ -38,7 +38,28 @@ class CatatanController extends Controller
     }
 
     public function pageAnggaran(){
-        return view('catatan/anggaran');
+        $proyeks = Proyek::where('id_perusahaan', Auth::user()->id_perusahaan)->get();
+        $pendapatans = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
+                    ->where('jenis', 'Masuk')
+                    ->get();
+        $biayas = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
+                ->where('jenis', 'Keluar')
+                ->get();
+
+        $anggarans = Anggaran::with('akun_tr_proyek')->where('id_perusahaan', Auth::user()->id_perusahaan);
+        // dd($anggarans->whereHas('akun_tr_proyek', function($query){
+        //     return $query->where('jenis', 'Masuk');
+        // })->sum('nominal'));
+        // dd($anggarans);\
+        // $anggarans->where('id_proyek', 2)
+        // ->where('id_akun_tr_proyek', 3)
+        // ->first()->nominal;
+
+        // dd($anggarans->where('id_proyek', 2)
+        // ->where('id_akun_tr_proyek', 3)
+        // ->first()->nominal, $anggarans);
+        // dd($anggarans->where('id_proyek', 2)->where('id_akun_tr_proyek', 3)->first()->nominal);
+        return view('catatan/anggaran', compact('proyeks', 'pendapatans', 'biayas', 'anggarans'));
     }
 
     public function pageTransaksiProyek($date_range = null){
@@ -76,7 +97,7 @@ class CatatanController extends Controller
         $bank_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
                     ->where('jenis_akun', '=', 'Bank')
                     ->sum('saldo');
-        // dd($akun_neracas, $kas_sum, $bank_sum);
+        // dd($catatan_tr_proyeks->find(1));
         return view('catatan/transaksi_proyek', [
             'catatan_tr_proyeks' => $catatan_tr_proyeks,
             'akun_tr_proyeks' => $akun_tr_proyeks,

@@ -10,7 +10,7 @@ class Proyek extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_pemilik', 'jenis', 'id_perusahaan',
+        'id_pemilik', 'jenis', 'id_perusahaan', 'kode_proyek'
     ];
     
     public function user(){

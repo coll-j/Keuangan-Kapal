@@ -17,6 +17,7 @@ class Gudang extends Migration
             $table->id()->autoIncrement();
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->unsignedBigInteger('id_parent')->nullable();
+            $table->unsignedBigInteger('id_transaksi')->references('id')->on('catatan_transaksi_proyeks')->nullable()->onDelete('cascade');
             $table->string('nama_barang');
             $table->string('satuan')->nullable();
             $table->integer('jumlah');

@@ -238,6 +238,10 @@
                     <!-- <input name="pr_kode" type="text" id="nama-pemilik-proyek" class="form-control"> -->
                 </div>
                 <div class="form-group">
+                    <label for="kode-proyek">Kode Proyek</label>
+                    <input name="kode_proyek" type="text" id="kode-proyek" class="form-control">
+                </div>
+                <div class="form-group">
                     <label for="nama-proyek">Nama Proyek</label>
                     <input name="pr_nama" type="text" id="nama-proyek" class="form-control">
                 </div>
