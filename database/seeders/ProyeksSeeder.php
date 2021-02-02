@@ -6,6 +6,10 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
+use App\Models\Perusahaan;
+use App\Models\Proyek;
+
 class ProyeksSeeder extends Seeder
 {
     /**
@@ -15,10 +19,27 @@ class ProyeksSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('proyeks')->insert([
-            'kode'=> 'Pak XYZ',
-            'nama' => 'Kapal 1',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
+        $pemilik_proyek = User::where('role', 4)->first();
+
+        Proyek::create([
+            'id_pemilik' => $pemilik_proyek->id,
+            'kode_proyek' => 'XYZ_1',
+            'jenis' => 'Kapal Pesiar Jek',
+            'id_perusahaan' => $pemilik_proyek->id_perusahaan,
+        ]);
+
+        Proyek::create([
+            'id_pemilik' => $pemilik_proyek->id,
+            'kode_proyek' => 'XYZ_2',
+            'jenis' => 'Kapal Ferry Jek',
+            'id_perusahaan' => $pemilik_proyek->id_perusahaan,
+        ]);
+
+        Proyek::create([
+            'id_pemilik' => $pemilik_proyek->id,
+            'kode_proyek' => 'XYZ_3',
+            'jenis' => 'Dermaga Jek',
+            'id_perusahaan' => $pemilik_proyek->id_perusahaan,
         ]);
     }
 }

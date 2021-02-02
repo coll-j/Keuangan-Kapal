@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-        <input name="daterange" type="text" value="{{ $date_range ?? '' }}" style="width: 250px;" class="form-control text-center">
+        <input name="daterange" type="text" value="{{ $date_range ?? '-- pilih tanggal --' }}" style="width: 250px;" class="form-control text-center">
         </div>
         <div class="row">
             <div class="col-sm">
@@ -170,11 +170,11 @@
             <div class="form-group">
                 <div class="form-group">
                     <label for="jumlah-transaksi">Jumlah (Rp)</label>
-                    <input type="text" id="jumlah-transaksi" class="form-control" name="jumlah_transaksi" required>
+                    <input autocomplete="off" type="text" id="jumlah-transaksi" class="form-control" name="jumlah_transaksi" required>
                 </div>
                 <div class="form-group">
                     <label for="jumlah-transaksi-transaksi">Jumlah Dibayar/Diterima (Rp)</label>
-                    <input type="text" id="jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required>
+                    <input autocomplete="off" type="text" id="jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required>
                 </div>
             </div>
         </form>
@@ -256,11 +256,11 @@
             <div class="form-group">
                 <div class="form-group">
                     <label for="edit-jumlah-transaksi">Jumlah (Rp)</label>
-                    <input type="text" id="edit-jumlah-transaksi" class="form-control" name="jumlah_transaksi" required>
+                    <input autocomplete="off" type="text" id="edit-jumlah-transaksi" class="form-control" name="jumlah_transaksi" required />
                 </div>
                 <div class="form-group">
                     <label for="edit-jumlah-transaksi-dibayar">Jumlah Dibayar/Diterima (Rp)</label>
-                    <input type="text" id="edit-jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required>
+                    <input autocomplete="off" type="text" id="edit-jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required />
                 </div>
             </div>
         </form>

@@ -97,7 +97,7 @@
                             <tr id="table-proyekan" name="table-proyekan" rowId="{{ $proyek['id'] }}">
                                 <td id="nama" style="width: 30%;">{{ $proyek->kode_proyek }}</td>
                                 <td id="jenis" style="width: 50%;">{{ $proyek['jenis'] }}</td>
-                                <td id="status" style="width: 20%;">Aktif</td>
+                                <td id="status" style="width: 20%;">{{ $proyek['status'] }}</td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -38,7 +38,9 @@ class CatatanController extends Controller
     }
 
     public function pageAnggaran(){
-        $proyeks = Proyek::where('id_perusahaan', Auth::user()->id_perusahaan)->get();
+        $proyeks = Proyek::where('id_perusahaan', Auth::user()->id_perusahaan)
+                        ->where('status', 'Aktif')
+                        ->get();
         $pendapatans = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
                     ->where('jenis', 'Masuk')
                     ->get();
@@ -46,20 +48,8 @@ class CatatanController extends Controller
                 ->where('jenis', 'Keluar')
                 ->get();
 
-        $anggarans = Anggaran::with('akun_tr_proyek', 'akun_tr_kantor')->where('id_perusahaan', Auth::user()->id_perusahaan);
-        // dd($anggarans->whereHas('akun_tr_proyek', function($query){
-        //     return $query->where('jenis', 'Masuk');
-        // })->sum('nominal'));
-        // dd($anggarans);\
-        // $anggarans->where('id_proyek', 2)
-        // ->where('id_akun_tr_proyek', 3)
-        // ->first()->nominal;
-
-        // dd($anggarans->where('id_proyek', 2)
-        // ->where('id_akun_tr_proyek', 3)
-        // ->first()->nominal, $anggarans);
-        // dd($anggarans->where('id_proyek', 2)->where('id_akun_tr_proyek', 3)->first()->nominal);
-        return view('catatan/anggaran', compact('proyeks', 'pendapatans', 'biayas', 'anggarans'));
+        
+        return view('catatan/anggaran', compact('proyeks', 'pendapatans', 'biayas'));
     }
 
     public function pageTransaksiProyek($date_range = null){

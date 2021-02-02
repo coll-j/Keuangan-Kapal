@@ -35,5 +35,28 @@ class AdminPerusahaanSeeder extends Seeder
         $user->role = 1;
         $user->save();
 
+        User::create([
+            'name' => 'Peta',
+            'email' => 'pemilik@a.a',
+            'id_perusahaan' => $perusahaan->id,
+            'role' => 3,
+            'password' => Hash::make('admin123'),
+        ]);
+
+        User::create([
+            'name' => 'Ransel',
+            'email' => 'proyek@a.a',
+            'id_perusahaan' => $perusahaan->id,
+            'role' => 4,
+            'password' => Hash::make('admin123'),
+        ]);
+
+        User::create([
+            'name' => 'Boots',
+            'email' => 'akuntan@a.a',
+            'id_perusahaan' => $perusahaan->id,
+            'role' => 2,
+            'password' => Hash::make('admin123'),
+        ]);
     }
 }
