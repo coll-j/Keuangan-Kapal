@@ -108,12 +108,11 @@ class CatatanController extends Controller
             $end = Carbon::CreateFromFormat('d-m-Y', $separated[1])->endOfDay();
             $catatan_tr_kantors = TransaksiKantor::with('akun_tr_kantor', 'akun_neraca')
             ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
-            ->whereBetween('tanggal_transaksi', [$start, $end])
+            ->whereBetween('tgl_transaksi', [$start, $end])
             ->get();
 
             $date_range = str_replace('-', '/', $date_range);
             $date_range = str_replace(' / ', ' - ', $date_range);
-            // dd($start, $end, $catatan_tr_proyeks);
         }
         else
         {

@@ -32,15 +32,15 @@ Route::get('/data', [App\Http\Controllers\DashboardController::class, 'PageData'
 Route::get('/anggaran', [App\Http\Controllers\CatatanController::class, 'pageAnggaran'])->name('anggaran');
 Route::get('/neraca', [App\Http\Controllers\CatatanController::class, 'pageNeraca'])->name('neraca');
 Route::get('/transaksi_proyek/{date_range?}', [App\Http\Controllers\CatatanController::class, 'pageTransaksiProyek'])->name('transaksi_proyek');
-Route::get('/transaksi_kantor', [App\Http\Controllers\CatatanController::class, 'pageTransaksiKantor'])->name('transaksi_kantor');
+Route::get('/transaksi_kantor/{date_range?}', [App\Http\Controllers\CatatanController::class, 'pageTransaksiKantor'])->name('transaksi_kantor');
 Route::get('/hutang_piutang', [App\Http\Controllers\CatatanController::class, 'pageHutangPiutang'])->name('hutang_piutang');
 Route::get('/gudang', [App\Http\Controllers\GudangController::class, 'index'])->name('gudang');
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
 Route::post('/users/update', [App\Http\Controllers\ProfileController::class,'update'])->name('users.update');
 
 Route::get('/laba_rugi', [App\Http\Controllers\LaporanController::class, 'pageLabaRugi'])->name('laba_rugi');
-Route::get('/laba_rugi_kantor', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiKantor'])->name('laba_rugi_kantor');
 Route::get('/laba_rugi_proyek/{id_proyek?}/{date_range?}', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiProyek'])->name('laba_rugi_proyek');
+Route::get('/laba_rugi_kantor/{date_range?}', [App\Http\Controllers\LaporanController::class, 'pageLabaRugiKantor'])->name('laba_rugi_kantor');
 
 // Route perusahaan
 Route::post('create_perusahaan', [App\Http\Controllers\dashboard\PerusahaanController::class, 'insert'])->name('create_perusahaan');
@@ -75,7 +75,7 @@ Route::post('create_transaksi_proyek', [App\Http\Controllers\Catatan\TransaksiPr
 Route::post('update_transaksi_proyek', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'edit'])->name('update_transaksi_proyek');
 Route::post('delete_transaksi_proyek', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'delete'])->name('delete_transaksi_proyek');
 
-// Route Catatan Transaksi Proyek
+// Route Catatan Transaksi Kantor
 Route::post('create_transaksi_kantor', [App\Http\Controllers\Catatan\TransaksiKantorController::class, 'insert'])->name('create_transaksi_kantor');
 Route::post('update_transaksi_kantor', [App\Http\Controllers\Catatan\TransaksiKantorController::class, 'edit'])->name('update_transaksi_kantor');
 Route::post('delete_transaksi_kantor', [App\Http\Controllers\Catatan\TransaksiKantorController::class, 'delete'])->name('delete_transaksi_kantor');
@@ -84,4 +84,4 @@ Route::post('delete_transaksi_kantor', [App\Http\Controllers\Catatan\TransaksiKa
 Route::post('update_anggaran', [App\Http\Controllers\Catatan\AnggaranController::class, 'edit'])->name('update_anggaran');
 
 Route::get('/get_transaksi_proyek/{id}', [App\Http\Controllers\Catatan\TransaksiProyekController::class, 'getById']);
-Route::get('/get_transaksi_proyek/{id}', [App\Http\Controllers\Catatan\TransaksiKantorController::class, 'getById']);
+Route::get('/get_transaksi_kantor/{id}', [App\Http\Controllers\Catatan\TransaksiKantorController::class, 'getById']);

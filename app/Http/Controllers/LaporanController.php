@@ -10,6 +10,11 @@ use App\Models\Proyek;
 use App\Models\Catatan\TransaksiProyek;
 use App\Models\Catatan\Anggaran;
 use App\Models\AkunTransaksiProyek;
+use Illuminate\Support\Facades\DB;
+use App\Models\Catatan\TransaksiKantor;
+use App\Models\Perusahaan;
+use DateTime;
+use Carbon\Carbon;
 
 class LaporanController extends Controller
 {
@@ -31,9 +36,37 @@ class LaporanController extends Controller
     public function pageLabaRugi(){
         return view('laporan/laba_rugi');
     }
+    
+    public function pageLabaRugiKantor($date_range = null){
+        if(!(is_null($date_range)))
+        {
+            $separated = explode(' - ', $date_range);
+            $start = Carbon::CreateFromFormat('d-m-Y', $separated[0])->startOfDay();
+            $end = Carbon::CreateFromFormat('d-m-Y', $separated[1])->endOfDay();
+            $sum_per_akuns = TransaksiKantor::with('akun_tr_kantor')
+            ->select('id_akun_tr_kantor', DB::raw('SUM(jumlah) as total_jumlah'))
+            ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereBetween('tgl_transaksi', [$start, $end])
+            ->groupBy('id_akun_tr_kantor')
+            ->get();
 
-    public function pageLabaRugiKantor(){
-        return view('laporan/laba_rugi_kantor');
+            $date_range = str_replace('-', '/', $date_range);
+            $date_range = str_replace(' / ', ' - ', $date_range);
+        }
+        else
+        {
+            $sum_per_akuns = TransaksiKantor::with('akun_tr_kantor')
+                               ->select('id_akun_tr_kantor', DB::raw('SUM(jumlah) as total_jumlah'))
+                               ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                               ->groupBy('id_akun_tr_kantor')
+                               ->get();
+        }
+        $perusahaan = Perusahaan::with('user')->get()->where('kode_perusahaan', '=', Auth::user()->kode_perusahaan)->first();
+        return view('laporan/laba_rugi_kantor', [
+            'date_range' => $date_range,
+            'perusahaan' => $perusahaan, 
+            'sum_per_akuns' => $sum_per_akuns,
+        ]);
     }
 
     public function pageLabaRugiProyek($id_proyek = null, $date_range = null){
