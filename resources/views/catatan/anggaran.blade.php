@@ -20,141 +20,178 @@
     <div class="card-body">
         <div class="row pt-1">
             <div class="col">
-                <div class="float-right mb-1">
-                    <form id="ubah-dropdown" class="form-inline">
-                        <select id="edit-proyek" class="form-control form-control-sm d-inline mr-1">
-                        <option disabled selected value> -- pilih proyek untuk diubah -- </option>
-                        @foreach($proyeks as $proyek)
-                        <option value="{{ $proyek->id }}">{{ $proyek->kode_proyek }}</option>
-                        @endforeach
-                        </select>
-                        <button class="btn btn-sm btn-primary d-inline float-right ml-1" form="" onclick="edit_proyek();">Ubah</button>
-                    </form>
-                    <button id="save-btn" class="btn btn-sm btn-primary float-right" style="display: none;" onclick="save_edit()">Simpan</button>
+                <div class="row">
+                    <div class="col">
+                        <div class="float-right">
+                            <form id="ubah-dropdown" class="form-inline">
+                                <select id="edit-proyek" class="form-control form-control-sm d-inline mr-1">
+                                <option disabled selected value> -- pilih proyek untuk diubah -- </option>
+                                @foreach($proyeks as $proyek)
+                                <option value="{{ $proyek->id }}">{{ $proyek->kode_proyek }}</option>
+                                @endforeach
+                                </select>
+                                <button class="btn btn-sm btn-primary d-inline float-right ml-1" form="" onclick="edit_proyek();">Ubah</button>
+                            </form>
+                            <button id="save-btn" class="btn btn-sm btn-primary float-right" style="display: none;" onclick="save_edit()">Simpan</button>
+                        </div>
+                        <div class="float-left">
+                            <div class="dropdown">
+                                <button class="btn btn-xs btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Pilih proyek untuk ditampilkan
+                                </button>
+                                <div class="dropdown-menu checkbox-menu">
+                                    @php
+                                        $data_col = 1;
+                                    @endphp
+                                    @foreach($proyeks as $proyek)
+                                    <a class="dropdown-item toggle-vis" data-column="{{ $data_col }}" style="font-size: 12px;">
+                                    <input type="checkbox" checked/> {{ $proyek->kode_proyek }}</a>
+                                    @php
+                                        $data_col++;
+                                    @endphp
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <table id="table1"class="table table-stripped table-hover dataTable table-condensed table-sm">
-                <thead class="thead-light">
-                    <th style="width: 30%">Kode Proyek</th>
-                    @foreach($proyeks as $proyek)
-                    <th style="">{{$proyek->kode_proyek}}</th>
-                    @endforeach
-                    <th style="width: 16%">Jumlah</th>
-                </thead>
-                <tbody>
-                   
-                    <!-- PENDAPATAN -->
-                    <tr>
-                        <td class="float-left" colspan="6" style="border: none;"><b>Pendapatan</b></td>
-                    </tr>
-                    @foreach($pendapatans as $pendapatan)
-                    <tr>
-                        <td class="akun-{{ $pendapatan->id }}">{{$pendapatan->nama}}</td>
-                        @foreach($proyeks as $proyek)
-                        <td class="akun-{{ $pendapatan->id }} pr-{{ $proyek->id }}">
-                        {{ number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)
-                        ->where('id_akun_tr_proyek', $pendapatan->id)
-                        ->first()->nominal, 2, '.', ',')}}
-                        </td>
-                        @endforeach
-                        <td>
-                        {{
-                            number_format(\App\Models\Catatan\Anggaran::where('id_akun_tr_proyek', $pendapatan->id)->whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Masuk');
-                            })->sum('nominal'), 2, '.', ',')
-                        }}
-                        </td>
-                    </tr>
-                    @endforeach
-                    <tr>
-                        <td class="right" ><b>Jumlah Pendapatan</b></td>
-                        @foreach($proyeks as $proyek)
-                        <td>
-                        {{
-                            number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Masuk');
-                            })->sum('nominal'), 2, '.', ',')
-                        }}
-                        </td>
-                        @endforeach
-                        <td class="end-row">
-                        {{
-                            number_format(\App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Masuk');
-                            })->sum('nominal'), 2, '.', ',')
-                        }}
-                        </td>
-                    </tr>
-                    
-                    <!-- BIAYA -->
-                    <tr>
-                        <td class="float-left" colspan="6" style="border: none;"><b>Biaya</b></td>
-                    </tr>
-                    @foreach($biayas as $biaya)
-                    <tr>
-                        <td class="akun-{{ $biaya->id }}">{{$biaya->nama}}</td>
-                        @foreach($proyeks as $proyek)
-                        <td class="akun-{{ $biaya->id }} pr-{{ $proyek->id }}">
-                        {{ number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)
-                        ->where('id_akun_tr_proyek', $biaya->id)
-                        ->first()->nominal, 2, '.', ',')}}
-                        </td>
-                        @endforeach
-                        <td>
-                        {{
-                            number_format(\App\Models\Catatan\Anggaran::where('id_akun_tr_proyek', $biaya->id)->whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Keluar');
-                            })->sum('nominal'), 2, '.', ',')
-                        }}
-                        </td>
-                    </tr>
-                    @endforeach
-                    <tr>
-                        <td class="right" ><b>Jumlah Biaya</b></td>
-                        @foreach($proyeks as $proyek)
-                        <td>
-                        {{
-                            number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Keluar');
-                            })->sum('nominal'), 2, '.', ',')
-                        }}
-                        </td>
-                        @endforeach
-                        <td class="end-row">
-                        {{
-                            number_format(\App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Keluar');
-                            })->sum('nominal'), 2, '.', ',')
-                        }}
-                        </td>
-                    </tr>
+                <div class="row">
+                    <div class="col">
+                        <table id="table-anggaran" class="table table-light table-hover table-condensed table-sm" style="min-width: 100%">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 200px">Kode Proyek</th>
+                                    @foreach($proyeks as $proyek)
+                                    <th style="width: 100px">{{$proyek->kode_proyek ?? ''}}</th>
+                                    @endforeach
+                                    <th style="width: 100px">Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        
+                            <!-- PENDAPATAN -->
+                            <tr>
+                                <td class="float-left" colspan="6" style="border: none;"><b>Pendapatan</b></td>
+                                @foreach($proyeks as $proyek)
+                                <td> </td>
+                                @endforeach
+                                <td> </td>
+                            </tr>
+                            @foreach($pendapatans as $pendapatan)
+                            <tr>
+                                <td class="akun-{{ $pendapatan->id }}">{{$pendapatan->nama}}</td>
+                                @foreach($proyeks as $proyek)
+                                <td class="akun-{{ $pendapatan->id }} pr-{{ $proyek->id }}">
+                                {{ number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)
+                                ->where('id_akun_tr_proyek', $pendapatan->id)
+                                ->first()->nominal, 2, '.', ',')}}
+                                </td>
+                                @endforeach
+                                <td>
+                                {{
+                                    number_format(\App\Models\Catatan\Anggaran::where('id_akun_tr_proyek', $pendapatan->id)->whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Masuk');
+                                    })->sum('nominal'), 2, '.', ',')
+                                }}
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td class="right" ><b>Jumlah Pendapatan</b></td>
+                                @foreach($proyeks as $proyek)
+                                <td>
+                                {{
+                                    number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Masuk');
+                                    })->sum('nominal'), 2, '.', ',')
+                                }}
+                                </td>
+                                @endforeach
+                                <td class="end-row">
+                                {{
+                                    number_format(\App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Masuk');
+                                    })->sum('nominal'), 2, '.', ',')
+                                }}
+                                </td>
+                            </tr>
+                            
+                            <!-- BIAYA -->
+                            <tr>
+                                <td class="float-left" colspan="6" style="border: none;"><b>Biaya</b></td>
+                                @foreach($proyeks as $proyek)
+                                <td></td>
+                                @endforeach
+                                <td></td>
+                            </tr>
+                            @foreach($biayas as $biaya)
+                            <tr>
+                                <td class="akun-{{ $biaya->id }}">{{$biaya->nama}}</td>
+                                @foreach($proyeks as $proyek)
+                                <td class="akun-{{ $biaya->id }} pr-{{ $proyek->id }}">
+                                {{ number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)
+                                ->where('id_akun_tr_proyek', $biaya->id)
+                                ->first()->nominal, 2, '.', ',')}}
+                                </td>
+                                @endforeach
+                                <td>
+                                {{
+                                    number_format(\App\Models\Catatan\Anggaran::where('id_akun_tr_proyek', $biaya->id)->whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Keluar');
+                                    })->sum('nominal'), 2, '.', ',')
+                                }}
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <td class="right" ><b>Jumlah Biaya</b></td>
+                                @foreach($proyeks as $proyek)
+                                <td>
+                                {{
+                                    number_format(\App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Keluar');
+                                    })->sum('nominal'), 2, '.', ',')
+                                }}
+                                </td>
+                                @endforeach
+                                <td class="end-row">
+                                {{
+                                    number_format(\App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Keluar');
+                                    })->sum('nominal'), 2, '.', ',')
+                                }}
+                                </td>
+                            </tr>
 
-                    <tr>
-                        <td class="right"><b>Laba</b></td>
-                        @foreach($proyeks as $proyek)
-                        @php
-                        $p_proyek = \App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Masuk');
-                            })->sum('nominal');
+                            <tr>
+                                <td class="right"><b>Laba</b></td>
+                                @foreach($proyeks as $proyek)
+                                @php
+                                $p_proyek = \App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Masuk');
+                                    })->sum('nominal');
 
-                        $b_proyek = \App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Keluar');
-                            })->sum('nominal');
-                        @endphp
-                        <td>{{ number_format($p_proyek - $b_proyek, 2, '.', ',') }}</td>
-                        @endforeach
-                        @php
-                        $p_total = \App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Masuk');
-                            })->sum('nominal');
+                                $b_proyek = \App\Models\Catatan\Anggaran::where('id_proyek', $proyek->id)->whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Keluar');
+                                    })->sum('nominal');
+                                @endphp
+                                <td>{{ number_format($p_proyek - $b_proyek, 2, '.', ',') }}</td>
+                                @endforeach
+                                @php
+                                $p_total = \App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Masuk');
+                                    })->sum('nominal');
 
-                        $b_total = \App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
-                            return $query->where('jenis', 'Keluar');
-                            })->sum('nominal')
-                        @endphp
-                        <td class="end-row">{{ number_format($p_total - $b_total, 2, '.', ',') ?? '' }}</td>
-                    </tr>
-                </tbody>
-                </table>
+                                $b_total = \App\Models\Catatan\Anggaran::whereHas('akun_tr_proyek', function($query){
+                                    return $query->where('jenis', 'Keluar');
+                                    })->sum('nominal')
+                                @endphp
+                                <td class="end-row">{{ number_format($p_total - $b_total, 2, '.', ',') ?? '' }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -168,16 +205,58 @@
 
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.2/css/fixedColumns.bootstrap.min.css">
+
 <style>
 .content {
     font-size: 12px;
 }
+
 </style>
 @endsection
 
 @section('js')
 <script src="https://unpkg.com/autonumeric"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/3.3.2/js/dataTables.fixedColumns.min.js"></script>
+
 <script>
+
+    $(document).ready(function() {
+        var table = $('#table-anggaran').DataTable({
+            searching: false,
+            info: false,
+            sorting: false,
+            ordering: false,
+            scrollY:        false,
+            scrollX:        true,
+            scrollCollapse: true,
+            paging:         false,
+            fixedColumns: {
+                leftColumns: 1,
+                rightColumns: 1,
+            },
+            buttons: [
+            {
+                extend: 'colvis',
+                columns: ':not(.noVis)'
+            }
+        ]
+        });
+
+        $('a.toggle-vis').on( 'click', function (e) {
+            // e.preventDefault();
+            var checkbox = $(this).children('input');
+            // console.log('tes cek ', checkbox.attr('checked'));
+            var check = checkbox.attr('checked') == 'checked' ? 'unchecked' : 'checked';
+            checkbox.attr('checked', check);
+            // Get the column API object
+            var column = table.column( $(this).attr('data-column') );
+    
+            // Toggle the visibility
+            column.visible( ! column.visible() );
+        } );
+    });
+
     function edit_proyek(){
         var id_proyek = $('#edit-proyek').val();
         if(id_proyek)
@@ -214,10 +293,6 @@
             // var json_data = { 'id_akun': akun, 'val': val};
             var input = '<input type="text" name="'+ akun +'" value="' + val + '">';
             all_input.push(input)
-            // var html = '<input type="text" value="' + val + '">'
-            // td.html(html);
-            // console.log(html);
-            // console.log(id_proyek);
         })
         var form = '<form method="post" action="{{ route("update_anggaran") }}">\
                     @csrf';

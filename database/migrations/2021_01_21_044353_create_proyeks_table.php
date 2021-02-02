@@ -18,6 +18,7 @@ class CreateProyeksTable extends Migration
             $table->string('kode_proyek');
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->unsignedBigInteger('id_pemilik')->references('id')->on('users')->onDelete('cascade');
+            $table->enum('status', ['Aktif', 'Selesai']);
             $table->string('jenis');
             $table->timestamps();
         });

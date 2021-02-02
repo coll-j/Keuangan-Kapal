@@ -24,7 +24,7 @@
 @if(!empty(Auth::user()->id_perusahaan))
 <div class="row">
     <div class="col-md-6 d-inline-block pl-3">
-        <div class="card" style="min-height: 100%;">
+        <div class="card" style="min-height: 415px;">
             <div class="card-header">
                 <h6 class="pt-1">Akun Neraca & Saldo</h6>
             </div>
@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card" style="height: 48.25%;">
+        <div class="card" style="height: 200px;">
             <div class="card-header">
                 <h6 class="pt-1">Pemasok</h6>
             </div>
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <div class="card" style="height: 48.25%;">
+        <div class="card" style="height: 200px;">
             <div class="card-header">
                 <h6 class="pt-1">Proyek</h6>
             </div>
@@ -89,13 +89,15 @@
                             <tr>
                                 <th >Akun</th>
                                 <th >Saldo</th>
+                                <th >Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($proyeks as $proyek)
                             <tr id="table-proyekan" name="table-proyekan" rowId="{{ $proyek['id'] }}">
-                                <td id="nama" style="width: 30%;">{{ $proyek->user->name }}</td>
-                                <td id="jenis" style="width: 70%;">{{ $proyek['jenis'] }}</td>
+                                <td id="nama" style="width: 30%;">{{ $proyek->kode_proyek }}</td>
+                                <td id="jenis" style="width: 50%;">{{ $proyek['jenis'] }}</td>
+                                <td id="status" style="width: 20%;">Aktif</td>
                             </tr>
                             @endforeach
                         </tbody>

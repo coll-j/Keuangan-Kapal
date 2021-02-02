@@ -129,23 +129,29 @@ function rowAcep(but) {
       break;
   }
 
-  var nama, var2, id;
+  var nama, var2, var3, id;
     IterarCamposEdit($cols, function($td) {  
     id = $td.attr("id");
    
     var cont = $td.find('input').val();
+    if(!cont) cont = $td.find('option:selected').val();
+    console.log('content ', cont);
       if(id == "nama") {
         nama = cont;
-      } else {
+      } else if(id == "status")
+      {
+        var3 = cont;
+      } 
+      else {
         var2= cont;
       }
       $td.html(cont); 
-    });
+  });
 
     var request =  $.ajax({
       url: prefix_url,
       type:"POST",
-      data:{id:dataId, nama:nama, var2:var2},
+      data:{id:dataId, nama:nama, var2:var2, var3:var3},
       dataType: "html",
     });
     request.done(function( msg ) {
@@ -153,7 +159,7 @@ function rowAcep(but) {
     });
      
     request.fail(function( jqXHR, textStatus ) {
-      window.alert( "Request failed: " + textStatus );
+      window.alert( "Request failed: " + textStatus + id);
     });
   FijModoNormal(but);
   params.onEdit($row);
@@ -171,13 +177,40 @@ function rowCancel(but) {
 function rowEdit(but) {  //Inicia la edición de una fila
   var $row = $(but).parents('tr');  //accede a la fila
   var $cols = $row.find('td');  //lee campos
+  var tableId = $row.attr("name");
  
   if (ModoEdicion($row)) return;  
   IterarCamposEdit($cols, function($td) { 
       var cont = $td.html(); 
-      var div = '<div style="display: none;">' + cont + '</div>'; 
-      var input = '<input class="form-control input-sm"  value="' + cont + '">';
-      $td.html(div + input);  
+      // console.log('cont ', cont)
+      if(tableId == 'table-proyekan' && (cont == 'Aktif' || cont == 'Selesai'))
+      {
+        // console.log('tes')
+        switch(cont)
+        {
+          case "Aktif":
+            var input = '<select> \
+            <option selected value="Aktif">Aktif</option> \
+            <option value="Selesai">Selesai</option> \
+            </select>';
+            break;
+          default:
+            var input = '<select> \
+            <option value="Aktif">Aktif</option> \
+            <option value="Selesai" selected>Selesai</option> \
+            </select>';
+            break;
+        }
+
+        $td.html(input);  
+      }
+      else
+      {
+        // console.log('t id', tableId);/
+        var div = '<div style="display: none;">' + cont + '</div>'; 
+        var input = '<input class="form-control input-sm"  value="' + cont + '">';
+        $td.html(div + input);  
+      }
   });
   
   FijModoEdit(but);
@@ -206,12 +239,16 @@ function rowElim(but) {  //Elimina la fila actual
       prefix_url = '/delete_neraca/';
       break;
   }
+
     $.ajax({
       url: prefix_url + name,
       method:'GET',
       data:{nama:name},
       success:function(data){
         window.alert("Success delete row in " + tableId);
+      },
+      error:function( msjqXHR, textStatus ) {
+        window.alert("Failed editing data in " + textStatus + name);
       }
     })
 

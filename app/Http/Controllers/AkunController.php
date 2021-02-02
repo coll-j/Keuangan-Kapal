@@ -130,7 +130,10 @@ class AkunController extends Controller
 
     function delProyek($nama)
     {
-        $data = Proyek::where('nama', '=', $nama)->first();
+        $data = Proyek::where('kode_proyek', '=', $nama)->first();
+        $id_proyek = $data->id;
+        
+        $anggaran = Anggaran::where('id_proyek', $id_proyek)->delete();
         $data->delete();
         return redirect()->route('data');
     }
@@ -174,8 +177,9 @@ class AkunController extends Controller
     function editProyek(Request $req)
     {
         $data = Proyek::where('id', '=', $req->id)->first();
-        $data->nama = $req->nama;
-        $data->jenis = $req->var2; 
+        $data->kode_proyek = $req->nama;
+        $data->jenis = $req->var2;
+        $data->status = $req->var3; 
         $data->save();
         return redirect()->route('data');
     }
