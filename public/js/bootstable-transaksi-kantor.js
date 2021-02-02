@@ -160,7 +160,7 @@ function rowElim(but) {  //Elimina la fila actual
   $row.remove();
   
   $.ajax({
-    url: '/delete_transaksi_proyek',
+    url: '/delete_transaksi_kantor',
     method: 'post',
     data: {id: id},
     dataType: 'JSON',
