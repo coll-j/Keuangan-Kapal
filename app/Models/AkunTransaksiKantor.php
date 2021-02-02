@@ -13,4 +13,11 @@ class AkunTransaksiKantor extends Model
         'nama', 'jenis', 'id_perusahaan',
     ];
     
+    public function catatan_transaksi_proyek(){
+        return $this->hasMany('\App\Models\Catatan\TransaksiKantor', 'id', 'id_akun_tr_kantor');
+    }
+
+    public function anggaran(){
+        return $this->hasMany('\App\Models\Catatan\Anggaran', 'id', 'id_akun_tr_kantor');
+    }
 }

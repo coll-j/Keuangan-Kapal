@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TransaksiKantor extends Migration
+class CatatanTransaksiKantor extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class TransaksiKantor extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi_kantors', function (Blueprint $table) {
+        Schema::create('catatan_transaksi_kantors', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->date('tgl_transaksi');
-            $table->string('nama_transaksi');
+            $table->unsignedBigInteger('id_akun_tr_kantor')->references('id')->on('akun_transaksi_kantors')->onDelete('cascade');
             $table->string('keterangan');
-            $table->enum('jenis_simpanan', ['Kas', 'Bank']);
-            $table->string('jenis_transaksi');
+            $table->unsignedBigInteger('id_akun_neraca')->references('id')->on('akun_neraca_saldos')->nullable()->onDelete('cascade');
             $table->double('jumlah', 32, 3);
+
             $table->timestamps();
             $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
         });
@@ -33,6 +33,6 @@ class TransaksiKantor extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksi_kantors');
+        Schema::dropIfExists('catatan_transaksi_kantors');
     }
 }

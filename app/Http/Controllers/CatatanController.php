@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AkunTransaksiProyek;
+use App\Models\AkunTransaksiKantor;
 use App\Models\Pemasok;
 use App\Models\Proyek;
 use App\Models\AkunNeracaSaldo;
 use App\Models\Gudang;
 
 use App\Models\Catatan\TransaksiProyek;
-use App\Models\TransaksiKantor;
-use App\Models\AkunTransaksiKantor;
+use App\Models\Catatan\TransaksiKantor;
 use App\Models\Catatan\Anggaran;
 use DateTime;
 use Carbon\Carbon;
@@ -46,7 +46,7 @@ class CatatanController extends Controller
                 ->where('jenis', 'Keluar')
                 ->get();
 
-        $anggarans = Anggaran::with('akun_tr_proyek')->where('id_perusahaan', Auth::user()->id_perusahaan);
+        $anggarans = Anggaran::with('akun_tr_proyek', 'akun_tr_kantor')->where('id_perusahaan', Auth::user()->id_perusahaan);
         // dd($anggarans->whereHas('akun_tr_proyek', function($query){
         //     return $query->where('jenis', 'Masuk');
         // })->sum('nominal'));
@@ -110,12 +110,44 @@ class CatatanController extends Controller
             ]);
     }
     
-    public function pageTransaksiKantor(){
-        $transaksi_kantors = TransaksiKantor::all();
-        $akun_transaksi_kantors = AkunTransaksiKantor::all();
+    public function pageTransaksiKantor($date_range = null){
+        if(!(is_null($date_range)))
+        {
+            $separated = explode(' - ', $date_range);
+            $start = Carbon::CreateFromFormat('d-m-Y', $separated[0])->startOfDay();
+            $end = Carbon::CreateFromFormat('d-m-Y', $separated[1])->endOfDay();
+            $catatan_tr_kantors = TransaksiKantor::with('akun_tr_kantor', 'akun_neraca')
+            ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereBetween('tanggal_transaksi', [$start, $end])
+            ->get();
+
+            $date_range = str_replace('-', '/', $date_range);
+            $date_range = str_replace(' / ', ' - ', $date_range);
+            // dd($start, $end, $catatan_tr_proyeks);
+        }
+        else
+        {
+            $catatan_tr_kantors = TransaksiKantor::with('akun_tr_kantor', 'akun_neraca')
+                               ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        }
+        
+        $akun_tr_kantors = AkunTransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $akun_neracas = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                        ->where('jenis_akun', '!=', 'Lainnya')
+                        ->get();
+        $kas_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                    ->where('jenis_akun', '=', 'Kas')
+                    ->sum('saldo');
+        $bank_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+                    ->where('jenis_akun', '=', 'Bank')
+                    ->sum('saldo');
         return view('catatan/transaksi_kantor', [
-            'transaksi_kantors' => $transaksi_kantors, 
-            'akun_transaksi_kantors' => $akun_transaksi_kantors, 
+            'catatan_tr_kantors' => $catatan_tr_kantors,
+            'akun_tr_kantors' => $akun_tr_kantors,
+            'akun_neracas' => $akun_neracas,
+            'date_range' => $date_range,
+            'kas_sum' => $kas_sum,
+            'bank_sum' => $bank_sum,
             ]);
     }
 
