@@ -7,6 +7,7 @@ use App\Models\Gudang;
 use App\Models\Perusahaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class GudangController extends Controller
 {
@@ -19,7 +20,7 @@ class GudangController extends Controller
     {
         $items = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
         $inventoris = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
-                    ->where('jenis', '=', 'Masuk')->get();
+            ->where('jenis', '=', 'Masuk')->get();
         // dd($inventoris);
         return view('catatan/gudang', compact('items', 'inventoris'));
     }
@@ -101,7 +102,7 @@ class GudangController extends Controller
             'nama_barang' => $request->nama_barang,
             'satuan' => $request->satuan,
             'jumlah' => $request->jumlah,
-            'harga_satuan' => $request->harga_satuan,
+            // 'harga_satuan' => $request->harga_satuan,
         ]);
 
         // $itemGudang->nama_barang = $request->nama_barang;
@@ -121,5 +122,61 @@ class GudangController extends Controller
     {
         //
         Gudang::where('id', $id)->destroy();
+    }
+
+    public function pageGudang($date_range = null)
+    {
+        if (!(is_null($date_range))) {
+            $separated = explode(' - ', $date_range);
+            $start = Carbon::CreateFromFormat('d-m-Y', $separated[0])->startOfDay();
+            $end = Carbon::CreateFromFormat('d-m-Y', $separated[1])->endOfDay();
+
+            // $catatan_gudangs = Gudang::with('perusahaan', 'transaksi')
+            //     ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            //     ->whereBetween('catatan_transaksi_proyeks.tanggal_transaksi', [$start, $end])
+            //     ->get();
+            // $catatan_gudangs = DB::select('select g.* from gudangs g, perusahaans p, catatan_transaksi_proyeks c 
+            // where p.id = g.id_perusahaan 
+            // and c.id = g.id_transaksi')
+            // ->whereBetween('c.tanggal_transaksi', [$start, $end])
+            // ->get();
+
+            $catatan_gudangs = DB::table('gudangs')
+                ->join('perusahaans', 'perusahaans.id', '=', 'gudangs.id_perusahaan')
+                ->join('catatan_transaksi_proyeks', 'catatan_transaksi_proyeks.id', '=', 'gudangs.id_transaksi')
+                ->select('gudangs.*')
+                ->whereBetween('catatan_transaksi_proyeks.tanggal_transaksi', [$start, $end])
+                ->get();
+
+            $date_range = str_replace('-', '/', $date_range);
+            $date_range = str_replace(' / ', ' - ', $date_range);
+            // dd($start, $end, $catatan_tr_proyeks);
+        } else {
+            $catatan_gudangs = Gudang::with('perusahaan', 'transaksi')
+                ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        }
+
+        $inventoris = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->where('jenis', '=', 'Masuk')->get();
+        // $transaksis = Pemasok::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        // $proyeks = Proyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        // $akun_neracas = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+        //     ->where('jenis_akun', '!=', 'Lainnya')
+        //     ->get();
+
+        // $kas_sum = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+        //     ->where('jenis_akun', '=', 'Kas')
+        //     ->sum('saldo');
+
+        // $bank_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+        //     ->where('jenis_akun', '=', 'Bank')
+        //     ->sum('saldo');
+        //dd($date_range);
+        return view('catatan/gudang', [
+            'items' => $catatan_gudangs,
+            'date_range' => $date_range,
+            'inventoris' => $inventoris,
+
+        ]);
     }
 }

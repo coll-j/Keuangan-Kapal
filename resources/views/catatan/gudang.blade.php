@@ -20,6 +20,9 @@
     <div class="card-body">
         <div class="row pt-1">
             <div class="col">
+                <div class="d-flex justify-content-center">
+                    <input name="daterange" value="{{ $date_range ?? '' }}" type="text" style="width: 250px;" class="form-control text-center">
+                </div>
                 <div class="row justify-content-start">
                     @if(Auth::user()->role == 1 || Auth::user()->role == 2)
                     <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah Pemakaian Material</button></a>
@@ -29,10 +32,10 @@
                 <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
                     <thead class="thead-light">
                         <th style="width: 40%">Nama Barang</th>
-                        <th style="width: 20%">Satuan</th>
-                        <th style="width: 10%">Jumlah</th>
+                        <th style="width: 30%">Satuan</th>
+                        <th style="width: 20%">Jumlah</th>
                         <th style="width: 10%">Jenis</th>
-                        <th style="width: 20%">Harga Satuan (Rp)</th>
+
                     </thead>
                     <tbody>
                         @foreach($items as $item)
@@ -41,7 +44,6 @@
                             <td>{{$item->satuan}}</td>
                             <td>{{$item->jumlah}}</td>
                             <td>{{$item->jenis}}</td>
-                            <td>{{$item->harga_satuan}}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -97,9 +99,9 @@
 @section('css')
 <!-- <link rel="stylesheet" href="/css/admin_custom.css"> -->
 <style>
-.content {
-    font-size: 12px;
-}
+    .content {
+        font-size: 12px;
+    }
 </style>
 @endsection
 
@@ -107,9 +109,8 @@
 <script>
     $(document).ready(function() {
         var role = <?php echo Auth::user()->role; ?>;
-        
-        if(role == 1)
-        {
+
+        if (role == 1) {
             $('table').SetEditable();
         }
         $('#table1').DataTable({
@@ -126,5 +127,34 @@
     });
     console.log('Hi!');
 </script>
-<script src="{{ asset('js/bootstable.js') }}"></script>
+<script>
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'center',
+            autoUpdateInput: false,
+            locale: {
+                format: 'DD/MM/YYYY',
+            },
+        }, function(start, end, label) {
+            start = start.format('DD-MM-YYYY');
+            end = end.format('DD-MM-YYYY');
+            var all = start + ' - ' + end;
+            var url = '/gudang/' + encodeURIComponent(all);
+            console.log(all);
+            console.log(url);
+            window.location.href = url;
+            // console.log("A new date selection was made: " + start + ' to ' + end);
+        });
+        $('input[name="tgl_transaksi"]').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'), 10),
+            locale: {
+                format: 'DD/MM/YYYY',
+            }
+        });
+    });
+</script>
+<script src="{{ asset('js/bootstable-gudang.js') }}"></script>
 @endsection

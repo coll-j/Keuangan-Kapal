@@ -34,8 +34,8 @@ $.fn.SetEditable = function (options) {
       onAdd: function() {}     //Called when added a new row
   };
   params = $.extend(defaults, options);
-  this.find('thead tr').prepend('<th name="buttons"></th>');  //encabezado vacío
-  this.find('tbody tr').prepend(colEdicHtml);
+ // this.find('thead tr').prepend('<th name="buttons"></th>');  //encabezado vacío
+//  this.find('tbody tr').prepend(colEdicHtml);
   var $tabedi = this;   //Read reference to the current table, to resolve "this" here.
   //Process "addButton" parameter
   if (params.$addButton != null) {
@@ -50,6 +50,7 @@ $.fn.SetEditable = function (options) {
       colsEdi = params.columnsEd.split(',');
   }
 };
+
 function IterarCamposEdit($cols, tarea) {
 //Itera por los campos editables de una fila
   var n = 0;

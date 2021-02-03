@@ -21,7 +21,7 @@ class Gudang extends Migration
             $table->string('nama_barang');
             $table->string('satuan')->nullable();
             $table->integer('jumlah');
-            $table->decimal('harga_satuan')->nullable();
+          //  $table->decimal('harga_satuan')->nullable();
             $table->enum('jenis', ['Masuk', 'Keluar']);
             $table->timestamps();
         });
