@@ -18,6 +18,16 @@ class Gudang extends Model
         'satuan',
         'jumlah',
         'jenis',
-        'harga_satuan',
+        //  'harga_satuan',
     ];
+
+    public function perusahaan()
+    {
+        return $this->belongsTo('\App\Models\Perusahaan', 'id_perusahaan', 'id');
+    }
+
+    public function transaksi()
+    {
+        return $this->belongsTo('\App\Models\Catatan\TransaksiProyek', 'id_transaksi', 'id');
+    }
 }
