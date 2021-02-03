@@ -257,12 +257,23 @@
         </div>
     </div>
     @else
-    <div id="no-perusahaan" class="row">
-        <div class="col text-center">
-                <h2 class="my-5">Anda belum tergabung perusahaan dan belum ada undangan</h2>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">Buat Perusahaan</button>
+    <!-- <div id="no-perusahaan" class="row"> -->
+    <div class="card pb-5">
+        <div class="card-body">
+            <div class="col text-center">
+                <h3 class="my-5">Maaf, Anda belum tergabung perusahaan & tidak ada undangan</h3>
+                <div class="row justify-content-center">
+                    <img src="/images/NoCompany.png" style="width:200px; height:200px;">   
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalCreate">Buat Perusahaan</button>
+                </div>
+               
+            </div>
         </div>
+        <!-- /.card-body -->
     </div>
+    <!-- </div> -->
     @endif
     <!-- /.row -->
 </div>
