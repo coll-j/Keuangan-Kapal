@@ -156,5 +156,5 @@
         });
     });
 </script>
-<script src="{{ asset('js/bootstable.js') }}"></script>
+<script src="{{ asset('js/bootstable-gudang.js') }}"></script>
 @endsection
