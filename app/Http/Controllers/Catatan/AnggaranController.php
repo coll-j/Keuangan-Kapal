@@ -42,6 +42,10 @@ class AnggaranController extends Controller
                 record_anggaran->value = request[req.key]
                 record_anggaran->save()
         */
-        return redirect()->route('anggaran');
+        $perusahaan = Perusahaan::with('user')->get()->where('id_perusahaan', '=', Auth::user()->id_perusahaan)->first();
+        // return redirect()->route('anggaran');
+        return view('anggaran', [
+            'perusahaan' => $perusahaan, 
+        ]);
     }
 }

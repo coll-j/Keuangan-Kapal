@@ -9,26 +9,25 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <div class="text-center pt-3">
+        <div class="text-center pt-3 mb-3">
             <div class="col">
-                <h5>PT. XYZ</h5>
+                <h5>{{ $perusahaan->nama_perusahaan ?? 'PT XYZ'}}</h5>
             </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <input name="daterange" value="{{ $date_range ?? '-- pilih tanggal --' }}" type="text" style="width: 250px;" class="form-control text-center">
+        </div>
+        <div class="row justify-content-star pl-2">
+            @if(Auth::user()->role == 1 || Auth::user()->role == 2)
+            <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah Pemakaian Material</button></a>
+            @endif
+            <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
         </div>
     </div>
     <!-- /.card-header -->
 
-    <div class="card-body">
-        <div class="row pt-1">
-            <div class="col">
-                <div class="d-flex justify-content-center">
-                    <input name="daterange" value="{{ $date_range ?? '' }}" type="text" style="width: 250px;" class="form-control text-center">
-                </div>
-                <div class="row justify-content-start">
-                    @if(Auth::user()->role == 1 || Auth::user()->role == 2)
-                    <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah Pemakaian Material</button></a>
-                    @endif
-                    <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
-                </div>
+    <div class="card-body" style="max-width: 1200px;">
+            <div class="dataTables_wrapper">
                 <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
                     <thead class="thead-light">
                         <th style="width: 40%">Nama Barang</th>
@@ -49,7 +48,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
     </div>
     <!-- /.card-body -->
 

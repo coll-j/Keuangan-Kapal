@@ -70,10 +70,10 @@ class LaporanController extends Controller
         $biayas = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
                 ->where('jenis', 'Keluar')
                 ->get();
-
+        $perusahaan = Perusahaan::with('user')->get()->where('kode_perusahaan', '=', Auth::user()->kode_perusahaan)->first();
         // dd($anggarans, $realisasis);
         return view('laporan/laba_rugi', compact('proyeks', 'curr_proyek', 
-        'pendapatans', 'biayas', 'start_date', 'end_date', 'date_range'));
+        'pendapatans', 'biayas', 'start_date', 'end_date', 'date_range', 'perusahaan'));
     }
     
     public function pageLabaRugiKantor($date_range = null){
@@ -146,9 +146,9 @@ class LaporanController extends Controller
         $biayas = AkunTransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
                 ->where('jenis', 'Keluar')
                 ->get();
-
+        $perusahaan = Perusahaan::with('user')->get()->where('kode_perusahaan', '=', Auth::user()->kode_perusahaan)->first();
         // dd($anggarans, $realisasis);
         return view('laporan/laba_rugi_proyek', compact('proyeks', 'curr_proyek', 
-        'pendapatans', 'biayas', 'start_date', 'end_date', 'date_range'));
+        'pendapatans', 'biayas', 'start_date', 'end_date', 'date_range', 'perusahaan'));
     }
 }

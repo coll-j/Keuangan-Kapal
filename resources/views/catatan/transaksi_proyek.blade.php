@@ -23,8 +23,8 @@
         <div class="row">
             <div class="col-sm">
                 @if(Auth::user()->role == 1 || Auth::user()->role == 2)
-                <div class="row justify-content-start">
-                    <a href="#"><button type="button" class="btn btn-xs btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
+                <div class="row justify-content-start pl-2 pt-2">
+                    <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
                 </div>
                 @endif
             </div>

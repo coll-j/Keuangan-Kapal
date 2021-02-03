@@ -16,7 +16,7 @@
 @endsection
 
 @section('content_header')
-<h5 class="pl-3">PROFIL PERUSAHAAN</h5>
+<h5 class="pl-3"><b>PROFIL PERUSAHAAN</b></h5>
 @endsection
 
 @section('content')

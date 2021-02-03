@@ -14,7 +14,7 @@
                 <div class="col">
                     <div class="float-right">
                         <div class="dropdown">
-                            <button class="btn btn-xs btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 @if(is_null($curr_proyek))
                                     Semua Proyek
                                 @else
@@ -43,7 +43,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h5>PT. XYZ</h5>
+                    <h5>{{ $perusahaan->nama_perusahaan}}</h5>
                     <h6>Laporan Anggaran & Realisasi Proyek</h6>
                     @if(is_null($curr_proyek))
                     <h6>Semua Proyek</h6>
