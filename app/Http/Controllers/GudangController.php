@@ -131,9 +131,21 @@ class GudangController extends Controller
             $start = Carbon::CreateFromFormat('d-m-Y', $separated[0])->startOfDay();
             $end = Carbon::CreateFromFormat('d-m-Y', $separated[1])->endOfDay();
 
-            $catatan_gudangs = Gudang::with('perusahaan', 'transaksi')
-                ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
-                ->whereBetween('created_at', [$start, $end])
+            // $catatan_gudangs = Gudang::with('perusahaan', 'transaksi')
+            //     ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            //     ->whereBetween('catatan_transaksi_proyeks.tanggal_transaksi', [$start, $end])
+            //     ->get();
+            // $catatan_gudangs = DB::select('select g.* from gudangs g, perusahaans p, catatan_transaksi_proyeks c 
+            // where p.id = g.id_perusahaan 
+            // and c.id = g.id_transaksi')
+            // ->whereBetween('c.tanggal_transaksi', [$start, $end])
+            // ->get();
+
+            $catatan_gudangs = DB::table('gudangs')
+                ->join('perusahaans', 'perusahaans.id', '=', 'gudangs.id_perusahaan')
+                ->join('catatan_transaksi_proyeks', 'catatan_transaksi_proyeks.id', '=', 'gudangs.id_transaksi')
+                ->select('gudangs.*')
+                ->whereBetween('catatan_transaksi_proyeks.tanggal_transaksi', [$start, $end])
                 ->get();
 
             $date_range = str_replace('-', '/', $date_range);
