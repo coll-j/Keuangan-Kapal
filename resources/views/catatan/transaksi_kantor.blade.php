@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <input name="daterange" value="{{ $date_range ?? '' }}" type="text" style="width: 250px;" class="form-control text-center">
+            <input name="daterange" value="{{ $date_range ?? '-- pilih tanggal --' }}" type="text" style="width: 250px;" class="form-control text-center">
         </div>
         <div class="row">
             <div class="col-sm">

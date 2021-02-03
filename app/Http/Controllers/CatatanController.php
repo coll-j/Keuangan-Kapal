@@ -181,13 +181,136 @@ class CatatanController extends Controller
 
             $date_range = str_replace('-', '/', $date_range);
             $date_range = str_replace(' / ', ' - ', $date_range);
+
+            $total_tr_proyeks_masuk_bank = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereDate('tanggal_transaksi', '<=', $end)
+            ->whereHas('akun_tr_proyek', function($query){
+                $query->where('jenis', 'Masuk');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Bank');
+            })->sum('terbayar');
+
+            $total_tr_proyeks_keluar_bank = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereDate('tanggal_transaksi', '<=', $end)
+            ->whereHas('akun_tr_proyek', function($query){
+                $query->where('jenis', 'Keluar');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Bank');
+            })->sum('terbayar');
+
+            $total_tr_kantors_masuk_bank = TransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereDate('tgl_transaksi', '<=', $end)
+            ->whereHas('akun_tr_kantor', function($query){
+                $query->where('jenis', 'Masuk');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Bank');
+            })->sum('jumlah');
+
+            $total_tr_kantors_keluar_bank = TransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereDate('tgl_transaksi', '<=', $end)
+            ->whereHas('akun_tr_kantor', function($query){
+                $query->where('jenis', 'Keluar');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Bank');
+            })->sum('jumlah');
+
+            // Kas
+            $total_tr_proyeks_masuk_kas = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereDate('tanggal_transaksi', '<=', $end)
+            ->whereHas('akun_tr_proyek', function($query){
+                $query->where('jenis', 'Masuk');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Kas');
+            })->sum('terbayar');
+
+            $total_tr_proyeks_keluar_kas = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereDate('tanggal_transaksi', '<=', $end)
+            ->whereHas('akun_tr_proyek', function($query){
+                $query->where('jenis', 'Keluar');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Kas');
+            })->sum('terbayar');
+
+            $total_tr_kantors_masuk_kas = TransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereDate('tgl_transaksi', '<=', $end)
+            ->whereHas('akun_tr_kantor', function($query){
+                $query->where('jenis', 'Masuk');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Kas');
+            })->sum('jumlah');
+
+            $total_tr_kantors_keluar_kas = TransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereDate('tgl_transaksi', '<=', $end)
+            ->whereHas('akun_tr_kantor', function($query){
+                $query->where('jenis', 'Keluar');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Kas');
+            })->sum('jumlah');
         }
         else
         {
             $catatan_tr_kantors = TransaksiKantor::with('akun_tr_kantor', 'akun_neraca')
                                ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+
+            $total_tr_proyeks_masuk_bank = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereHas('akun_tr_proyek', function($query){
+                $query->where('jenis', 'Masuk');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Bank');
+            })->sum('terbayar');
+
+            $total_tr_proyeks_keluar_bank = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereHas('akun_tr_proyek', function($query){
+                $query->where('jenis', 'Keluar');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Bank');
+            })->sum('terbayar');
+
+            $total_tr_kantors_masuk_bank = TransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereHas('akun_tr_kantor', function($query){
+                $query->where('jenis', 'Masuk');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Bank');
+            })->sum('jumlah');
+
+            $total_tr_kantors_keluar_bank = TransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereHas('akun_tr_kantor', function($query){
+                $query->where('jenis', 'Keluar');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Bank');
+            })->sum('jumlah');
+
+            // Kas
+            $total_tr_proyeks_masuk_kas = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereHas('akun_tr_proyek', function($query){
+                $query->where('jenis', 'Masuk');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Kas');
+            })->sum('terbayar');
+
+            $total_tr_proyeks_keluar_kas = TransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereHas('akun_tr_proyek', function($query){
+                $query->where('jenis', 'Keluar');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Kas');
+            })->sum('terbayar');
+
+            $total_tr_kantors_masuk_kas = TransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereHas('akun_tr_kantor', function($query){
+                $query->where('jenis', 'Masuk');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Kas');
+            })->sum('jumlah');
+
+            $total_tr_kantors_keluar_kas = TransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+            ->whereHas('akun_tr_kantor', function($query){
+                $query->where('jenis', 'Keluar');
+            })->whereHas('akun_neraca', function($query){
+                $query->where('jenis_akun', 'Kas');
+            })->sum('jumlah');
+
         }
-        
+
         $akun_tr_kantors = AkunTransaksiKantor::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
         $akun_neracas = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
                         ->where('jenis_akun', '!=', 'Lainnya')
@@ -198,6 +321,13 @@ class CatatanController extends Controller
         $bank_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
                     ->where('jenis_akun', '=', 'Bank')
                     ->sum('saldo');
+        
+        $bank_sum = $bank_sum + $total_tr_proyeks_masuk_bank + $total_tr_kantors_masuk_bank
+        - $total_tr_proyeks_keluar_bank - $total_tr_kantors_keluar_bank;
+
+        $kas_sum = $kas_sum + $total_tr_proyeks_masuk_kas + $total_tr_kantors_masuk_kas
+        - $total_tr_proyeks_keluar_kas - $total_tr_kantors_keluar_kas;
+
         return view('catatan/transaksi_kantor', [
             'catatan_tr_kantors' => $catatan_tr_kantors,
             'akun_tr_kantors' => $akun_tr_kantors,
