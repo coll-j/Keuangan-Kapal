@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Perusahaan;
+use App\Models\AkunNeracaSaldo;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,10 +18,30 @@ class AkunNeracaSaldosSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('akun_neraca_saldos')->insert([
-            'nama'=> 'Kas',
-            'saldo' => 999999,
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
+        $perusahaan = DB::table('perusahaans')->select('*')->first();
+
+        AkunNeracaSaldo::create([
+            'nama' => 'Bank BCA',
+            'saldo' => 900000000,
+            'id_perusahaan' => $perusahaan->id,
+            'jenis_akun' => 'Bank',
+            'jenis_neraca' => 'Aset Lancar',
+        ]);
+
+        AkunNeracaSaldo::create([
+            'nama' => 'Bank Mandiri',
+            'saldo' => 1000000000,
+            'id_perusahaan' => $perusahaan->id,
+            'jenis_akun' => 'Bank',
+            'jenis_neraca' => 'Aset Lancar',
+        ]);
+
+        AkunNeracaSaldo::create([
+            'nama' => 'Kas',
+            'saldo' => 20000000,
+            'id_perusahaan' => $perusahaan->id,
+            'jenis_akun' => 'Kas',
+            'jenis_neraca' => 'Aset Lancar',
         ]);
     }
 }

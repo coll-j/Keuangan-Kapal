@@ -11,7 +11,7 @@
     <div class="card-body box-profile">
         <h4 class="text-center">PT. XYZ</h4>
         <div class="d-flex justify-content-center mb-3">
-            <input name="daterange" value="01/01/2021" type="text" style="width: 180px;" class="form-control text-center">
+            <input name="daterange" type="text" value="{{ $date_range ?? '-- pilih tanggal --' }}" style="width: 250px;" class="form-control text-center">
         </div>
 
         <div class="row pl-2">
@@ -141,12 +141,22 @@
 @section('js')
 <script>
 $(function() {
-  $('input[name="daterange"]').daterangepicker({
-    singleDatePicker: true,
-    showDropdowns: true,
-    minYear: 1901,
-    maxYear: parseInt(moment().format('YYYY'),10)
-  });
+    $('input[name="daterange"]').daterangepicker({
+        opens: 'center',
+        autoUpdateInput: false,
+        locale: {
+            format: 'DD/MM/YYYY',
+        },
+    }, function(start, end, label) {
+        start = start.format('DD-MM-YYYY');
+        end = end.format('DD-MM-YYYY');
+        var all = start + ' - ' + end;
+        var url = '/transaksi_proyek/' + encodeURIComponent(all);
+        console.log(all);
+        console.log(url);
+        // window.location.href = url;
+        // console.log("A new date selection was made: " + start + ' to ' + end);
+    });
 });
 </script>
 @endsection

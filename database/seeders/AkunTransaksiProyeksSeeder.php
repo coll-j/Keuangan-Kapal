@@ -2,10 +2,14 @@
 
 namespace Database\Seeders;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
+use App\Models\User;
+use App\Models\Perusahaan;
+use App\Models\AkunTransaksiProyek;
+use App\Models\Catatan\Anggaran;
 
 class AkunTransaksiProyeksSeeder extends Seeder
 {
@@ -16,70 +20,57 @@ class AkunTransaksiProyeksSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Administrasi dan Umum',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Lain-lain (tak terduga)',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Listrik',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Material',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Pengawas',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Pemasaran',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Persiapan dan Perijinan',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Sewa Alat',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Telepon/Internet',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Tenaga Kerja',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Biaya Pembayaran Utang',
-            'jenis' => 'Keluar',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Pendapatan Proyek',
-            'jenis' => 'Masuk',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
-        DB::table('akun_transaksi_proyeks')->insert([
-            'nama'=> 'Penerimaan Piutang Proyek',
-            'jenis' => 'Masuk',
-            'id_perusahaan' => (User::find(Auth::user()->id))->id_perusahaan,
-        ]);
+        $perusahaan = DB::table('perusahaans')->select('*')->first();
+
+        $input_akuns = [
+            [
+                'nama' => 'Biaya Material',
+                'jenis' => 'Keluar',
+                'neraca' => 'Kewajiban Lancar'
+            ],
+            [
+                'nama' => 'Biaya Perizinan',
+                'jenis' => 'Keluar',
+                'neraca' => 'Kewajiban Lancar'
+            ],
+            [
+                'nama' => 'Pendapatan Proyek',
+                'jenis' => 'Masuk',
+                'neraca' => 'Aset Lancar'
+            ],
+            [
+                'nama' => 'Penerimaan Piutang Proyek',
+                'jenis' => 'Masuk',
+                'neraca' => 'Aset Lancar'
+            ],
+            [
+                'nama' => 'Biaya Listrik',
+                'jenis' => 'Keluar',
+                'neraca' => 'Kewajiban Lancar'
+            ],
+        ];
+
+        foreach($input_akuns as $input_akun)
+        {
+            $akun = AkunTransaksiProyek::create([
+                'nama' => $input_akun['nama'],
+                'jenis' => $input_akun['jenis'],
+                'id_perusahaan' => $perusahaan->id,
+                'jenis_neraca' => $input_akun['neraca'],
+    
+            ]);
+    
+            $proyeks = DB::table('proyeks')->select('*')->get();
+            foreach($proyeks as $proyek)
+            {
+                Anggaran::create([
+                    'id_akun_tr_proyek' => $akun->id,
+                    'id_perusahaan' => $perusahaan->id,
+                    'id_proyek' => $proyek->id,
+                    'nominal' => 0,
+                ]);
+            }
+
+        }
     }
 }
