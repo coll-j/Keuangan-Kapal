@@ -35,7 +35,7 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Akun</th>
-                                <th>Saldo (Rp)</th>
+                                <th>Saldo Awal (Rp)</th>
                             </tr>
                         </thead>
                         <tbody>

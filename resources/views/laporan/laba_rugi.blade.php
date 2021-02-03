@@ -82,13 +82,6 @@
                                         ->where('id_perusahaan', Auth::user()->id_perusahaan)
                                         ->where('id_akun_tr_proyek', $pendapatan->id)
                         @endphp
-                        @if(Auth::user()->role == 4)
-                            @php 
-                            $realisasi = $realisasi->whereHas('proyek', function($query){
-                                return $query->where('id_pemilik', Auth::user()->id);
-                            })
-                            @endphp
-                        @endif
                         @if(!(is_null($curr_proyek)))
                             @php $realisasi = $realisasi->where('id_proyek', $curr_proyek->id) @endphp
                         @endif
