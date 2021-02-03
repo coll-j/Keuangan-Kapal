@@ -21,4 +21,7 @@ class Anggaran extends Model
         return $this->belongsTo('\App\Models\AkunTransaksiProyek', 'id_akun_tr_proyek', 'id');
     }
     
+    public function proyek(){
+        return $this->belongsTo('\App\Models\Proyek', 'id_proyek', 'id');
+    }
 }

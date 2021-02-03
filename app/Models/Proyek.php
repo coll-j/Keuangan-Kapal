@@ -20,4 +20,8 @@ class Proyek extends Model
     public function catatan_transaksi_proyek(){
         return $this->hasMany('\App\Models\Catatan\TransaksiProyek', 'id', 'id_proyek');
     }
+
+    public function anggaran(){
+        return $this->hasMany('\App\Models\Catatan\Anggaran', 'id', 'id_proyek');
+    }
 }
