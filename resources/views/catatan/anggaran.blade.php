@@ -36,7 +36,7 @@
                         </div>
                         <div class="float-left">
                             <div class="dropdown">
-                                <button class="btn btn-xs btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Pilih proyek untuk ditampilkan
                                 </button>
                                 <div class="dropdown-menu checkbox-menu">

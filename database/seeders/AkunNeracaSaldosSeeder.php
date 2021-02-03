@@ -43,5 +43,37 @@ class AkunNeracaSaldosSeeder extends Seeder
             'jenis_akun' => 'Kas',
             'jenis_neraca' => 'Aset Lancar',
         ]);
+
+        AkunNeracaSaldo::create([
+            'nama' => 'Kendaraan',
+            'saldo' => 200000000,
+            'id_perusahaan' => $perusahaan->id,
+            'jenis_akun' => 'Lainnya',
+            'jenis_neraca' => 'Aset Tetap',
+        ]);
+
+        AkunNeracaSaldo::create([
+            'nama' => 'Peralatan Kantor',
+            'saldo' => 30000000,
+            'id_perusahaan' => $perusahaan->id,
+            'jenis_akun' => 'Lainnya',
+            'jenis_neraca' => 'Aset Tetap',
+        ]);
+
+        AkunNeracaSaldo::create([
+            'nama' => 'Modal',
+            'saldo' => 25000000,
+            'id_perusahaan' => $perusahaan->id,
+            'jenis_akun' => 'Lainnya',
+            'jenis_neraca' => 'Ekuitas',
+        ]);
+
+        AkunNeracaSaldo::create([
+            'nama' => 'Utang Bank',
+            'saldo' => 30000000,
+            'id_perusahaan' => $perusahaan->id,
+            'jenis_akun' => 'Lainnya',
+            'jenis_neraca' => 'Kewajiban Panjang',
+        ]);
     }
 }
