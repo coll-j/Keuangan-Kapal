@@ -30,6 +30,7 @@
         <div class="dataTables_wrapper">
             <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
                 <thead class="thead-light">
+                    <th style="width: 10%">Id Proyek</th>
                     <th style="width: 40%">Nama Barang</th>
                     <th style="width: 30%">Satuan</th>
                     <th style="width: 20%">Jumlah</th>
@@ -41,6 +42,7 @@
                 <tbody>
                     @foreach($items as $item)
                     <tr>
+                        <td>{{$item->kode_proyek}}</td>
                         <td>{{$item->nama_barang}}</td>
                         <td>{{$item->satuan}}</td>
                         <td>{{$item->jumlah}}</td>
@@ -75,10 +77,10 @@
                 <form id="form-gudang" method="POST" action="{{route ('create_gudang')}}">
                     @csrf
                     <div class="form-group">
-                        <label for="nama_barang">Nama Barang</label>
+                        <label for="nama_barang">Nama Barang - id proyek</label>
                         <select class="form-control" id="nama_barang" name="id_parent">
                             @foreach($inventoris as $inventori)
-                            <option value="{{ $inventori->id }}">{{$inventori->nama_barang}}</option>
+                            <option value="{{ $inventori->nama_barang.'-'.$inventori->id_proyek}}">{{$inventori->nama_barang." - ".$inventori->id_proyek}}</option>
                             @endforeach
                         </select>
                     </div>

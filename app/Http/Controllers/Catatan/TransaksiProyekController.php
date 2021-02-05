@@ -8,7 +8,7 @@ use App\Models\Gudang;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Catatan\TransaksiProyek;
 use DateTime;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\AkunTransaksiProyek;
 use App\Models\Pemasok;
 use App\Models\Proyek;
@@ -35,23 +35,23 @@ class TransaksiProyekController extends Controller
         //               ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
         //               ->whereBetween('catatan_transaksi_proyeks.tanggal_transaksi', [$start, $end])
         //               ->get();
-         
+
         // bikin sisa dari transaksi proyek
         $akun = AkunTransaksiProyek::find($request->jenis_transaksi);
-        $jml = floatval(str_replace(",","",$request->jumlah_transaksi));
-        $terbayar = floatval(str_replace(",","",$request->jumlah_dibayar));
-        
+        $jml = floatval(str_replace(",", "", $request->jumlah_transaksi));
+        $terbayar = floatval(str_replace(",", "", $request->jumlah_dibayar));
+
         $sisa = $jml - $terbayar;
         $jenis = '-';
-        if($sisa > 0 && $akun->jenis == 'Keluar') $jenis = 'Utang';
-        else if($sisa > 0 && $akun->jenis == 'Masuk') $jenis = 'Piutang';
+        if ($sisa > 0 && $akun->jenis == 'Keluar') $jenis = 'Utang';
+        else if ($sisa > 0 && $akun->jenis == 'Masuk') $jenis = 'Piutang';
         $kas_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
-                    ->where('jenis_akun', '=', 'Kas')
-                    ->sum('saldo');
-        
+            ->where('jenis_akun', '=', 'Kas')
+            ->sum('saldo');
+
         $bank_sum = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
-                    ->where('jenis_akun', '=', 'Bank')
-                    ->sum('saldo');
+            ->where('jenis_akun', '=', 'Bank')
+            ->sum('saldo');
         $akun = AkunNeracaSaldo::find($request->akun_neraca);
         $sisa_saldo = 0;
         // if($akun->jenis_neraca == 'Aset Lancar'){
@@ -79,18 +79,33 @@ class TransaksiProyekController extends Controller
             'jenis' => $jenis,
             'id_perusahaan' => Auth::user()->id_perusahaan,
         ]);
+
+        $materials = DB::table('gudangs')
+            ->select('sisa')
+            ->where('id_proyek', '=', $request->id_proyek)
+            ->where('nama_barang', '=', $request->nama_material)
+            ->orderByDesc('id')
+            ->limit(1)
+            ->get();
         // create gudang
-        if(!(empty($request->nama_material)) && !(empty($request->jumlah_material)))
-        {
+        //
+        $sisa = 0;
+        foreach ($materials as $row) {
+            $sisa = $row->sisa;
+        }
+
+        // dd($sisa);
+        if (!(empty($request->nama_material)) && !(empty($request->jumlah_material))) {
             Gudang::create([
                 'id_perusahaan' => Auth::user()->id_perusahaan,
                 'id_transaksi' => $tr_proyek->id,
+                'id_proyek' => $request->id_proyek,
                 'nama_barang' => $request->nama_material,
                 'satuan' => $request->satuan_material,
                 'jumlah' => $request->jumlah_material,
                 'jenis' => 'Masuk',
-              //  'harga_satuan' => (floatval(str_replace(",","",$request->jumlah_transaksi))/$request->jumlah_material),
-                'sisa' => $request->jumlah_material,
+                //  'harga_satuan' => (floatval(str_replace(",","",$request->jumlah_transaksi))/$request->jumlah_material),
+                'sisa' => intval($request->jumlah_material) + intval($sisa),
                 'keterangan' => '-'
             ]);
         }
@@ -98,21 +113,23 @@ class TransaksiProyekController extends Controller
         return redirect()->route('transaksi_proyek');
     }
 
-    public function getById ($id) {
+    public function getById($id)
+    {
         // dd($id);
         return json_encode(TransaksiProyek::find($id));
     }
 
-    public function edit (Request $request) {
+    public function edit(Request $request)
+    {
         // dd($request);
         $tr_proyek = TransaksiProyek::find($request->id);
         $akun = AkunTransaksiProyek::find($request->jenis_transaksi);
-        $jml = floatval(str_replace(",","",$request->jumlah_transaksi));
-        $terbayar = floatval(str_replace(",","",$request->jumlah_dibayar));
+        $jml = floatval(str_replace(",", "", $request->jumlah_transaksi));
+        $terbayar = floatval(str_replace(",", "", $request->jumlah_dibayar));
         $sisa = $jml - $terbayar;
         $jenis = '-';
-        if($sisa > 0 && $akun->jenis == 'Keluar') $jenis = 'Utang';
-        else if($sisa > 0 && $akun->jenis == 'Masuk') $jenis = 'Piutang';
+        if ($sisa > 0 && $akun->jenis == 'Keluar') $jenis = 'Utang';
+        else if ($sisa > 0 && $akun->jenis == 'Masuk') $jenis = 'Piutang';
 
         $tr_proyek->tanggal_transaksi = DateTime::CreateFromFormat('Y-m-d', $request->tanggal_transaksi);
         $tr_proyek->id_akun_tr_proyek = $request->jenis_transaksi;
@@ -130,29 +147,28 @@ class TransaksiProyekController extends Controller
         $tr_proyek->save();
 
         $gudang = Gudang::where('id_transaksi', '=', $request->id)->first();
-        if(!(is_null($gudang)))
-        {
-                $gudang->nama_barang = $request->nama_material;
-                $gudang->satuan = $request->satuan_material;
-                $gudang->jumlah = $request->jumlah_material;
-                $gudang->jenis = 'Masuk';
-                $gudang->harga_satuan = (floatval(str_replace(",","",$request->jumlah_transaksi))/$request->jumlah_material);
+        if (!(is_null($gudang))) {
+            $gudang->nama_barang = $request->nama_material;
+            $gudang->satuan = $request->satuan_material;
+            $gudang->jumlah = $request->jumlah_material;
+            $gudang->jenis = 'Masuk';
+            $gudang->harga_satuan = (floatval(str_replace(",", "", $request->jumlah_transaksi)) / $request->jumlah_material);
         }
-        
+
         return redirect()->route('transaksi_proyek');
     }
 
-    public function delete (Request $request) {
+    public function delete(Request $request)
+    {
         // dd($request);
         try {
             TransaksiProyek::find($request->id)->delete();
             $gudang = Gudang::where('id_transaksi', '=', $request->id)->first();
-            if(!(is_null($gudang))) $gudang->delete();
-            
+            if (!(is_null($gudang))) $gudang->delete();
         } catch (Exception $e) {
             return $e->getMessage();
         }
-        
+
         return $request->id;
     }
 }

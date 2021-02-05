@@ -144,8 +144,8 @@
                         <input type="checkbox" id="material_checked" name="material_checked" onclick="checkbox()">
                         <label for="material_baru" id="material_baru" class="form-check-label"> Material Baru</label>
                     </div>
-                    
-                    <!-- ====s= -->
+
+                    <!-- ===== -->
 
                     <div class="form-group" id="tambah-material" style="display: none;">
                         <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
@@ -154,10 +154,10 @@
 
                     <div class="form-group" id="pilih-material">
                         <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
-                        <select class="form-control" name="id_material">
+                        <select class="form-control" name="nama_material">
                             <option disabled selected value> -- pilih material -- </option>
                             @foreach($material_barus as $material_baru)
-                            <option value="{{ $material_baru->id }}">{{ $material_baru->nama_barang}}</option>
+                            <option value="{{ $material_baru->nama_barang }}">{{ $material_baru->nama_barang}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -311,18 +311,19 @@
 @endsection
 
 @section('js')
+<script src="{{ asset('js/bootstable-transaksi-proyek.js') }}"></script>
 <script src="https://unpkg.com/autonumeric"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         var role = <?php echo Auth::user()->role; ?>;
-        if (role == 1) {
-            $('table').SetEditable();
-        }
-
         if (role == 1 || role == 2) {
             new AutoNumeric('#jumlah-transaksi');
             new AutoNumeric('#jumlah-transaksi-dibayar');
         }
+        if (role == 1) {
+            $('table').SetEditable();
+        }
+
 
         var columnDefs = [];
         if (role == 1) {
@@ -400,10 +401,9 @@
     }
 </script>
 
-<script src="{{ asset('js/bootstable-transaksi-proyek.js') }}"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 
 @endsection

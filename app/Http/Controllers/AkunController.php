@@ -12,6 +12,7 @@ use App\Models\Proyek;
 use App\Models\Catatan\Anggaran;
 use App\Models\Catatan\TransaksiProyek;
 use App\Models\Catatan\TransaksiKantor;
+use App\Models\Gudang;
 
 class AkunController extends Controller
 {
@@ -146,6 +147,7 @@ class AkunController extends Controller
         
         $anggaran = Anggaran::where('id_proyek', $id_proyek)->delete();
         TransaksiProyek::where('id_proyek', $id_proyek)->delete();
+        Gudang::where('id_proyek', $id_proyek)->delete();
         $data->delete();
         return redirect()->route('data');
     }
