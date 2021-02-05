@@ -22,6 +22,7 @@
             <div class="col">
                 <div class="row pb-3">
                     <div class="col">
+                        @if(Auth::user()->role != 3)
                         <div class="float-right">
                             <form id="ubah-dropdown" class="form-inline">
                                 <select id="edit-proyek" class="form-control form-control-sm d-inline mr-1">
@@ -34,6 +35,7 @@
                             </form>
                             <button id="save-btn" class="btn btn-sm btn-primary float-right" style="display: none;" onclick="save_edit()">Simpan</button>
                         </div>
+                        @endif
                         <div class="float-left">
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

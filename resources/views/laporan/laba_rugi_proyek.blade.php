@@ -368,8 +368,9 @@
                         @endif
                     </tr>
                     <tr>
-                        <td class="right"><b>Laba/Rugi</b></td>
                         @if(Auth::user()->role != 4)
+                        <td class="right"><b>Laba/Rugi</b></td>
+                        
                             <!-- Anggaran -->
                             <td class="end-row">
                                 @php
@@ -397,8 +398,8 @@
                                 @endphp
                                 {{ number_format($anggaran, 2, '.', ',') }}
                             </td>
-                        @endif
                         <td class="end-row">
+                        @endif
                             @php
                             $p_realisasi = \App\Models\Catatan\TransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
                             ->whereHas('akun_tr_proyek', function($query){
