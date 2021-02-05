@@ -11,7 +11,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 @if(!empty(Auth::user()->id_perusahaan))
 <div class="card">
-    <div class="card-header">
+    <div class="card-header bg-transparent">
         <div class="text-center pt-3 mb-3">
             <div class="col">
                 <h5>Catatan Transaksi Proyek</h5>
@@ -140,9 +140,12 @@
 
 
                     <!-- New Material -->
-                    <input type="checkbox" id="checkbox" onclick="checkbox()">
-                    <label for="material_baru" id="material_baru" class="form-check-label"> Material Baru</label>
-                    <!-- ===== -->
+                    <div class="form-group pt-1">
+                        <input type="checkbox" id="material_checked" name="material_checked" onclick="checkbox()">
+                        <label for="material_baru" id="material_baru" class="form-check-label"> Material Baru</label>
+                    </div>
+                    
+                    <!-- ====s= -->
 
                     <div class="form-group" id="tambah-material" style="display: none;">
                         <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
@@ -384,23 +387,16 @@
         });
     });
 </script>
-
-<!--Modal condition -->
-<script type="text/javascript">
-    // if checkbox is checked, input text
-    // else, use drop down
-
+<script>
     function checkbox() {
-        var checkBox = document.getElementById("material_baru");
-
-        if ($('#checkbox').is(":checked")) {
+        var elm = document.getElementById('material_checked');
+        if (elm.checked == true) {
             $('#tambah-material').show();
             $('#pilih-material').hide();
         } else {
             $('#tambah-material').hide();
             $('#pilih-material').show();
         }
-
     }
 </script>
 
