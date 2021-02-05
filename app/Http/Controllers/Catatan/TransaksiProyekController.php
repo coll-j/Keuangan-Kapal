@@ -35,6 +35,7 @@ class TransaksiProyekController extends Controller
         //               ->whereBetween('catatan_transaksi_proyeks.tanggal_transaksi', [$start, $end])
         //               ->get();
          
+        // bikin sisa dari transaksi proyek
         $akun = AkunTransaksiProyek::find($request->jenis_transaksi);
         $jml = floatval(str_replace(",","",$request->jumlah_transaksi));
         $terbayar = floatval(str_replace(",","",$request->jumlah_dibayar));
