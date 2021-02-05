@@ -106,8 +106,8 @@ class AkunController extends Controller
     function delAkunNeraca($nama)
     {
         $data = AkunNeracaSaldo::where('nama', '=', $nama)->first();
-        TransaksiProyek::where('id_akun_neraca', $data->id)->delete();
-        TransaksiKantor::where('id_akun_neraca', $data->id)->delete();
+        // TransaksiProyek::where('id_akun_neraca', $data->id)->delete();
+        // TransaksiKantor::where('id_akun_neraca', $data->id)->delete();
 
         $data->delete();
         return redirect()->route('data');
@@ -116,7 +116,7 @@ class AkunController extends Controller
     function delAkunTransaksiKantor($nama)
     {
         $data = AkunTransaksiKantor::where('nama', '=', $nama)->first();
-        TransaksiKantor::where('id_akun_tr_kantor', $data->id)->delete();
+        // TransaksiKantor::where('id_akun_tr_kantor', $data->id)->delete();
 
         $data->delete();
         return redirect()->route('data');
@@ -125,7 +125,7 @@ class AkunController extends Controller
     function delAkunTransaksiProyek($nama)
     {
         $data = AkunTransaksiProyek::where('nama', '=', $nama)->first();
-        TransaksiProyek::where('id_akun_tr_proyek', $data->id)->delete();
+        // TransaksiProyek::where('id_akun_tr_proyek', $data->id)->delete();
 
         $data->delete();
         return redirect()->route('data');
@@ -134,7 +134,7 @@ class AkunController extends Controller
     function delPemasok($nama)
     {
         $data = Pemasok::where('nama', '=', $nama)->first();
-        TransaksiProyek::where('id_pemasok', $data->id)->delete();
+        // TransaksiProyek::where('id_pemasok', $data->id)->delete();
 
         $data->delete();
         return redirect()->route('data');
@@ -146,8 +146,8 @@ class AkunController extends Controller
         $id_proyek = $data->id;
         
         $anggaran = Anggaran::where('id_proyek', $id_proyek)->delete();
-        TransaksiProyek::where('id_proyek', $id_proyek)->delete();
-        Gudang::where('id_proyek', $id_proyek)->delete();
+        // TransaksiProyek::where('id_proyek', $id_proyek)->delete();
+        // Gudang::where('id_proyek', $id_proyek)->delete();
         $data->delete();
         return redirect()->route('data');
     }

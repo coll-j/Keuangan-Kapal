@@ -19,7 +19,7 @@ class CatatanTransaksiProyek extends Migration
             $table->date('tanggal_transaksi');
             $table->unsignedBigInteger('id_akun_tr_proyek')->unsigned();
             $table->foreign('id_akun_tr_proyek')->references('id')->on('akun_transaksi_proyeks')->onDelete('cascade');
-            $table->unsignedBigInteger('id_pemasok')->unsigned();
+            $table->unsignedBigInteger('id_pemasok')->unsigned()->nullable();
             $table->foreign('id_pemasok')->references('id')->on('pemasoks')->nullable()->onDelete('cascade');
             $table->string('nama_material')->nullable();
             $table->integer('jumlah_material')->nullable();
