@@ -34,7 +34,7 @@
                             </form>
                             <button id="save-btn" class="btn btn-sm btn-primary float-right" style="display: none;" onclick="save_edit()">Simpan</button>
                         </div>
-                        <div class="float-left">
+                        <div class="float-left" id="display-proyek">
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Pilih proyek untuk ditampilkan
@@ -275,6 +275,7 @@
             
             $('#ubah-dropdown').hide();
             $('#save-btn').show();
+            $('#display-proyek').hide();
         }
     }
     

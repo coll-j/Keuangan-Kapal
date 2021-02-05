@@ -24,7 +24,6 @@ class TransaksiProyekController extends Controller
     }
 
     public function insert (Request $request) {
-        // dd(DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi));
         // create transaksi proyek
         $akun = AkunTransaksiProyek::find($request->jenis_transaksi);
         $jml = floatval(str_replace(",","",$request->jumlah_transaksi));
