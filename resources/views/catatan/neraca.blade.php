@@ -7,9 +7,9 @@
 @endsection
 
 @section('content')
-<div class="card card-outline">
+<div class="card card-outline pt-3  pb-5">
     <div class="card-body box-profile">
-        <h4 class="text-center">PT. XYZ</h4>
+        <h4 class="text-center">{{$perusahaan->nama_perusahaan}}</h4>
         <div class="d-flex justify-content-center mb-3">
             <input name="daterange" type="text" value="{{ $date_range ?? '-- pilih tanggal --' }}" style="width: 250px;" class="form-control text-center">
         </div>

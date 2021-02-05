@@ -11,7 +11,7 @@
     <div class="card-header">
         <div class="text-center pt-3">
             <div class="col">
-                <h5>PT. XYZ</h5>
+                <h5>{{ $perusahaan->nama_perusahaan}}</h5>
             </div>
         </div>
     </div>
@@ -20,12 +20,13 @@
     <div class="card-body">
         <div class="row pt-1">
             <div class="col">
-                <div class="row">
+                <div class="row pb-3">
                     <div class="col">
+                        @if(Auth::user()->role != 3)
                         <div class="float-right">
                             <form id="ubah-dropdown" class="form-inline">
                                 <select id="edit-proyek" class="form-control form-control-sm d-inline mr-1">
-                                <option disabled selected value> -- pilih proyek untuk diubah -- </option>
+                                <option disabled selected value> Pilih Proyek untuk Diubah </option>
                                 @foreach($proyeks as $proyek)
                                 <option value="{{ $proyek->id }}">{{ $proyek->kode_proyek }}</option>
                                 @endforeach
@@ -37,7 +38,7 @@
                         <div class="float-left" id="display-proyek">
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Pilih proyek untuk ditampilkan
+                                    Pilih Proyek untuk Ditampilkan
                                 </button>
                                 <div class="dropdown-menu checkbox-menu">
                                     @php

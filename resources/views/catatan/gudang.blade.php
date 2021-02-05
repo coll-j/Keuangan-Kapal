@@ -9,46 +9,48 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <div class="text-center pt-3">
+        <div class="text-center pt-3 mb-3">
             <div class="col">
-                <h5>PT. XYZ</h5>
+                <h5>{{ $perusahaan->nama_perusahaan ?? 'PT XYZ'}}</h5>
             </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <input name="daterange" value="{{ $date_range ?? '-- pilih tanggal --' }}" type="text" style="width: 250px;" class="form-control text-center">
+        </div>
+        <div class="row justify-content-star pl-2">
+            @if(Auth::user()->role == 1 || Auth::user()->role == 2)
+            <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah Pemakaian Material</button></a>
+            @endif
+            <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
         </div>
     </div>
     <!-- /.card-header -->
 
-    <div class="card-body">
-        <div class="row pt-1">
-            <div class="col">
-                <div class="d-flex justify-content-center">
-                    <input name="daterange" value="{{ $date_range ?? '' }}" type="text" style="width: 250px;" class="form-control text-center">
-                </div>
-                <div class="row justify-content-start">
-                    @if(Auth::user()->role == 1 || Auth::user()->role == 2)
-                    <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah Pemakaian Material</button></a>
-                    @endif
-                    <!-- <a href="#"><button type="button" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></a> -->
-                </div>
-                <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
-                    <thead class="thead-light">
-                        <th style="width: 40%">Nama Barang</th>
-                        <th style="width: 30%">Satuan</th>
-                        <th style="width: 20%">Jumlah</th>
-                        <th style="width: 10%">Jenis</th>
+    <div class="card-body" style="max-width: 1200px;">
+        <div class="dataTables_wrapper">
+            <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
+                <thead class="thead-light">
+                    <th style="width: 40%">Nama Barang</th>
+                    <th style="width: 30%">Satuan</th>
+                    <th style="width: 20%">Jumlah</th>
+                    <th style="width: 10%">Jenis</th>
+                    <th style="width: 10%">Sisa</th>
+                    <th style="width: 30%">Keterangan</th>
 
-                    </thead>
-                    <tbody>
-                        @foreach($items as $item)
-                        <tr>
-                            <td>{{$item->nama_barang}}</td>
-                            <td>{{$item->satuan}}</td>
-                            <td>{{$item->jumlah}}</td>
-                            <td>{{$item->jenis}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                </thead>
+                <tbody>
+                    @foreach($items as $item)
+                    <tr>
+                        <td>{{$item->nama_barang}}</td>
+                        <td>{{$item->satuan}}</td>
+                        <td>{{$item->jumlah}}</td>
+                        <td>{{$item->jenis}}</td>
+                        <td>{{$item->sisa}}</td>
+                        <td>{{$item->keterangan}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
     <!-- /.card-body -->
@@ -83,6 +85,10 @@
                     <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input autocomplete="off" type="number" id="jumlah" class="form-control" name="jumlah" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="keterangan">Keterangan</label>
+                        <textarea name="keterangan" id="keterangan" cols="30" rows="5" class="form-control" required></textarea>
                     </div>
                 </form>
             </div>
