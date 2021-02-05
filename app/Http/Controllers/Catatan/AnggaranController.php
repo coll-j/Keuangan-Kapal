@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Catatan\Anggaran;
+use App\Models\Perusahaan;
 
 class AnggaranController extends Controller
 {
@@ -25,27 +26,11 @@ class AnggaranController extends Controller
                 $anggaran->nominal = floatval(str_replace(',', '', $value));
                 $anggaran->save();
             }
-            // echo 'id akun '. $id_akun;
-            // echo ' value '. $value;
-            // echo '</br>';
         }
-        // echo $request['akun-1'];
-        // find proyek
-        // for every request
-        /*
-        ex:
-        proyek = proyek->find(id)
-        for req in request:
-            if req.key diawali "akun-":
-                id_akun = req.key[len("akun-"):]
-                record_anggaran = anggaran->where('id_proyek == proyek->id and id_akun == id_akun')
-                record_anggaran->value = request[req.key]
-                record_anggaran->save()
-        */
-        $perusahaan = Perusahaan::with('user')->get()->where('id_perusahaan', '=', Auth::user()->id_perusahaan)->first();
-        // return redirect()->route('anggaran');
-        return view('anggaran', [
-            'perusahaan' => $perusahaan, 
-        ]);
+        $perusahaan = Perusahaan::where('id', '=', Auth::user()->id_perusahaan)->first();
+        return redirect()->route('anggaran');
+        // return view('catatan/anggaran', [
+        //     'perusahaan' => $perusahaan, 
+        // ]);
     }
 }

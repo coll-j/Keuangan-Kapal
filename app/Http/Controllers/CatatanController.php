@@ -370,7 +370,8 @@ class CatatanController extends Controller
 
         $akun_tr_proyeks = AkunTransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
         $pemasoks = Pemasok::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
-        $material_barus = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $material_barus = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->distinct()->get(['nama_barang']);
+        // dd($material_barus);
         $proyeks = Proyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
         $akun_neracas = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
             ->where('jenis_akun', '!=', 'Lainnya')

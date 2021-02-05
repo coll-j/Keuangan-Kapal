@@ -24,8 +24,8 @@ class TransaksiProyekController extends Controller
         $this->middleware('auth');
     }
 
-    public function insert(Request $request)
-    {
+    public function insert (Request $request) {
+        // create transaksi proyek
         // $date_range = null;
         // $separated = explode(' - ', $date_range);
         // $start = Carbon::CreateFromFormat('d-m-Y', $separated[0])->startOfDay();
@@ -54,16 +54,16 @@ class TransaksiProyekController extends Controller
             ->sum('saldo');
         $akun = AkunNeracaSaldo::find($request->akun_neraca);
         $sisa_saldo = 0;
-        if ($akun->jenis_neraca == 'Aset Lancar') {
-            if ($akun->jenis_akun == 'Kas') $sisa_saldo = $kas_sum - $jml;
-            else if ($akun->jenis_akun == 'Bank') $sisa_saldo = $kas_sum - $jml;
-            $histori_aset_lancar = HistoriAsetLancar::create([
-                'tgl_transaksi' => DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi),
-                'id_akun_neraca' => $request->akun_neraca,
-                'sisa_saldo' => $sisa_saldo,
-                'id_perusahaan' => Auth::user()->id_perusahaan,
-            ]);
-        }
+        // if($akun->jenis_neraca == 'Aset Lancar'){
+        //     if($akun->jenis_akun == 'Kas') $sisa_saldo = $kas_sum - $jml;
+        //     else if($akun->jenis_akun == 'Bank') $sisa_saldo = $kas_sum - $jml;
+        //     $histori_aset_lancar = HistoriAsetLancar::create([
+        //         'tgl_transaksi'=> DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi),
+        //         'id_akun_neraca'=>$request->akun_neraca,
+        //         'sisa_saldo'=>$sisa_saldo,
+        //         'id_perusahaan' => Auth::user()->id_perusahaan,
+        //     ]);
+        // }
         $tr_proyek = TransaksiProyek::create([
             'tanggal_transaksi' => DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi),
             'id_akun_tr_proyek' => $request->jenis_transaksi,
@@ -80,7 +80,7 @@ class TransaksiProyekController extends Controller
             'id_perusahaan' => Auth::user()->id_perusahaan,
         ]);
 
-        $sisa = DB::table('gudangs')
+        $materials = DB::table('gudangs')
             ->select('sisa')
             ->where('id_proyek', '=', $request->id_proyek)
             ->where('nama_barang', '=', $request->nama_material)
@@ -89,11 +89,12 @@ class TransaksiProyekController extends Controller
             ->get();
         // create gudang
         //
-        foreach ($sisa as $row) {
+        $sisa = 0;
+        foreach ($materials as $row) {
             $sisa = $row->sisa;
         }
 
-
+        // dd($sisa);
         if (!(empty($request->nama_material)) && !(empty($request->jumlah_material))) {
             Gudang::create([
                 'id_perusahaan' => Auth::user()->id_perusahaan,

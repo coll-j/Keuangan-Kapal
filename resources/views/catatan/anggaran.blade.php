@@ -35,8 +35,7 @@
                             </form>
                             <button id="save-btn" class="btn btn-sm btn-primary float-right" style="display: none;" onclick="save_edit()">Simpan</button>
                         </div>
-                        @endif
-                        <div class="float-left">
+                        <div class="float-left" id="display-proyek">
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Pilih Proyek untuk Ditampilkan
@@ -55,6 +54,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
                 <div class="row">
@@ -242,7 +242,7 @@
                 extend: 'colvis',
                 columns: ':not(.noVis)'
             }
-        ]
+            ]
         });
 
         $('a.toggle-vis').on( 'click', function (e) {
@@ -277,6 +277,7 @@
             
             $('#ubah-dropdown').hide();
             $('#save-btn').show();
+            $('#display-proyek').hide();
         }
     }
     
@@ -284,9 +285,9 @@
         // TODO: buat form
         var id_proyek = $('#edit-proyek').val();
         var class_tag = '.pr-' + id_proyek;
-        var all_input = []
+        var all_input = [];
         $(class_tag).each(function(idx, obj){
-            var td = $(obj)
+            var td = $(obj);
 
             var val = td.find('input').val();
             var akun = td.attr("class").split(' ')[0];
@@ -294,10 +295,9 @@
 
             // var json_data = { 'id_akun': akun, 'val': val};
             var input = '<input type="text" name="'+ akun +'" value="' + val + '">';
-            all_input.push(input)
+            all_input.push(input);
         })
-        var form = '<form method="post" action="{{ route("update_anggaran") }}">\
-                    @csrf';
+        var form = '<form method="post" action="{{ route("update_anggaran") }}">@csrf';
         var id_input = '<input type="text" name="id_proyek" value="' + id_proyek + '">';
         form = form.concat(id_input);
         for(var i in all_input)
@@ -306,7 +306,6 @@
             form = form.concat(all_input[i]);
         }
         form = form.concat('</form>');
-        console.log(form);
         $(form).appendTo('body').submit();
     }
 </script>
