@@ -144,8 +144,8 @@
                         <input type="checkbox" id="material_checked" name="material_checked" onclick="checkbox()">
                         <label for="material_baru" id="material_baru" class="form-check-label"> Material Baru</label>
                     </div>
-                    
-                    <!-- ====s= -->
+
+                    <!-- ===== -->
 
                     <div class="form-group" id="tambah-material" style="display: none;">
                         <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
@@ -154,10 +154,10 @@
 
                     <div class="form-group" id="pilih-material">
                         <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
-                        <select class="form-control" name="id_material">
+                        <select class="form-control" name="nama_material">
                             <option disabled selected value> -- pilih material -- </option>
                             @foreach($material_barus as $material_baru)
-                            <option value="{{ $material_baru->id }}">{{ $material_baru->nama_barang}}</option>
+                            <option value="{{ $material_baru->nama_barang }}">{{ $material_baru->nama_barang}}</option>
                             @endforeach
                         </select>
                     </div>

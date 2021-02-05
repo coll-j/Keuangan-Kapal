@@ -12,6 +12,7 @@ class Gudang extends Model
 
     protected $fillable = [
         'id_perusahaan',
+        'id_proyek',
         'nama_barang',
         'id_parent',
         'id_transaksi',
