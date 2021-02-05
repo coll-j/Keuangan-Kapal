@@ -27,27 +27,31 @@
     <!-- /.card-header -->
 
     <div class="card-body" style="max-width: 1200px;">
-            <div class="dataTables_wrapper">
-                <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
-                    <thead class="thead-light">
-                        <th style="width: 40%">Nama Barang</th>
-                        <th style="width: 30%">Satuan</th>
-                        <th style="width: 20%">Jumlah</th>
-                        <th style="width: 10%">Jenis</th>
+        <div class="dataTables_wrapper">
+            <table id="table1" class="table table-stripped table-hover dataTable table-condensed table-sm">
+                <thead class="thead-light">
+                    <th style="width: 40%">Nama Barang</th>
+                    <th style="width: 30%">Satuan</th>
+                    <th style="width: 20%">Jumlah</th>
+                    <th style="width: 10%">Jenis</th>
+                    <th style="width: 10%">Sisa</th>
+                    <th style="width: 30%">Keterangan</th>
 
-                    </thead>
-                    <tbody>
-                        @foreach($items as $item)
-                        <tr>
-                            <td>{{$item->nama_barang}}</td>
-                            <td>{{$item->satuan}}</td>
-                            <td>{{$item->jumlah}}</td>
-                            <td>{{$item->jenis}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                </thead>
+                <tbody>
+                    @foreach($items as $item)
+                    <tr>
+                        <td>{{$item->nama_barang}}</td>
+                        <td>{{$item->satuan}}</td>
+                        <td>{{$item->jumlah}}</td>
+                        <td>{{$item->jenis}}</td>
+                        <td>{{$item->sisa}}</td>
+                        <td>{{$item->keterangan}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
     <!-- /.card-body -->
 
@@ -81,6 +85,10 @@
                     <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input autocomplete="off" type="number" id="jumlah" class="form-control" name="jumlah" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="keterangan">Keterangan</label>
+                        <textarea name="keterangan" id="keterangan" cols="30" rows="5" class="form-control" required></textarea>
                     </div>
                 </form>
             </div>

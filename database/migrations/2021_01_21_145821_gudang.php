@@ -24,6 +24,8 @@ class Gudang extends Migration
           //  $table->decimal('harga_satuan')->nullable();
             $table->enum('jenis', ['Masuk', 'Keluar']);
             $table->timestamps();
+            $table->integer('sisa');
+            $table->text('keterangan');
         });
     }
 
