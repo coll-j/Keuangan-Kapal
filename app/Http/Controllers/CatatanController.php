@@ -367,6 +367,7 @@ class CatatanController extends Controller
         
         $akun_tr_proyeks = AkunTransaksiProyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
         $pemasoks = Pemasok::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
+        $material_barus = Gudang::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
         $proyeks = Proyek::where('id_perusahaan', '=', Auth::user()->id_perusahaan)->get();
         $akun_neracas = AkunNeracaSaldo::where('id_perusahaan', '=', Auth::user()->id_perusahaan)
                         ->where('jenis_akun', '!=', 'Lainnya')
@@ -397,6 +398,7 @@ class CatatanController extends Controller
             'date_range' => $date_range,
             'kas_sum' => $kas_sum,
             'bank_sum' => $bank_sum,
+            'material_barus' => $material_barus,
             ]);
     }
     

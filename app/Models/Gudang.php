@@ -18,6 +18,8 @@ class Gudang extends Model
         'satuan',
         'jumlah',
         'jenis',
+        'sisa',
+        'keterangan',
         //  'harga_satuan',
     ];
 

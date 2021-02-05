@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Catatan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Gudang;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Catatan\TransaksiProyek;
 use DateTime;
@@ -12,8 +13,8 @@ use App\Models\AkunTransaksiProyek;
 use App\Models\Pemasok;
 use App\Models\Proyek;
 use App\Models\AkunNeracaSaldo;
-use App\Models\Gudang;
 use App\Models\HistoriAsetLancar;
+use Carbon\Carbon;
 
 class TransaksiProyekController extends Controller
 {
@@ -24,11 +25,21 @@ class TransaksiProyekController extends Controller
     }
 
     public function insert (Request $request) {
-        // dd(DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi));
-        // create transaksi proyek
+        // $date_range = null;
+        // $separated = explode(' - ', $date_range);
+        // $start = Carbon::CreateFromFormat('d-m-Y', $separated[0])->startOfDay();
+        // $end = Carbon::CreateFromFormat('d-m-Y', $separated[1])->endOfDay();
+
+        // $sisa_material = Gudang::select('select sisa')
+        //               ->where('id_perusahaan', '=', Auth::user()->id_perusahaan)
+        //               ->whereBetween('catatan_transaksi_proyeks.tanggal_transaksi', [$start, $end])
+        //               ->get();
+         
+        // bikin sisa dari transaksi proyek
         $akun = AkunTransaksiProyek::find($request->jenis_transaksi);
         $jml = floatval(str_replace(",","",$request->jumlah_transaksi));
         $terbayar = floatval(str_replace(",","",$request->jumlah_dibayar));
+        
         $sisa = $jml - $terbayar;
         $jenis = '-';
         if($sisa > 0 && $akun->jenis == 'Keluar') $jenis = 'Utang';
@@ -77,7 +88,9 @@ class TransaksiProyekController extends Controller
                 'satuan' => $request->satuan_material,
                 'jumlah' => $request->jumlah_material,
                 'jenis' => 'Masuk',
-                'harga_satuan' => (floatval(str_replace(",","",$request->jumlah_transaksi))/$request->jumlah_material),
+              //  'harga_satuan' => (floatval(str_replace(",","",$request->jumlah_transaksi))/$request->jumlah_material),
+                'sisa' => $request->jumlah_material,
+                'keterangan' => '-'
             ]);
         }
 

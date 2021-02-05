@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-        <input name="daterange" type="text" value="{{ $date_range ?? '-- pilih tanggal --' }}" style="width: 250px;" class="form-control text-center">
+            <input name="daterange" type="text" value="{{ $date_range ?? '-- pilih tanggal --' }}" style="width: 250px;" class="form-control text-center">
         </div>
         <div class="row">
             <div class="col-sm">
@@ -85,7 +85,7 @@
                         <td>{{$catatan_tr_proyek->akun_tr_proyek->jenis}}</td>
                         <td>{{ number_format($catatan_tr_proyek->jumlah, 2, '.', ',') }}</td>
                         <td>{{ number_format($catatan_tr_proyek->terbayar, 2, '.', ',') }}</td>
-                        
+
                         <td>{{ number_format($catatan_tr_proyek->sisa, 2, '.', ',') }}</td>
                         <td>{{ $catatan_tr_proyek->jenis }}</td>
                     </tr>
@@ -104,173 +104,194 @@
 @if(Auth::user()->role == 1 || Auth::user()->role == 2)
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="add-transaksi" method="post" action="{{ route('create_transaksi_proyek') }}">
-        @csrf
-            <div class="form-group">
-                <label for="nama-akun">Tanggal</label>
-                <input id="daterange-form" name="tanggal_transaksi" value="01/01/2018" type="text" class="form-control">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="jenis-akun">Jenis Transaksi</label>
-                <select class="form-control" id="jenis-akun" name="jenis_transaksi" required>
-                <option disabled selected value> -- pilih jenis transaksi -- </option>
-                @foreach($akun_tr_proyeks as $akun_tr_proyek)
-                <option value="{{ $akun_tr_proyek->id }}">{{ $akun_tr_proyek->nama}}</option>
-                @endforeach
-                </select>
+            <div class="modal-body">
+                <form id="add-transaksi" method="post" action="{{ route('create_transaksi_proyek') }}">
+                    @csrf
+                    <div class="form-group">
+                        <label for="nama-akun">Tanggal</label>
+                        <input id="daterange-form" name="tanggal_transaksi" value="01/01/2018" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="jenis-akun">Jenis Transaksi</label>
+                        <select class="form-control" id="jenis-akun" name="jenis_transaksi" required>
+                            <option disabled selected value> -- pilih jenis transaksi -- </option>
+                            @foreach($akun_tr_proyeks as $akun_tr_proyek)
+                            <option value="{{ $akun_tr_proyek->id }}">{{ $akun_tr_proyek->nama}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="saldo-akun">Pemasok <span class="text-muted">(opsional)</span></label>
+                        <select class="form-control" id="kode-pemasok" name="id_pemasok">
+                            <option disabled selected value> -- pilih pemasok -- </option>
+                            @foreach($pemasoks as $pemasok)
+                            <option value="{{ $pemasok->id }}">{{ $pemasok->nama}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
+                    <!-- New Material -->
+                    <input type="checkbox" id="checkbox" onclick="checkbox()">
+                    <label for="material_baru" id="material_baru" class="form-check-label"> Material Baru</label>
+                    <!-- ===== -->
+
+                    <div class="form-group" id="tambah-material" style="display: none;">
+                        <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
+                        <input type="text" name="nama_material" class="form-control">
+                    </div>
+
+                    <div class="form-group" id="pilih-material">
+                        <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
+                        <select class="form-control" name="id_material">
+                            <option disabled selected value> -- pilih material -- </option>
+                            @foreach($material_barus as $material_baru)
+                            <option value="{{ $material_baru->id }}">{{ $material_baru->nama_barang}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jumlah-material">Jumlah Material <span class="text-muted">(opsional)</span></label>
+                        <input type="number" id="jumlah-material" class="form-control" name="jumlah_material">
+                    </div>
+                    <div class="form-group">
+                        <label for="satuan-material">Satuan Material <span class="text-muted">(opsional)</span></label>
+                        <input type="text" id="satuan-material" name="satuan_material" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="kode-proyek">Proyek</label>
+                        <select class="form-control" id="kode-proyek" name="id_proyek">
+                            <option disabled selected value required> -- pilih proyek -- </option>
+                            @foreach($proyeks as $proyek)
+                            <option value="{{ $proyek->id }}">{{ $proyek->jenis }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="kas-bank">Kas/Bank</label>
+                        <select class="form-control" id="kas-bank" name="akun_neraca" required>
+                            <option disabled selected value> -- pilih akun -- </option>
+                            @foreach($akun_neracas as $akun_neraca)
+                            <option value="{{ $akun_neraca->id }}">{{ $akun_neraca->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="jumlah-transaksi">Jumlah (Rp)</label>
+                            <input autocomplete="off" type="text" id="jumlah-transaksi" class="form-control" name="jumlah_transaksi" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="jumlah-transaksi-transaksi">Jumlah Dibayar/Diterima (Rp)</label>
+                            <input autocomplete="off" type="text" id="jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="saldo-akun">Pemasok <span class="text-muted">(opsional)</span></label>
-                <select class="form-control" id="kode-pemasok" name="id_pemasok">
-                <option disabled selected value> -- pilih pemasok -- </option>
-                @foreach($pemasoks as $pemasok)
-                <option value="{{ $pemasok->id }}">{{ $pemasok->nama}}</option>
-                @endforeach
-                </select>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="add-transaksi">Simpan</button>
             </div>
-            <div class="form-group">
-                <label for="nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
-                <input type="text" id="nama-material" name="nama_material" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="jumlah-material">Jumlah Material <span class="text-muted">(opsional)</span></label>
-                <input type="number" id="jumlah-material" class="form-control" name="jumlah_material">
-            </div>
-            <div class="form-group">
-                <label for="satuan-material">Satuan Material <span class="text-muted">(opsional)</span></label>
-                <input type="text" id="satuan-material" name="satuan_material" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="kode-proyek">Proyek</label>
-                <select class="form-control" id="kode-proyek" name="id_proyek">
-                <option disabled selected value required> -- pilih proyek -- </option>
-                @foreach($proyeks as $proyek)
-                <option value="{{ $proyek->id }}">{{ $proyek->jenis }}</option>
-                @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="kas-bank">Kas/Bank</label>
-                <select class="form-control" id="kas-bank" name="akun_neraca" required>
-                <option disabled selected value> -- pilih akun -- </option>
-                @foreach($akun_neracas as $akun_neraca)
-                <option value="{{ $akun_neraca->id }}">{{ $akun_neraca->nama }}</option>
-                @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <label for="jumlah-transaksi">Jumlah (Rp)</label>
-                    <input autocomplete="off" type="text" id="jumlah-transaksi" class="form-control" name="jumlah_transaksi" required>
-                </div>
-                <div class="form-group">
-                    <label for="jumlah-transaksi-transaksi">Jumlah Dibayar/Diterima (Rp)</label>
-                    <input autocomplete="off" type="text" id="jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required>
-                </div>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" form="add-transaksi">Simpan</button>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">Tambah Data</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="edit-transaksi" method="post" action="{{ route('update_transaksi_proyek') }}">
-        @csrf
-            <input id="edit-id" name="id" type="hidden" class="form-control">
-            <div class="form-group">
-                <label for="nama-akun">Tanggal</label>
-                <input id="daterange-edit" name="tanggal_transaksi" type="text" class="form-control">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Tambah Data</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="edit-jenis-akun">Jenis Transaksi</label>
-                <select class="form-control" id="edit-jenis-akun" name="jenis_transaksi" required>
-                <option disabled selected value> -- pilih jenis transaksi -- </option>
-                @foreach($akun_tr_proyeks as $akun_tr_proyek)
-                <option value="{{ $akun_tr_proyek->id }}">{{ $akun_tr_proyek->nama}}</option>
-                @endforeach
-                </select>
+            <div class="modal-body">
+                <form id="edit-transaksi" method="post" action="{{ route('update_transaksi_proyek') }}">
+                    @csrf
+                    <input id="edit-id" name="id" type="hidden" class="form-control">
+                    <div class="form-group">
+                        <label for="nama-akun">Tanggal</label>
+                        <input id="daterange-edit" name="tanggal_transaksi" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-jenis-akun">Jenis Transaksi</label>
+                        <select class="form-control" id="edit-jenis-akun" name="jenis_transaksi" required>
+                            <option disabled selected value> -- pilih jenis transaksi -- </option>
+                            @foreach($akun_tr_proyeks as $akun_tr_proyek)
+                            <option value="{{ $akun_tr_proyek->id }}">{{ $akun_tr_proyek->nama}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-kode-pemasok">Pemasok <span class="text-muted">(opsional)</span></label>
+                        <select class="form-control" id="edit-kode-pemasok" name="id_pemasok">
+                            <option disabled selected value> -- pilih pemasok -- </option>
+                            @foreach($pemasoks as $pemasok)
+                            <option value="{{ $pemasok->id }}">{{ $pemasok->nama}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
+                        <input type="text" id="edit-nama-material" name="nama_material" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-jumlah-material">Jumlah Material <span class="text-muted">(opsional)</span></label>
+                        <input type="number" id="edit-jumlah-material" class="form-control" name="jumlah_material">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-satuan-material">Satuan Material <span class="text-muted">(opsional)</span></label>
+                        <input type="text" id="edit-satuan-material" name="satuan_material" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-kode-proyek">Proyek</label>
+                        <select class="form-control" id="edit-kode-proyek" name="id_proyek">
+                            <option disabled selected value required> -- pilih proyek -- </option>
+                            @foreach($proyeks as $proyek)
+                            <option value="{{ $proyek->id }}">{{ $proyek->jenis }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-kas-bank">Kas/Bank</label>
+                        <select class="form-control" id="edit-kas-bank" name="akun_neraca" required>
+                            <option disabled selected value> -- pilih akun -- </option>
+                            @foreach($akun_neracas as $akun_neraca)
+                            <option value="{{ $akun_neraca->id }}">{{ $akun_neraca->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="edit-jumlah-transaksi">Jumlah (Rp)</label>
+                            <input autocomplete="off" type="text" id="edit-jumlah-transaksi" class="form-control" name="jumlah_transaksi" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-jumlah-transaksi-dibayar">Jumlah Dibayar/Diterima (Rp)</label>
+                            <input autocomplete="off" type="text" id="edit-jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required />
+                        </div>
+                    </div>
+
+                </form>
             </div>
-            <div class="form-group">
-                <label for="edit-kode-pemasok">Pemasok <span class="text-muted">(opsional)</span></label>
-                <select class="form-control" id="edit-kode-pemasok" name="id_pemasok">
-                <option disabled selected value> -- pilih pemasok -- </option>
-                @foreach($pemasoks as $pemasok)
-                <option value="{{ $pemasok->id }}">{{ $pemasok->nama}}</option>
-                @endforeach
-                </select>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="edit-transaksi">Simpan</button>
             </div>
-            <div class="form-group">
-                <label for="edit-nama-material">Nama Material <span class="text-muted">(opsional)</span></label>
-                <input type="text" id="edit-nama-material" name="nama_material" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="edit-jumlah-material">Jumlah Material <span class="text-muted">(opsional)</span></label>
-                <input type="number" id="edit-jumlah-material" class="form-control" name="jumlah_material">
-            </div>
-            <div class="form-group">
-                <label for="edit-satuan-material">Satuan Material <span class="text-muted">(opsional)</span></label>
-                <input type="text" id="edit-satuan-material" name="satuan_material" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="edit-kode-proyek">Proyek</label>
-                <select class="form-control" id="edit-kode-proyek" name="id_proyek">
-                <option disabled selected value required> -- pilih proyek -- </option>
-                @foreach($proyeks as $proyek)
-                <option value="{{ $proyek->id }}">{{ $proyek->jenis }}</option>
-                @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="edit-kas-bank">Kas/Bank</label>
-                <select class="form-control" id="edit-kas-bank" name="akun_neraca" required>
-                <option disabled selected value> -- pilih akun -- </option>
-                @foreach($akun_neracas as $akun_neraca)
-                <option value="{{ $akun_neraca->id }}">{{ $akun_neraca->nama }}</option>
-                @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <label for="edit-jumlah-transaksi">Jumlah (Rp)</label>
-                    <input autocomplete="off" type="text" id="edit-jumlah-transaksi" class="form-control" name="jumlah_transaksi" required />
-                </div>
-                <div class="form-group">
-                    <label for="edit-jumlah-transaksi-dibayar">Jumlah Dibayar/Diterima (Rp)</label>
-                    <input autocomplete="off" type="text" id="edit-jumlah-transaksi-dibayar" class="form-control" name="jumlah_dibayar" required />
-                </div>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" form="edit-transaksi">Simpan</button>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 @endif
 @endif
@@ -279,12 +300,11 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <style>
-.content {
-    font-size: 12px;
-}
-
+    .content {
+        font-size: 12px;
+    }
 </style>
-<meta name="csrf-token" content="{{ Session::token() }}"> 
+<meta name="csrf-token" content="{{ Session::token() }}">
 @endsection
 
 @section('js')
@@ -292,28 +312,35 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var role = <?php echo Auth::user()->role; ?>;
-        if(role == 1)
-        {
+        if (role == 1) {
             $('table').SetEditable();
         }
 
-        if(role == 1 || role == 2)
-        {
+        if (role == 1 || role == 2) {
             new AutoNumeric('#jumlah-transaksi');
             new AutoNumeric('#jumlah-transaksi-dibayar');
         }
 
         var columnDefs = [];
-        if(role == 1){
-            columnDefs = [
-                { "width": "20px", "targets": [4,5,6,8,9,13] },
-                { "targets": [2, 3, 4, 5, 6, 7, 8], "orderable": false }
+        if (role == 1) {
+            columnDefs = [{
+                    "width": "20px",
+                    "targets": [4, 5, 6, 8, 9, 13]
+                },
+                {
+                    "targets": [2, 3, 4, 5, 6, 7, 8],
+                    "orderable": false
+                }
             ]
-        }
-        else{
-            columnDefs = [
-                { "width": "20px", "targets": [3,4,5,7,8,12] },
-                { "targets": [1, 2, 3, 4, 5, 6, 7], "orderable": false }
+        } else {
+            columnDefs = [{
+                    "width": "20px",
+                    "targets": [3, 4, 5, 7, 8, 12]
+                },
+                {
+                    "targets": [1, 2, 3, 4, 5, 6, 7],
+                    "orderable": false
+                }
             ]
         }
         $('#table-transaksi-proyek').DataTable({
@@ -357,6 +384,30 @@
         });
     });
 </script>
+
+<!--Modal condition -->
+<script type="text/javascript">
+    // if checkbox is checked, input text
+    // else, use drop down
+
+    function checkbox() {
+        var checkBox = document.getElementById("material_baru");
+
+        if ($('#checkbox').is(":checked")) {
+            $('#tambah-material').show();
+            $('#pilih-material').hide();
+        } else {
+            $('#tambah-material').hide();
+            $('#pilih-material').show();
+        }
+
+    }
+</script>
+
 <script src="{{ asset('js/bootstable-transaksi-proyek.js') }}"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 @endsection
