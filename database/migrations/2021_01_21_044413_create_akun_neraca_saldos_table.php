@@ -16,7 +16,8 @@ class CreateAkunNeracaSaldosTable extends Migration
     {
         Schema::create('akun_neraca_saldos', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
+            $table->unsignedBigInteger('id_perusahaan')->unsigned();
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->string('nama')->unique();
             $table->enum('jenis_akun', ['Kas', 'Bank', 'Lainnya']);
             $table->enum('jenis_neraca', ['Aset Lancar', 'Aset Tetap', 'Kewajiban Lancar', 'Kewajiban Panjang', 'Ekuitas']);

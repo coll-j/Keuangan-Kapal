@@ -16,8 +16,10 @@ class CreateProyeksTable extends Migration
         Schema::create('proyeks', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('kode_proyek');
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
-            $table->unsignedBigInteger('id_pemilik')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('id_perusahaan')->unsigned();
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
+            $table->unsignedBigInteger('id_pemilik')->unsigned();
+            $table->foreign('id_pemilik')->references('id')->on('users')->onDelete('cascade');
             $table->enum('status', ['Aktif', 'Selesai']);
             $table->string('jenis');
             $table->timestamps();

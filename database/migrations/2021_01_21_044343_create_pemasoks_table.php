@@ -15,7 +15,8 @@ class CreatePemasoksTable extends Migration
     {
         Schema::create('pemasoks', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
+            $table->unsignedBigInteger('id_perusahaan')->unsigned();
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->string('nama')->unique();
             $table->string('jenis');
             $table->timestamps();

@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('role')->nullable(); // 0: super admin, 1: admin, 2: akuntan, 3: pemilik, 4: manajer proyek
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaan')->nullable();
+            $table->unsignedBigInteger('id_perusahaan')->unsigned()->nullable();
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->rememberToken();
             // $table->timestamps();
         });

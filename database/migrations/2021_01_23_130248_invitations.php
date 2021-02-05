@@ -19,7 +19,8 @@ class Invitations extends Migration
             $table->string('token')->unique();
             $table->string('email');
             $table->integer('role');
-            $table->unsignedBigInteger('id_perusahaan')->references('id')->on('perusahaan')->nullable()->onDelete('cascade');
+            $table->unsignedBigInteger('id_perusahaan')->unsigned();
+            $table->foreign('id_perusahaan')->references('id')->on('perusahaans')->onDelete('cascade');
             $table->integer('status');
             $table->timestamps();
         });
