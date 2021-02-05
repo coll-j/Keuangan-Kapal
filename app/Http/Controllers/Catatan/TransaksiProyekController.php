@@ -54,16 +54,16 @@ class TransaksiProyekController extends Controller
                     ->sum('saldo');
         $akun = AkunNeracaSaldo::find($request->akun_neraca);
         $sisa_saldo = 0;
-        if($akun->jenis_neraca == 'Aset Lancar'){
-            if($akun->jenis_akun == 'Kas') $sisa_saldo = $kas_sum - $jml;
-            else if($akun->jenis_akun == 'Bank') $sisa_saldo = $kas_sum - $jml;
-            $histori_aset_lancar = HistoriAsetLancar::create([
-                'tgl_transaksi'=> DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi),
-                'id_akun_neraca'=>$request->akun_neraca,
-                'sisa_saldo'=>$sisa_saldo,
-                'id_perusahaan' => Auth::user()->id_perusahaan,
-            ]);
-        }
+        // if($akun->jenis_neraca == 'Aset Lancar'){
+        //     if($akun->jenis_akun == 'Kas') $sisa_saldo = $kas_sum - $jml;
+        //     else if($akun->jenis_akun == 'Bank') $sisa_saldo = $kas_sum - $jml;
+        //     $histori_aset_lancar = HistoriAsetLancar::create([
+        //         'tgl_transaksi'=> DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi),
+        //         'id_akun_neraca'=>$request->akun_neraca,
+        //         'sisa_saldo'=>$sisa_saldo,
+        //         'id_perusahaan' => Auth::user()->id_perusahaan,
+        //     ]);
+        // }
         $tr_proyek = TransaksiProyek::create([
             'tanggal_transaksi' => DateTime::CreateFromFormat('d/m/Y', $request->tanggal_transaksi),
             'id_akun_tr_proyek' => $request->jenis_transaksi,
