@@ -243,7 +243,7 @@
 
         $('#table-transaksi-kantor').DataTable({
             'columnDefs': columnDefs,
-            'paging': true,
+            'paging': false,
             'lengthChange': false,
             'searching': false,
             'ordering': true,
