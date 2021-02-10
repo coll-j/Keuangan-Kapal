@@ -349,13 +349,14 @@
         }
         $('#table-transaksi-proyek').DataTable({
             'columnDefs': columnDefs,
-            'paging': true,
+            'paging': false,
             'lengthChange': false,
             'searching': false,
             'ordering': true,
             'info': false,
             'autoWidth': false,
-            'scrollX': true,
+            'scrollY': 250,
+            'scrollCollapse': true,
         });
     });
 </script>

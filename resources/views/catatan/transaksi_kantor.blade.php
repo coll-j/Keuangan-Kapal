@@ -249,7 +249,8 @@
             'ordering': true,
             'info': false,
             'autoWidth': false,
-            'scrollX': true,
+            'scrollY': 250,
+            'scrollCollapse': true,
         });
     });
 </script>
