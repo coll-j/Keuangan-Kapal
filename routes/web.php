@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('front.welcome');
 });
 
+Route::get('/print', function () {
+    return view('print');
+});
 // Route::get('/login', function() {
 //     return view('front.login');
 // })->name('login');

@@ -11,7 +11,16 @@
     <div class="card-header">
         <div class="text-center pt-3">
             <div class="row">
-                <div class="col">
+                <div class="col-6">
+                    <div class="float-left">
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-primary" type="button" onclick="print_table()">
+                            <i class="fas fa-print"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
                     <div class="float-right">
                         <div class="dropdown">
                             <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,7 +52,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h5>{{ $perusahaan->nama_perusahaan}}</h5>
+                    <h5>{{ $perusahaan->nama_perusahaan }}</h5>
                     <h6>Laporan Anggaran & Realisasi Proyek</h6>
                     @if(is_null($curr_proyek))
                     <h6>Semua Proyek</h6>
@@ -54,7 +63,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <input name="daterange" value="{{ $date_range ?? '-- pilih tanggal --' }}" type="text" style="width: 250px;" class="form-control  text-center">
+            <input id="tanggalan" name="daterange" value="{{ $date_range ?? '-- pilih tanggal --' }}" type="text" style="width: 250px;" class="form-control  text-center">
         </div>
     </div>
     <!-- /.card-header -->
@@ -73,11 +82,13 @@
                         <th style="width: 5%">Hasil</th>
                         @else
                         <th style="width: 25%">Keterangan</th>
+                        <th style="width: 18%">Anggaran</th>
                         <th style="width: 18%">Realisasi</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
+                    @if(Auth::user()->role != 4)
                     <tr>
                         <td colspan="6"><b>Pendapatan</b></td>
                     </tr>
@@ -224,29 +235,28 @@
                             @endif
                         @endif
                     </tr>
+                    @endif
                     <tr>
-                        <td colspan="6"><b>Biaya</b></td>
+                        <td colspan="6"><b class="float-left">Biaya</b></td>
                     </tr>
                     @foreach($biayas as $biaya)
                     <tr>
                         <td>{{ $biaya->nama }}</td>
-                        @if(Auth::user()->role != 4)
-                            <td>
-                            @php
-                                $anggaran = \App\Models\Catatan\Anggaran::where('id_perusahaan', Auth::user()->id_perusahaan)
-                                    ->where('id_akun_tr_proyek', $biaya->id);
-                            @endphp
-                            @if(!(is_null($curr_proyek)))
-                                @php $anggaran = $anggaran->where('id_proyek', $curr_proyek->id) @endphp
-                            @endif
-                            @php
-                                $anggaran = $anggaran->sum('nominal');
-                            @endphp
-                            {{ 
-                                number_format($anggaran, 2, '.', ',')
-                            }}
-                            </td>
+                        <td>
+                        @php
+                            $anggaran = \App\Models\Catatan\Anggaran::where('id_perusahaan', Auth::user()->id_perusahaan)
+                                ->where('id_akun_tr_proyek', $biaya->id);
+                        @endphp
+                        @if(!(is_null($curr_proyek)))
+                            @php $anggaran = $anggaran->where('id_proyek', $curr_proyek->id) @endphp
                         @endif
+                        @php
+                            $anggaran = $anggaran->sum('nominal');
+                        @endphp
+                        {{ 
+                            number_format($anggaran, 2, '.', ',')
+                        }}
+                        </td>
                         <td>
                         @php
                             $realisasi = \App\Models\Catatan\TransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
@@ -298,7 +308,6 @@
                     @endforeach
                     <tr>
                         <td class="right" ><b>Jumlah Biaya</b></td>
-                        @if(Auth::user()->role != 4)
                             <td class="end-row">
                             @php
                                 $anggaran = \App\Models\Catatan\Anggaran::where('id_perusahaan', Auth::user()->id_perusahaan)
@@ -316,7 +325,6 @@
                                 number_format($anggaran, 2, '.', ',')
                             }}
                             </td>
-                        @endif
                         <td class="end-row">
                         @php
                             $realisasi = \App\Models\Catatan\TransaksiProyek::where('id_perusahaan', Auth::user()->id_perusahaan)
@@ -398,6 +406,7 @@
                                 @endphp
                                 {{ number_format($anggaran, 2, '.', ',') }}
                             </td>
+                        @if(Auth::user()->role != 4)
                         <td class="end-row">
                         @endif
                             @php
@@ -442,7 +451,6 @@
                             @endphp
                             {{ number_format($realisasi, 2, '.', ',') }}
                         </td>
-                        @if(Auth::user()->role != 4)
                             <td class="end-row">
                             @php
                                 $selisih = $realisasi - $anggaran;
@@ -569,7 +577,10 @@
             'searching'   : false,
             'ordering'    : true,
             'info'        : false,
-            'autoWidth'   : false
+            'autoWidth'   : false,
+            'buttons': [
+                'print'
+            ]
         });
 
     } );
@@ -587,6 +598,26 @@
         window.location.href = url;
 
         console.log(url);
+    }
+
+    function print_table(){
+        var divToPrint=document.getElementById("table-laba-rugi-proyek");
+        var tanggal = document.getElementById("tanggalan").value;
+        newWin= window.open("/print/");
+        newWin.onload = function() {
+            newWin.document.getElementById("nama-perusahaan").innerHTML = "<?php echo $perusahaan->nama_perusahaan; ?>";
+            newWin.document.getElementById("judul").innerHTML = "Laporan Anggaran & Realisasi Proyek"
+            if (tanggal != "-- pilih tanggal --")
+            {
+                newWin.document.getElementById("tanggal").innerHTML = tanggal
+            }
+            newWin.document.getElementById("konten-tabel").innerHTML = divToPrint.outerHTML
+            newWin.document.close();
+            newWin.opener.location.reload();
+            newWin.print();
+        }
+        // newWin.document.write(divToPrint.outerHTML);
+        // newWin.print();
     }
 </script> 
 @endsection

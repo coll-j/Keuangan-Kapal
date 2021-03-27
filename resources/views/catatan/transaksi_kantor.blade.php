@@ -3,7 +3,14 @@
 @section('title', 'Keuangan Kapal | Transaksi Kantor')
 
 @section('content_header')
-<h5 class="pl-3"><b>TRANSAKSI KANTOR</b></h5>
+<div class="row">
+    <div class="col-6">
+        <h5 class="pl-3"><b>TRANSAKSI KANTOR</b></h5>
+    </div>
+    <div class="col-6">
+        <input name="daterange" type="text" value="{{ $date_range ?? '-- pilih tanggal --' }}" style="width: 250px; height: 30px;" class="form-control text-center float-right">
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -12,14 +19,6 @@
 @if(!empty(Auth::user()->id_perusahaan))
 <div class="card">
     <div class="card-header">
-        <div class="text-center pt-3 mb-3">
-            <div class="col">
-                <h5>Catatan Transaksi Kantor</h5>
-            </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <input name="daterange" value="{{ $date_range ?? '-- pilih tanggal --' }}" type="text" style="width: 250px;" class="form-control text-center">
-        </div>
         <div class="row">
             <div class="col-sm">
                 @if(Auth::user()->role == 1 || Auth::user()->role == 2)
@@ -249,7 +248,7 @@
             'ordering': true,
             'info': false,
             'autoWidth': false,
-            'scrollY': 250,
+            'scrollY': 700,
             'scrollCollapse': true,
         });
     });
