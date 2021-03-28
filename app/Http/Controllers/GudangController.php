@@ -74,6 +74,7 @@ class GudangController extends Controller
                 'satuan' => $satuan,
                 'jumlah' => $request->jumlah,
                 'jenis' => 'Keluar',
+                'id_transaksi' => $split[2],
                 // 'harga_satuan' => $request->harga_satuan,
                 'id_perusahaan' => $perusahaan->id,
                 'sisa' => $sisa - $request->jumlah,

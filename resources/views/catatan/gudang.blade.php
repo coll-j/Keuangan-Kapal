@@ -77,13 +77,14 @@
                 <form id="form-gudang" method="POST" action="{{route ('create_gudang')}}">
                     @csrf
                     <div class="form-group">
-                        <label for="nama_barang">Nama Barang - id proyek</label>
+                        <label for="nama_barang">Nama Barang - id proyek - id transaksi</label>
                         <select class="form-control" id="nama_barang" name="id_parent">
                             @foreach($inventoris as $inventori)
-                            <option value="{{ $inventori->nama_barang.'-'.$inventori->id_proyek}}">{{$inventori->nama_barang." - ".$inventori->id_proyek}}</option>
+                            <option value="{{ $inventori->nama_barang.'-'.$inventori->id_proyek. '-' .$inventori->id_transaksi}}">{{$inventori->nama_barang." - ".$inventori->id_proyek. " - " .$inventori->id_transaksi}}</option>
                             @endforeach
                         </select>
                     </div>
+
                     <div class="form-group">
                         <label for="jumlah">Jumlah</label>
                         <input autocomplete="off" type="number" id="jumlah" class="form-control" name="jumlah" required>
