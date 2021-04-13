@@ -12,14 +12,11 @@
 @if(!empty(Auth::user()->id_perusahaan))
 <div class="card">
     <div class="card-header bg-transparent">
-        <div class="text-center pt-3 mb-3">
+        <!-- <div class="text-center pt-3 mb-3">
             <div class="col">
                 <h5>Catatan Transaksi Proyek</h5>
             </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <input name="daterange" type="text" value="{{ $date_range ?? '-- pilih tanggal --' }}" style="width: 250px;" class="form-control text-center">
-        </div>
+        </div> -->
         <div class="row">
             <div class="col-sm">
                 @if(Auth::user()->role == 1 || Auth::user()->role == 2)
@@ -27,6 +24,11 @@
                     <a href="#"><button type="button" class="btn btn-sm btn-primary mr-2 " data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button></a>
                 </div>
                 @endif
+            </div>
+            <div class="col-sm">
+                <div class="d-flex justify-content-center">
+                    <input name="daterange" value="{{ $date_range ?? '-- pilih tanggal --' }}" type="text" style="width: 250px;" class="form-control text-center">
+                </div>
             </div>
             <div class="col-sm">
                 <div class="row justify-content-end">
