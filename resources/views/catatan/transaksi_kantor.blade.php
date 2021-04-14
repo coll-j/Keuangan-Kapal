@@ -28,6 +28,11 @@
                 @endif
             </div>
             <div class="col-sm">
+                <div class="d-flex justify-content-center">
+                    <input name="daterange" value="{{ $date_range ?? '-- pilih tanggal --' }}" type="text" style="width: 250px;" class="form-control text-center">
+                </div>
+            </div>
+            <div class="col-sm">
                 <div class="row justify-content-end">
                     <div class="col-2 text-left">
                         <b> Kas </b>
