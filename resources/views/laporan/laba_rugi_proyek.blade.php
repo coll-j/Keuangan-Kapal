@@ -486,6 +486,7 @@
     <!-- /.card-body -->
 
     <div class="card-footer">
+        <button onclick="window.print()" type="button" class="btn btn-sm btn-primary mr-2 "><i class="fas fa-print"></i> Cetak</button>
     </div>
     <!-- /.card-footer -->
 </div>
